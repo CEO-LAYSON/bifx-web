@@ -1,8 +1,8 @@
-import { configureStore } from '@reduxjs/toolkit'
-import authReducer from './slices/authSlice'
-import userReducer from './slices/userSlice'
-import courseReducer from './slices/courseSlice'
-import uiReducer from './slices/uiSlice'
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./slices/authSlice";
+import userReducer from "./slices/userSlice";
+import courseReducer from "./slices/courseSlice";
+import uiReducer from "./slices/uiSlice";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +11,6 @@ export const store = configureStore({
     courses: courseReducer,
     ui: uiReducer,
   },
-})
+});
 
-export default store
+export default store;

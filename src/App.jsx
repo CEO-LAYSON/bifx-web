@@ -1,8 +1,8 @@
-import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import { store } from './store/store'
-import AppRoutes from './routes/AppRoutes'
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
+import AppRoutes from "./routes/AppRoutes";
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
         <AppRoutes />
       </BrowserRouter>
     </Provider>
-  )
+  );
 }
 
-export default App
+export default App;
