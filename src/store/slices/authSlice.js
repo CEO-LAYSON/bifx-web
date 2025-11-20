@@ -30,12 +30,13 @@ export const registerUser = createAsyncThunk(
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    user: null,
+    user: JSON.parse(localStorage.getItem("user")),
     token: localStorage.getItem("token"),
     isAuthenticated: !!localStorage.getItem("token"),
     isLoading: false,
     error: null,
   },
+
   reducers: {
     logout: (state) => {
       state.user = null;
@@ -56,19 +57,24 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload;
-        state.token = action.payload.token;
+        state.user = action.payload.data;
+        state.token = action.payload.data.token;
         state.isAuthenticated = true;
-        localStorage.setItem("token", action.payload.token);
+        localStorage.setItem("token", action.payload.data.token);
+        localStorage.setItem("user", JSON.stringify(action.payload.data));
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
       // Register
-      .addCase(registerUser.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.data;
+        state.token = action.payload.data.token;
+        state.isAuthenticated = true;
+        localStorage.setItem("token", action.payload.data.token);
+        localStorage.setItem("user", JSON.stringify(action.payload.data));
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
