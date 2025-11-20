@@ -1,60 +1,107 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchCoursesStart } from "../../../store/slices/courseSlice";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCourses } from "../../../store/slices/courseSlice";
+import CourseGrid from "../../../components/courses/CourseGrid";
+import CourseFilter from "../../../components/courses/CourseFilter";
 
 const CourseListPage = () => {
   const dispatch = useDispatch();
-  const { courses, loading, error } = useSelector((state) => state.courses);
+  const { courses, isLoading } = useSelector((state) => state.courses);
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filters, setFilters] = useState({});
+  const [filteredCourses, setFilteredCourses] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchCoursesStart());
+    dispatch(fetchCourses());
   }, [dispatch]);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-lg text-gray-600">Loading courses...</p>
-        </div>
-      </div>
-    );
-  }
+  useEffect(() => {
+    let result = courses;
 
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-lg text-red-600">Error: {error}</p>
-        </div>
-      </div>
-    );
-  }
+    // Apply search filter
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      result = result.filter(
+        (course) =>
+          course.title.toLowerCase().includes(query) ||
+          course.description.toLowerCase().includes(query)
+      );
+    }
+
+    // Apply level filter
+    if (filters.level) {
+      result = result.filter((course) => course.level === filters.level);
+    }
+
+    // Apply price filter
+    if (filters.price === "free") {
+      result = result.filter((course) => course.isFree);
+    } else if (filters.price === "paid") {
+      result = result.filter((course) => !course.isFree);
+    }
+
+    // Apply duration filter (simplified)
+    if (filters.duration) {
+      result = result.filter((course) => {
+        const duration = course.totalDuration || 0;
+        switch (filters.duration) {
+          case "short":
+            return duration <= 120; // 2 hours
+          case "medium":
+            return duration > 120 && duration <= 600; // 2-10 hours
+          case "long":
+            return duration > 600; // 10+ hours
+          default:
+            return true;
+        }
+      });
+    }
+
+    setFilteredCourses(result);
+  }, [courses, searchQuery, filters]);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Courses</h1>
-        {courses.length === 0 ? (
-          <p className="text-gray-600">No courses available.</p>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {courses.map((course) => (
-              <div
-                key={course.id}
-                className="bg-white rounded-lg shadow-md p-6"
-              >
-                <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                  {course.title}
-                </h2>
-                <p className="text-gray-600 mb-4">{course.description}</p>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                  Enroll
-                </button>
-              </div>
-            ))}
-          </div>
+    <div className="max-w-7xl mx-auto py-8">
+      {/* Page Header */}
+      <div className="text-center mb-8">
+        <h1 className="text-4xl font-bold text-white mb-4">All Courses</h1>
+        <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+          Explore our comprehensive forex trading curriculum designed for all
+          skill levels
+        </p>
+      </div>
+
+      {/* Filters */}
+      <div className="mb-8">
+        <CourseFilter
+          onSearchChange={setSearchQuery}
+          onFilterChange={setFilters}
+          searchQuery={searchQuery}
+          filters={filters}
+        />
+      </div>
+
+      {/* Results Info */}
+      <div className="flex justify-between items-center mb-6">
+        <p className="text-gray-400">
+          Showing {filteredCourses.length} of {courses.length} courses
+        </p>
+
+        {searchQuery && (
+          <p className="text-gray-400">
+            Search results for:{" "}
+            <span className="text-white">"{searchQuery}"</span>
+          </p>
         )}
       </div>
+
+      {/* Courses Grid */}
+      <CourseGrid
+        courses={filteredCourses}
+        loading={isLoading}
+        emptyMessage="No courses match your search criteria"
+      />
     </div>
   );
 };
