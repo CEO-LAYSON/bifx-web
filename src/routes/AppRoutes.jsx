@@ -1,46 +1,38 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { ROUTES } from "../utils/constants/routes";
+import ProtectedRoute from "../components/auth/ProtectedRoute";
+import RoleBasedRoute from "../components/auth/RoleBasedRoute";
+import { ROLES } from "../utils/constants/roles";
 
-// Placeholder components - replace with actual components later
-const Home = () => <div>Home Page</div>;
-const Login = () => <div>Login Page</div>;
-const Register = () => <div>Register Page</div>;
-const Courses = () => <div>Courses Page</div>;
-const Dashboard = () => <div>Dashboard Page</div>;
-const Profile = () => <div>Profile Page</div>;
-const AdminDashboard = () => <div>Admin Dashboard</div>;
-const AdminUsers = () => <div>Admin Users</div>;
-const AdminCourses = () => <div>Admin Courses</div>;
-const AdminEnrollments = () => <div>Admin Enrollments</div>;
-const InstructorDashboard = () => <div>Instructor Dashboard</div>;
-const InstructorCourses = () => <div>Instructor Courses</div>;
-const InstructorStudents = () => <div>Instructor Students</div>;
+// Public Pages
+import LoginPage from "../pages/auth/LoginPage";
+import RegisterPage from "../pages/auth/RegisterPage";
 
-function AppRoutes() {
+// Layouts
+import MainLayout from "../components/layout/MainLayout";
+
+const AppRoutes = () => {
   return (
     <Routes>
-      <Route path={ROUTES.HOME} element={<Home />} />
-      <Route path={ROUTES.LOGIN} element={<Login />} />
-      <Route path={ROUTES.REGISTER} element={<Register />} />
-      <Route path={ROUTES.COURSES} element={<Courses />} />
-      <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
-      <Route path={ROUTES.PROFILE} element={<Profile />} />
-      <Route path={ROUTES.ADMIN.DASHBOARD} element={<AdminDashboard />} />
-      <Route path={ROUTES.ADMIN.USERS} element={<AdminUsers />} />
-      <Route path={ROUTES.ADMIN.COURSES} element={<AdminCourses />} />
-      <Route path={ROUTES.ADMIN.ENROLLMENTS} element={<AdminEnrollments />} />
+      {/* Public Routes */}
+      <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+      <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
+
+      {/* Protected Routes */}
       <Route
-        path={ROUTES.INSTRUCTOR.DASHBOARD}
-        element={<InstructorDashboard />}
+        path="/*"
+        element={
+          <ProtectedRoute>
+            <MainLayout />
+          </ProtectedRoute>
+        }
       />
-      <Route path={ROUTES.INSTRUCTOR.COURSES} element={<InstructorCourses />} />
-      <Route
-        path={ROUTES.INSTRUCTOR.STUDENTS}
-        element={<InstructorStudents />}
-      />
+
+      {/* Default redirect */}
+      <Route path="/" element={<Navigate to={ROUTES.DASHBOARD} replace />} />
     </Routes>
   );
-}
+};
 
 export default AppRoutes;
