@@ -19,6 +19,8 @@ import CourseDetailPage from "../pages/public/Courses/CourseDetailPage";
 // User Pages
 import UserDashboard from "../pages/user/Dashboard/UserDashboard";
 import LessonPage from "../pages/user/Learning/LessonPage";
+import ProgressPage from "../pages/user/Progress/ProgressPage";
+import MyProgressPage from "../pages/user/Progress/MyProgressPage";
 
 // Admin Pages
 import AdminDashboard from "../pages/admin/Dashboard/AdminDashboard";
@@ -58,7 +60,8 @@ const AppRoutes = () => {
           path={ROUTES.PROFILE}
           element={<div>Profile Page - Coming Soon</div>}
         />
-
+        <Route path="progress/:courseId" element={<ProgressPage />} />
+        <Route path="my-progress" element={<MyProgressPage />} />
         {/* Admin Routes */}
         <Route
           path={ROUTES.ADMIN.DASHBOARD}

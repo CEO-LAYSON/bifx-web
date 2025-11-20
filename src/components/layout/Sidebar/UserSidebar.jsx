@@ -9,7 +9,7 @@ const UserSidebar = () => {
   const navigation = [
     { name: "Dashboard", href: ROUTES.DASHBOARD, icon: Home },
     { name: "My Courses", href: "/my-courses", icon: BookOpen },
-    { name: "Progress", href: "/progress", icon: BarChart3 },
+    { name: "Progress", href: "/my-progress", icon: BarChart3 },
     { name: "Live Sessions", href: "/live-sessions", icon: Video },
     { name: "Profile", href: ROUTES.PROFILE, icon: User },
   ];
