@@ -14,9 +14,11 @@ import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
 import HomePage from "../pages/public/Home/HomePage";
 import CourseListPage from "../pages/public/Courses/CourseListPage";
+import CourseDetailPage from "../pages/public/Courses/CourseDetailPage";
 
 // User Pages
 import UserDashboard from "../pages/user/Dashboard/UserDashboard";
+import LessonPage from "../pages/user/Learning/LessonPage";
 
 // Admin Pages
 import AdminDashboard from "../pages/admin/Dashboard/AdminDashboard";
@@ -38,6 +40,7 @@ const AppRoutes = () => {
       <Route path="/" element={<MainLayout />}>
         <Route index element={<HomePage />} />
         <Route path={ROUTES.COURSES} element={<CourseListPage />} />
+        <Route path="/courses/:id" element={<CourseDetailPage />} />
       </Route>
 
       {/* Protected Routes with Dashboard Layout */}
@@ -74,6 +77,12 @@ const AppRoutes = () => {
               <InstructorDashboard />
             </RoleBasedRoute>
           }
+        />
+
+        {/* Learning Routes */}
+        <Route
+          path="learn/:courseId/lesson/:lessonId"
+          element={<LessonPage />}
         />
       </Route>
 
