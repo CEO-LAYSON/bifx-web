@@ -5,32 +5,81 @@ import ProtectedRoute from "../components/auth/ProtectedRoute";
 import RoleBasedRoute from "../components/auth/RoleBasedRoute";
 import { ROLES } from "../utils/constants/roles";
 
+// Layouts
+import DashboardLayout from "../components/layout/DashboardLayout";
+import MainLayout from "../components/layout/MainLayout";
+
 // Public Pages
 import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
+import HomePage from "../pages/public/Home/HomePage";
+import CourseListPage from "../pages/public/Courses/CourseListPage";
 
-// Layouts
-import MainLayout from "../components/layout/MainLayout";
+// User Pages
+import UserDashboard from "../pages/user/Dashboard/UserDashboard";
+
+// Admin Pages
+import AdminDashboard from "../pages/admin/Dashboard/AdminDashboard";
+
+// Instructor Pages
+import InstructorDashboard from "../pages/instructor/Dashboard/InstructorDashboard";
+
+// Error Pages
+import NotFound from "../pages/errors/NotFound";
+import Unauthorized from "../pages/errors/Unauthorized";
 
 const AppRoutes = () => {
   return (
     <Routes>
-      {/* Public Routes */}
+      {/* Public Routes with Main Layout */}
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
 
-      {/* Protected Routes */}
+      <Route path="/" element={<MainLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path={ROUTES.COURSES} element={<CourseListPage />} />
+      </Route>
+
+      {/* Protected Routes with Dashboard Layout */}
       <Route
         path="/*"
         element={
           <ProtectedRoute>
-            <MainLayout />
+            <DashboardLayout />
           </ProtectedRoute>
         }
-      />
+      >
+        {/* User Routes */}
+        <Route path={ROUTES.DASHBOARD} element={<UserDashboard />} />
+        <Route
+          path={ROUTES.PROFILE}
+          element={<div>Profile Page - Coming Soon</div>}
+        />
 
-      {/* Default redirect */}
-      <Route path="/" element={<Navigate to={ROUTES.DASHBOARD} replace />} />
+        {/* Admin Routes */}
+        <Route
+          path={ROUTES.ADMIN.DASHBOARD}
+          element={
+            <RoleBasedRoute requiredRole={ROLES.ADMIN}>
+              <AdminDashboard />
+            </RoleBasedRoute>
+          }
+        />
+
+        {/* Instructor Routes */}
+        <Route
+          path={ROUTES.INSTRUCTOR.DASHBOARD}
+          element={
+            <RoleBasedRoute requiredRole={ROLES.INSTRUCTOR}>
+              <InstructorDashboard />
+            </RoleBasedRoute>
+          }
+        />
+      </Route>
+
+      {/* Error Routes */}
+      <Route path="/unauthorized" element={<Unauthorized />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
