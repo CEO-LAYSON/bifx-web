@@ -10,7 +10,7 @@ import UserMenu from "../shared/UserMenu";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.auth);
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
@@ -69,9 +69,24 @@ const Header = () => {
             )}
           </nav>
 
-          {/* User Menu */}
+          {/* Auth Section */}
           <div className="flex items-center space-x-4">
-            <UserMenu user={user} onLogout={handleLogout} />
+            {isAuthenticated ? (
+              <UserMenu user={user} onLogout={handleLogout} />
+            ) : (
+              <div className="flex items-center space-x-3">
+                <Link to={ROUTES.LOGIN}>
+                  <Button variant="ghost" size="sm">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link to={ROUTES.REGISTER}>
+                  <Button variant="primary" size="sm">
+                    Sign Up
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* Mobile menu button */}
