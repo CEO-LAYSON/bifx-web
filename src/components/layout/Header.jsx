@@ -7,7 +7,7 @@ import { hasRole } from "../../utils/constants/roles";
 import Button from "../ui/Button";
 import UserMenu from "../shared/UserMenu";
 
-const Header = () => {
+const Header = ({ onMenuClick }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user, isAuthenticated } = useSelector((state) => state.auth);
@@ -90,10 +90,10 @@ const Header = () => {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-gray-400 hover:text-white focus:outline-none focus:text-white"
+              onClick={onMenuClick}
+              className="text-gray-400 hover:text-white focus:outline-none focus:text-white p-2"
             >
               <svg
                 className="h-6 w-6"

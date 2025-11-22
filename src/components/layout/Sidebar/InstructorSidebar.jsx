@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { ROUTES } from "../../../utils/constants/routes";
 
-const InstructorSidebar = () => {
+const InstructorSidebar = ({ onClose }) => {
   const location = useLocation();
 
   const navigation = [

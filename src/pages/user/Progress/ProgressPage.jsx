@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCourseProgress } from "../../../store/slices/progressSlice";
+import { fetchCourseProgressSummary } from "../../../store/slices/progressSlice";
 import { fetchCourseWithLessons } from "../../../store/slices/courseSlice";
 import ProgressSummary from "../../../components/courses/ProgressSummary";
 import Loader from "../../../components/ui/Loader";
@@ -25,7 +25,7 @@ const ProgressPage = () => {
 
   useEffect(() => {
     if (courseId) {
-      dispatch(fetchCourseProgress(courseId));
+      dispatch(fetchCourseProgressSummary(courseId));
       dispatch(fetchCourseWithLessons(courseId));
     }
   }, [dispatch, courseId]);

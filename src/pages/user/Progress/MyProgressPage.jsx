@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { enrollmentAPI } from "../../../services/api/enrollmentAPI";
-import { fetchCourseProgress } from "../../../store/slices/progressSlice";
+import { fetchCourseProgressSummary } from "../../../store/slices/progressSlice";
 import CourseProgress from "../../../components/courses/CourseProgress";
 import Loader from "../../../components/ui/Loader";
 import { BookOpen, TrendingUp, Award, AlertCircle } from "lucide-react";
@@ -34,7 +34,7 @@ const MyProgressPage = () => {
     // Fetch progress for each enrolled course
     enrollments.forEach((enrollment) => {
       if (enrollment.courseId && !courseProgress[enrollment.courseId]) {
-        dispatch(fetchCourseProgress(enrollment.courseId));
+        dispatch(fetchCourseProgressSummary(enrollment.courseId));
       }
     });
   }, [dispatch, enrollments, courseProgress]);
@@ -150,7 +150,7 @@ const MyProgressPage = () => {
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {enrollments.map((enrollment) => {
-              const course = enrollment.course || {};
+              const course = { level: 'Beginner' }; // Default level since not provided in enrollment
               const progress = courseProgress[enrollment.courseId];
 
               return (
@@ -161,10 +161,10 @@ const MyProgressPage = () => {
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex-1">
                       <h3 className="text-lg font-semibold text-white mb-1">
-                        {course.title || "Course Title"}
+                        {enrollment.courseTitle || "Course Title"}
                       </h3>
                       <p className="text-gray-400 text-sm">
-                        {course.description || "Course description"}
+                        Course enrollment
                       </p>
                     </div>
                     <Link

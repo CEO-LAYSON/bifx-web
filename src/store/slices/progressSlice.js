@@ -15,15 +15,15 @@ export const updateLessonProgress = createAsyncThunk(
   }
 );
 
-export const fetchCourseProgress = createAsyncThunk(
-  "progress/fetchCourse",
+export const fetchCourseProgressSummary = createAsyncThunk(
+  "progress/fetchCourseSummary",
   async (courseId, { rejectWithValue }) => {
     try {
-      const response = await progressAPI.getCourseProgress(courseId);
+      const response = await progressAPI.getCourseProgressSummary(courseId);
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to fetch progress"
+        error.response?.data?.message || "Failed to fetch progress summary"
       );
     }
   }
@@ -76,10 +76,16 @@ const progressSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-      // Fetch course progress
-      .addCase(fetchCourseProgress.fulfilled, (state, action) => {
-        const { courseId, progress } = action.payload.data;
-        state.courseProgress[courseId] = progress;
+      // Fetch course progress summary
+      .addCase(fetchCourseProgressSummary.fulfilled, (state, action) => {
+        const summary = action.payload.data;
+        state.courseProgress[summary.courseId] = {
+          completedLessons: summary.completedLessons,
+          totalLessons: summary.totalLessons,
+          progressPercentage: Math.round(summary.overallProgress * 100),
+          totalDuration: 0, // Not provided in summary
+          timeSpent: 0, // Not provided
+        };
       })
       // Fetch lesson progress
       .addCase(fetchLessonProgress.fulfilled, (state, action) => {

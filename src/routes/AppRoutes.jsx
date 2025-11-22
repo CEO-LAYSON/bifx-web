@@ -15,9 +15,13 @@ import RegisterPage from "../pages/auth/RegisterPage";
 import HomePage from "../pages/public/Home/HomePage";
 import CourseListPage from "../pages/public/Courses/CourseListPage";
 import CourseDetailPage from "../pages/public/Courses/CourseDetailPage";
+import UpgradePage from "../pages/public/Upgrade/UpgradePage";
 
 // User Pages
 import UserDashboard from "../pages/user/Dashboard/UserDashboard";
+import MyCoursesPage from "../pages/user/MyCourses/MyCoursesPage";
+import LiveSessionsPage from "../pages/user/LiveSessions/LiveSessionsPage";
+import ProfilePage from "../pages/user/Profile/ProfilePage";
 import LessonPage from "../pages/user/Learning/LessonPage";
 import ProgressPage from "../pages/user/Progress/ProgressPage";
 import MyProgressPage from "../pages/user/Progress/MyProgressPage";
@@ -43,6 +47,7 @@ const AppRoutes = () => {
         <Route index element={<HomePage />} />
         <Route path={ROUTES.COURSES} element={<CourseListPage />} />
         <Route path="/courses/:id" element={<CourseDetailPage />} />
+        <Route path="/upgrade" element={<UpgradePage />} />
       </Route>
 
       {/* Protected Routes with Dashboard Layout */}
@@ -56,10 +61,9 @@ const AppRoutes = () => {
       >
         {/* User Routes */}
         <Route path={ROUTES.DASHBOARD} element={<UserDashboard />} />
-        <Route
-          path={ROUTES.PROFILE}
-          element={<div>Profile Page - Coming Soon</div>}
-        />
+        <Route path="my-courses" element={<MyCoursesPage />} />
+        <Route path="live-sessions" element={<LiveSessionsPage />} />
+        <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
         <Route path="progress/:courseId" element={<ProgressPage />} />
         <Route path="my-progress" element={<MyProgressPage />} />
         {/* Admin Routes */}

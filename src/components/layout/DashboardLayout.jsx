@@ -12,34 +12,38 @@ const DashboardLayout = () => {
   const { user } = useSelector((state) => state.auth);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const getSidebar = () => {
+  const getSidebar = (onClose) => {
     if (hasRole(user?.roles, "ROLE_ADMIN")) {
-      return <AdminSidebar />;
+      return <AdminSidebar onClose={onClose} />;
     }
     if (hasRole(user?.roles, "ROLE_INSTRUCTOR")) {
-      return <InstructorSidebar />;
+      return <InstructorSidebar onClose={onClose} />;
     }
-    return <UserSidebar />;
+    return <UserSidebar onClose={onClose} />;
   };
 
   return (
-    <div className="min-h-screen bg-black flex">
+    <div className="min-h-screen bg-black">
       {/* Mobile Sidebar */}
       <MobileSidebar
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
-        sidebarComponent={getSidebar()}
+        sidebarComponent={getSidebar(() => setSidebarOpen(false))}
       />
 
-      {/* Desktop Sidebar */}
-      <div className="hidden lg:flex lg:flex-shrink-0">
-        <div className="flex flex-col w-64">{getSidebar()}</div>
+      {/* Desktop Sidebar - Fixed */}
+      <div className="hidden lg:block fixed left-0 top-0 h-full z-40">
+        {getSidebar()}
+      </div>
+
+      {/* Fixed Header */}
+      <div className="fixed top-0 left-0 right-0 z-30 lg:left-64">
+        <Header onMenuClick={() => setSidebarOpen(true)} />
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0">
-        <Header onMenuClick={() => setSidebarOpen(true)} />
-        <main className="flex-1 relative overflow-y-auto focus:outline-none">
+      <div className="lg:ml-64 pt-16">
+        <main className="min-h-screen bg-black">
           <div className="py-6">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <Outlet />

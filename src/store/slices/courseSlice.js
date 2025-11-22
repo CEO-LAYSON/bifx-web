@@ -100,7 +100,7 @@ const courseSlice = createSlice({
       })
       .addCase(fetchCourseById.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.currentCourse = action.payload.data[0]; // Adjust based on your API response
+        state.currentCourse = action.payload.data;
       })
       .addCase(fetchCourseById.rejected, (state, action) => {
         state.isLoading = false;
