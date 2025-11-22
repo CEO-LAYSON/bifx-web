@@ -56,26 +56,34 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Hero Image/Video Placeholder */}
+          {/* Hero Video */}
           <div className="relative">
-            <div className="bg-gradient-to-br from-primary-purple to-primary-gold p-1 rounded-2xl">
-              <div className="bg-black rounded-2xl p-8">
-                <div className="aspect-video bg-gray-800 rounded-lg flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-20 h-20 bg-primary-purple rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Play size={32} className="text-white ml-1" />
-                    </div>
-                    <p className="text-gray-400">Course Preview</p>
-                  </div>
+            <div className="bg-gradient-to-br from-primary-purple to-primary-gold p-1 rounded-2xl shadow-2xl">
+              <div className="bg-black rounded-2xl p-2">
+                <div className="aspect-video rounded-xl overflow-hidden shadow-2xl">
+                  <iframe
+                    src="https://www.youtube.com/embed/J0WC352ftKg?autoplay=1&mute=1&loop=1&list=PL73KHYWzhYix03CBKTrtm3c1bxL4WVzu6&controls=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3"
+                    title="Forex Trading Foundation Course Preview"
+                    className="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
                 </div>
 
                 {/* Floating Elements */}
-                <div className="absolute -top-4 -left-4 bg-primary-gold text-black px-4 py-2 rounded-lg font-bold">
-                  Foundation Course
+                <div className="absolute -top-4 -left-4 bg-gradient-to-r from-primary-gold to-yellow-500 text-black px-4 py-2 rounded-lg font-bold shadow-lg animate-pulse">
+                  🎯 Foundation Course
                 </div>
-                <div className="absolute -bottom-4 -right-4 bg-primary-purple text-white px-4 py-2 rounded-lg font-bold">
-                  $70
+                <div className="absolute -bottom-4 -right-4 bg-gradient-to-r from-primary-purple to-purple-600 text-white px-4 py-2 rounded-lg font-bold shadow-lg">
+                  $70 Value
                 </div>
+
+                {/* Overlay Play Button - Hidden when controls are enabled */}
+                {/* <div className="absolute inset-0 flex items-center justify-center bg-black/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                  <div className="w-16 h-16 bg-primary-gold/90 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+                    <Play size={24} className="text-black ml-1" />
+                  </div>
+                </div> */}
               </div>
             </div>
           </div>
