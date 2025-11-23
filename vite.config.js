@@ -9,7 +9,24 @@ export default defineConfig({
       "/api": {
         target: "https://bifx-backend-app.onrender.com",
         changeOrigin: true,
+        secure: false,
       },
     },
+  },
+  build: {
+    outDir: "dist",
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ["react", "react-dom", "react-router-dom"],
+          redux: ["redux", "@reduxjs/toolkit", "react-redux"],
+          utils: ["axios", "date-fns", "clsx"],
+        },
+      },
+    },
+  },
+  optimizeDeps: {
+    include: ["react", "react-dom", "react-router-dom"],
   },
 });

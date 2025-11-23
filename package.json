@@ -1,13 +1,20 @@
 {
   "name": "bifx-web",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "preview:prod": "vite preview --port 4173",
+    "build:docker": "docker build -t bifx-frontend .",
+    "start:docker": "docker-compose up -d",
+    "stop:docker": "docker-compose down",
+    "deploy:prepare": "npm run build && npm run build:docker",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext js,jsx --fix",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -24,6 +31,7 @@
     "react-router-dom": "^6.8.0",
     "redux": "^4.2.1",
     "video.js": "^8.3.0",
+    "react-video-player": "^1.0.0",
     "yup": "^1.0.0"
   },
   "devDependencies": {
@@ -39,5 +47,17 @@
     "prettier": "^2.8.4",
     "tailwindcss": "^3.2.7",
     "vite": "^4.1.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

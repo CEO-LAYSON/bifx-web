@@ -1,16 +1,38 @@
-# React + Vite
+# BIFX - Forex Trading Education Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A comprehensive web application for forex trading education with course management, live sessions, and progress tracking.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **User Management**: Registration, authentication, and role-based access
+- **Course System**: Course browsing, enrollment, and progress tracking
+- **Video Learning**: Integrated video player with progress tracking
+- **Live Sessions**: Zoom-integrated live meeting rooms
+- **Admin Panel**: User management, content moderation, analytics
+- **Instructor Portal**: Course creation, student progress tracking
+- **Reviews & Ratings**: Course reviews with moderation system
+- **Responsive Design**: Mobile-first responsive design
 
-## React Compiler
+## 🛠 Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Frontend
 
-## Expanding the ESLint configuration
+- **React 18** - UI Framework
+- **Redux Toolkit** - State Management
+- **React Router** - Routing
+- **Tailwind CSS** - Styling
+- **Vite** - Build Tool
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Backend Integration
+
+- **RESTful APIs** - Backend communication
+- **JWT Authentication** - Secure authentication
+- **Axios** - HTTP client
+
+## 📦 Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/bifx-web.git
+   cd bifx-web
+   ```
