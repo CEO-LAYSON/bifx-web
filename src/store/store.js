@@ -4,6 +4,7 @@ import userReducer from "./slices/userSlice";
 import courseReducer from "./slices/courseSlice";
 import progressReducer from "./slices/progressSlice";
 import adminReducer from "./slices/adminSlice";
+import instructorReducer from "./slices/instructorSlice";
 import uiReducer from "./slices/uiSlice";
 
 export const store = configureStore({
@@ -13,6 +14,7 @@ export const store = configureStore({
     courses: courseReducer,
     progress: progressReducer,
     admin: adminReducer,
+    instructor: instructorReducer,
     ui: uiReducer,
   },
 });
