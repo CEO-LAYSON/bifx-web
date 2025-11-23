@@ -32,6 +32,8 @@ import UserListPage from "../pages/admin/Users/UserListPage";
 import EnrollmentList from "../pages/admin/Enrollments/EnrollmentList";
 // Instructor Pages
 import InstructorDashboard from "../pages/instructor/Dashboard/InstructorDashboard";
+import CreateCourse from "../pages/instructor/Courses/CreateCourse";
+import MyCourses from "../pages/instructor/Courses/MyCourses";
 
 // Error Pages
 import NotFound from "../pages/errors/NotFound";
@@ -88,6 +90,8 @@ const AppRoutes = () => {
             </RoleBasedRoute>
           }
         />
+        <Route path={ROUTES.INSTRUCTOR.COURSES} element={<MyCourses />} />
+        <Route path="/instructor/courses/create" element={<CreateCourse />} />
 
         {/* Learning Routes */}
         <Route
