@@ -61,7 +61,7 @@ class ErrorBoundary extends React.Component {
 
               <Link
                 to="/"
-                className="block w-full flex items-center justify-center px-6 py-3 border border-gray-600 text-gray-300 rounded-lg font-semibold hover:bg-gray-800 transition-colors"
+                className="w-full flex items-center justify-center px-6 py-3 border border-gray-600 text-gray-300 rounded-lg font-semibold hover:bg-gray-800 transition-colors"
               >
                 <Home size={20} className="mr-2" />
                 Go Home
