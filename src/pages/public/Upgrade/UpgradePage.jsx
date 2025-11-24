@@ -55,13 +55,11 @@ const UpgradePage = () => {
   return (
     <div className="min-h-screen bg-black">
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-purple-900 via-gray-900 to-black py-16">
+      <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6">
             Upgrade Your Learning
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary-gold to-yellow-400">
-              Experience
-            </span>
+            <span className="block text-primary-purple">Experience</span>
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
             Unlock premium courses, live sessions, and expert mentorship to
@@ -92,22 +90,22 @@ const UpgradePage = () => {
             return (
               <div
                 key={plan.name}
-                className={`relative bg-gray-800 rounded-2xl border border-gray-700 p-8 hover:border-primary-purple transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10 ${
+                className={`relative bg-gray-800 rounded-2xl border border-gray-700 p-8 hover:border-primary-purple transition-all duration-300 ${
                   plan.popular
-                    ? "transform scale-105 border-primary-gold shadow-xl shadow-gold-500/20"
+                    ? "border-primary-purple"
                     : ""
                 }`}
               >
                 {plan.popular && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <div className="bg-gradient-to-r from-primary-gold to-yellow-500 text-black px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                    <div className="bg-primary-purple text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
                       Most Popular
                     </div>
                   </div>
                 )}
 
                 <div className="text-center mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary-purple to-primary-gold rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <div className="w-16 h-16 bg-primary-purple rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
                     <Icon className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-2xl font-bold text-white mb-2">
@@ -133,11 +131,7 @@ const UpgradePage = () => {
 
                 <Button
                   variant={plan.popular ? "primary" : "outline"}
-                  className={`w-full ${
-                    plan.popular
-                      ? "bg-gradient-to-r from-primary-purple to-primary-gold hover:from-purple-600 hover:to-gold-600"
-                      : ""
-                  }`}
+                  className="w-full"
                   size="lg"
                 >
                   {plan.popular ? "Start Pro Trial" : `Choose ${plan.name}`}

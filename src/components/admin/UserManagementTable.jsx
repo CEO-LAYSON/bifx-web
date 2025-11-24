@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  changeUserRole,
-  fetchAllUsers,
-} from "../../../store/slices/adminSlice";
+import { changeUserRole, fetchAllUsers } from "../../store/slices/adminSlice";
 import {
   Search,
   Filter,
@@ -13,8 +10,8 @@ import {
   Shield,
   Award,
 } from "lucide-react";
-import Button from "../../ui/Button";
-import Loader from "../../ui/Loader";
+import Button from "../ui/Button";
+import Loader from "../ui/Loader";
 
 const UserManagementTable = () => {
   const dispatch = useDispatch();
@@ -28,8 +25,7 @@ const UserManagementTable = () => {
       user.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesRole =
-      roleFilter === "ALL" ||
-      user.roles?.some((role) => role === `ROLE_${roleFilter}`);
+      roleFilter === "ALL" || (user.role || user.roles?.[0]) === roleFilter;
     return matchesSearch && matchesRole;
   });
 
@@ -42,21 +38,23 @@ const UserManagementTable = () => {
     }
   };
 
-  const getRoleBadge = (roles) => {
-    if (roles?.includes("ROLE_ADMIN")) {
+  const getRoleBadge = (user) => {
+    const role = user.role || user.roles?.[0];
+    if (role === "ADMIN") {
       return { label: "Admin", color: "bg-red-500 text-white" };
     }
-    if (roles?.includes("ROLE_INSTRUCTOR")) {
+    if (role === "INSTRUCTOR") {
       return { label: "Instructor", color: "bg-purple-500 text-white" };
     }
     return { label: "User", color: "bg-gray-500 text-white" };
   };
 
-  const getRoleIcon = (roles) => {
-    if (roles?.includes("ROLE_ADMIN")) {
+  const getRoleIcon = (user) => {
+    const role = user.role || user.roles?.[0];
+    if (role === "ADMIN") {
       return <Shield size={16} />;
     }
-    if (roles?.includes("ROLE_INSTRUCTOR")) {
+    if (role === "INSTRUCTOR") {
       return <Award size={16} />;
     }
     return <User size={16} />;
@@ -137,7 +135,7 @@ const UserManagementTable = () => {
           </thead>
           <tbody className="divide-y divide-gray-700">
             {filteredUsers.map((user) => {
-              const roleBadge = getRoleBadge(user.roles);
+              const roleBadge = getRoleBadge(user);
               return (
                 <tr
                   key={user.id}
@@ -169,7 +167,7 @@ const UserManagementTable = () => {
                       >
                         {roleBadge.label}
                       </span>
-                      {getRoleIcon(user.roles)}
+                      {getRoleIcon(user)}
                     </div>
                   </td>
 
@@ -188,7 +186,11 @@ const UserManagementTable = () => {
 
                   {/* Joined Date */}
                   <td className="p-4 text-gray-400 text-sm">
-                    {new Date(user.createdAt).toLocaleDateString()}
+                    {user.createdAt || user.created_at
+                      ? new Date(
+                          user.createdAt || user.created_at
+                        ).toLocaleDateString()
+                      : "N/A"}
                   </td>
 
                   {/* Actions */}
@@ -212,7 +214,7 @@ const UserManagementTable = () => {
                               Change Role
                             </div>
 
-                            {!user.roles?.includes("ROLE_ADMIN") && (
+                            {(user.role || user.roles?.[0]) !== "ADMIN" && (
                               <button
                                 onClick={() =>
                                   handleRoleChange(user.id, "ADMIN")
@@ -224,7 +226,8 @@ const UserManagementTable = () => {
                               </button>
                             )}
 
-                            {!user.roles?.includes("ROLE_INSTRUCTOR") && (
+                            {(user.role || user.roles?.[0]) !==
+                              "INSTRUCTOR" && (
                               <button
                                 onClick={() =>
                                   handleRoleChange(user.id, "INSTRUCTOR")
@@ -236,7 +239,7 @@ const UserManagementTable = () => {
                               </button>
                             )}
 
-                            {!user.roles?.includes("ROLE_USER") && (
+                            {(user.role || user.roles?.[0]) !== "USER" && (
                               <button
                                 onClick={() =>
                                   handleRoleChange(user.id, "USER")
@@ -262,7 +265,7 @@ const UserManagementTable = () => {
       {/* Empty State */}
       {filteredUsers.length === 0 && (
         <div className="text-center py-12">
-          <Users className="h-16 w-16 text-gray-500 mx-auto mb-4" />
+          <User className="h-16 w-16 text-gray-500 mx-auto mb-4" />
           <h3 className="text-lg font-semibold text-white mb-2">
             No users found
           </h3>

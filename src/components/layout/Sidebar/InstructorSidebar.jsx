@@ -18,10 +18,10 @@ const InstructorSidebar = ({ onClose }) => {
     { name: "Dashboard", href: ROUTES.INSTRUCTOR.DASHBOARD, icon: Home },
     { name: "My Courses", href: ROUTES.INSTRUCTOR.COURSES, icon: BookOpen },
     { name: "Students", href: ROUTES.INSTRUCTOR.STUDENTS, icon: Users },
-    { name: "Analytics", href: "/instructor/analytics", icon: BarChart3 },
-    { name: "Assignments", href: "/instructor/assignments", icon: FileText },
-    { name: "Live Sessions", href: "/instructor/live-sessions", icon: Video },
-    { name: "Settings", href: "/instructor/settings", icon: Settings },
+    { name: "Analytics", href: "analytics", icon: BarChart3 },
+    { name: "Assignments", href: "assignments", icon: FileText },
+    { name: "Live Sessions", href: "live-sessions", icon: Video },
+    { name: "Settings", href: "settings", icon: Settings },
   ];
 
   const isActive = (path) => location.pathname.startsWith(path);
@@ -50,7 +50,7 @@ const InstructorSidebar = ({ onClose }) => {
               to={item.href}
               className={`flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
                 isActive(item.href)
-                  ? "bg-primary-purple text-white"
+                  ? "bg-gray-700 text-white"
                   : "text-gray-300 hover:bg-gray-800 hover:text-white"
               }`}
             >
@@ -65,13 +65,13 @@ const InstructorSidebar = ({ onClose }) => {
       <div className="p-4 border-t border-gray-700">
         <div className="space-y-2">
           <Link
-            to="/instructor/courses/create"
+            to="courses/create"
             className="block w-full bg-primary-purple text-white text-center py-2 px-3 rounded text-sm font-semibold hover:bg-purple-700 transition-colors"
           >
             Create Course
           </Link>
           <Link
-            to="/instructor/upload"
+            to="upload"
             className="block w-full border border-primary-purple text-primary-purple text-center py-2 px-3 rounded text-sm font-semibold hover:bg-purple-900 transition-colors"
           >
             Upload Video

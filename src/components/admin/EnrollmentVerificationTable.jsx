@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   verifyEnrollment,
   fetchPendingEnrollments,
-} from "../../../store/slices/adminSlice";
+} from "../../store/slices/adminSlice";
 import {
   Clock,
   CheckCircle,
@@ -12,8 +12,8 @@ import {
   User,
   BookOpen,
 } from "lucide-react";
-import Button from "../../ui/Button";
-import Loader from "../../ui/Loader";
+import Button from "../ui/Button";
+import Loader from "../ui/Loader";
 
 const EnrollmentVerificationTable = () => {
   const dispatch = useDispatch();

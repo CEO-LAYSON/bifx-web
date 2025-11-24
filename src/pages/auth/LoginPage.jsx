@@ -4,10 +4,16 @@ import { Navigate } from "react-router-dom";
 import LoginForm from "../../components/auth/LoginForm";
 
 const LoginPage = () => {
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
-  if (isAuthenticated) {
-    return <Navigate to="/dashboard" replace />;
+  if (isAuthenticated && user) {
+    if (user.roles?.includes("ROLE_ADMIN")) {
+      return <Navigate to="/admin" replace />;
+    } else if (user.roles?.includes("ROLE_INSTRUCTOR")) {
+      return <Navigate to="/instructor" replace />;
+    } else {
+      return <Navigate to="/dashboard" replace />;
+    }
   }
 
   return (

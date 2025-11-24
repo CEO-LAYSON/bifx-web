@@ -91,7 +91,7 @@ const AppRoutes = () => {
           }
         />
         <Route path={ROUTES.INSTRUCTOR.COURSES} element={<MyCourses />} />
-        <Route path="/instructor/courses/create" element={<CreateCourse />} />
+        <Route path="instructor/courses/create" element={<CreateCourse />} />
 
         {/* Learning Routes */}
         <Route

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { createNewCourse } from "../../../store/slices/instructorSlice";
+import { createNewCourse } from "../../store/slices/instructorSlice";
 import { Upload, X, DollarSign } from "lucide-react";
-import Button from "../../ui/Button";
-import Input from "../../ui/Input";
-import Alert from "../../ui/Alert";
+import Button from "../ui/Button";
+import Input from "../ui/Input";
+import Alert from "../ui/Alert";
 
 const CourseCreationForm = ({ onSuccess }) => {
   const dispatch = useDispatch();

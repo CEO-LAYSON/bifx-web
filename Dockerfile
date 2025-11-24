@@ -1,5 +1,5 @@
 # Multi-stage build for production
-FROM node:22.11-slim as builder
+FROM node:20-slim as builder
 
 WORKDIR /app
 

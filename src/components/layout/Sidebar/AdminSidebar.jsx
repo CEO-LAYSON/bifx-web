@@ -19,15 +19,15 @@ const AdminSidebar = ({ onClose }) => {
     { name: "Users", href: ROUTES.ADMIN.USERS, icon: Users },
     { name: "Courses", href: ROUTES.ADMIN.COURSES, icon: BookOpen },
     { name: "Enrollments", href: ROUTES.ADMIN.ENROLLMENTS, icon: FileCheck },
-    { name: "Reviews", href: "/admin/reviews", icon: MessageSquare },
-    { name: "Uploads", href: "/admin/uploads", icon: Upload },
-    { name: "Settings", href: "/admin/settings", icon: Settings },
+    { name: "Reviews", href: "reviews", icon: MessageSquare },
+    { name: "Uploads", href: "uploads", icon: Upload },
+    { name: "Settings", href: "settings", icon: Settings },
   ];
 
   const isActive = (path) => location.pathname.startsWith(path);
 
   return (
-    <div className="flex flex-col w-64 bg-gray-900 border-r border-gray-700">
+    <div className="flex flex-col w-64 bg-gray-900 border-r border-gray-700 h-screen">
       {/* Sidebar Header */}
       <div className="flex items-center justify-center h-16 px-4 border-b border-gray-700">
         <div className="flex items-center">
@@ -48,7 +48,7 @@ const AdminSidebar = ({ onClose }) => {
               to={item.href}
               className={`flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
                 isActive(item.href)
-                  ? "bg-primary-gold text-black"
+                  ? "bg-gray-700 text-white"
                   : "text-gray-300 hover:bg-gray-800 hover:text-white"
               }`}
             >
