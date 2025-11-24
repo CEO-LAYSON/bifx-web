@@ -46,6 +46,7 @@ const AdminSidebar = ({ onClose }) => {
             <Link
               key={item.name}
               to={item.href}
+              onClick={onClose}
               className={`flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
                 isActive(item.href)
                   ? "bg-gray-700 text-white"

@@ -48,6 +48,7 @@ const InstructorSidebar = ({ onClose }) => {
             <Link
               key={item.name}
               to={item.href}
+              onClick={onClose}
               className={`flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
                 isActive(item.href)
                   ? "bg-gray-700 text-white"
@@ -66,12 +67,14 @@ const InstructorSidebar = ({ onClose }) => {
         <div className="space-y-2">
           <Link
             to="courses/create"
+            onClick={onClose}
             className="block w-full bg-primary-purple text-white text-center py-2 px-3 rounded text-sm font-semibold hover:bg-purple-700 transition-colors"
           >
             Create Course
           </Link>
           <Link
             to="upload"
+            onClick={onClose}
             className="block w-full border border-primary-purple text-primary-purple text-center py-2 px-3 rounded text-sm font-semibold hover:bg-purple-900 transition-colors"
           >
             Upload Video

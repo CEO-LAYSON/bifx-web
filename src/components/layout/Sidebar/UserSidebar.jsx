@@ -27,13 +27,6 @@ const UserSidebar = ({ onClose }) => {
           </div>
           <span className="text-white font-bold text-lg">Student Portal</span>
         </div>
-        {/* Close button for mobile */}
-        <button
-          onClick={onClose}
-          className="lg:hidden text-gray-400 hover:text-white p-2 transition-colors"
-        >
-          <X size={20} />
-        </button>
       </div>
 
       {/* Navigation */}
@@ -44,6 +37,7 @@ const UserSidebar = ({ onClose }) => {
             <Link
               key={item.name}
               to={item.href}
+              onClick={onClose}
               className={`flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
                 isActive(item.href)
                   ? "bg-gray-700 text-white"
@@ -68,6 +62,7 @@ const UserSidebar = ({ onClose }) => {
           </p>
           <Link
             to="/upgrade"
+            onClick={onClose}
             className="block w-full bg-primary-purple text-white text-center py-2 px-3 rounded text-sm font-semibold hover:bg-purple-700 transition-colors"
           >
             Upgrade Now
