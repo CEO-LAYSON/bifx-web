@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL ||
-  (import.meta.env.PROD ? "https://bifx-backend-app.onrender.com" : "/api");
+  (import.meta.env.PROD ? "https://bifx-backend-app.onrender.com/api" : "/api");
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -31,7 +31,10 @@ axiosInstance.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem("token");
-      window.location.href = "/login";
+      // Prevent redirect if already on login or register page to avoid page reload
+      if (window.location.pathname !== "/login" && window.location.pathname !== "/register") {
+        window.location.href = "/login";
+      }
     }
     return Promise.reject(error);
   }
