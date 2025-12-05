@@ -37,18 +37,23 @@ const Header = ({ onMenuClick }) => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link
-              to={ROUTES.DASHBOARD}
-              className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
-            >
-              Dashboard
-            </Link>
-            <Link
-              to={ROUTES.COURSES}
-              className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
-            >
-              Courses
-            </Link>
+            {/* Show Dashboard and Courses only for non-admin users */}
+            {!isAdmin && (
+              <>
+                <Link
+                  to={ROUTES.DASHBOARD}
+                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  to={ROUTES.COURSES}
+                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >
+                  Courses
+                </Link>
+              </>
+            )}
 
             {/* Admin/Instructor Links */}
             {isAdmin && (
@@ -116,20 +121,25 @@ const Header = ({ onMenuClick }) => {
         {isMobileMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-800 rounded-lg mt-2">
-              <Link
-                to={ROUTES.DASHBOARD}
-                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Dashboard
-              </Link>
-              <Link
-                to={ROUTES.COURSES}
-                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Courses
-              </Link>
+              {/* Show Dashboard and Courses only for non-admin users */}
+              {!isAdmin && (
+                <>
+                  <Link
+                    to={ROUTES.DASHBOARD}
+                    className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Dashboard
+                  </Link>
+                  <Link
+                    to={ROUTES.COURSES}
+                    className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Courses
+                  </Link>
+                </>
+              )}
               {isAdmin && (
                 <Link
                   to={ROUTES.ADMIN.DASHBOARD}
