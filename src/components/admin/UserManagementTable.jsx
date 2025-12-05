@@ -27,6 +27,8 @@ const UserManagementTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [roleFilter, setRoleFilter] = useState("ALL");
   const [activeActions, setActiveActions] = useState(null);
+  const [dropdownPosition, setDropdownPosition] = useState("below");
+  const tableRef = React.useRef(null);
 
   const filteredUsers = users.filter((user) => {
     const matchesSearch =
@@ -37,6 +39,20 @@ const UserManagementTable = () => {
       (user.role || user.roles?.[0]?.name) === roleFilter;
     return matchesSearch && matchesRole;
   });
+
+  const calculateDropdownPosition = (buttonElement) => {
+    if (!buttonElement || !tableRef.current) return "below";
+
+    const buttonRect = buttonElement.getBoundingClientRect();
+    const tableRect = tableRef.current.getBoundingClientRect();
+    const dropdownHeight = 160; // Approximate height of dropdown
+
+    // Check if there's enough space above
+    const spaceAbove = buttonRect.top - tableRect.top;
+    const spaceBelow = tableRect.bottom - buttonRect.bottom;
+
+    return spaceAbove > dropdownHeight ? "above" : "below";
+  };
 
   const handleRoleChange = async (userId, newRole) => {
     try {
@@ -146,7 +162,7 @@ const UserManagementTable = () => {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto" ref={tableRef}>
         <table className="w-full">
           <thead>
             <tr className="border-b border-gray-700">
@@ -231,18 +247,30 @@ const UserManagementTable = () => {
                   <td className="p-4">
                     <div className="relative">
                       <button
-                        onClick={() =>
-                          setActiveActions(
-                            activeActions === user.id ? null : user.id
-                          )
-                        }
+                        ref={(el) => {
+                          if (activeActions === user.id && el) {
+                            const position = calculateDropdownPosition(el);
+                            setDropdownPosition(position);
+                          }
+                        }}
+                        onClick={() => {
+                          const newActiveId =
+                            activeActions === user.id ? null : user.id;
+                          setActiveActions(newActiveId);
+                        }}
                         className="p-2 text-gray-400 hover:text-white hover:bg-gray-600 rounded-lg transition-colors"
                       >
                         <MoreVertical size={16} />
                       </button>
 
                       {activeActions === user.id && (
-                        <div className="absolute right-0 top-12 bg-gray-700 border border-gray-600 rounded-lg shadow-lg z-10 min-w-48">
+                        <div
+                          className={`absolute right-0 bg-gray-700 border border-gray-600 rounded-lg shadow-xl z-50 min-w-48 ${
+                            dropdownPosition === "above"
+                              ? "-top-2 transform -translate-y-full"
+                              : "top-12"
+                          }`}
+                        >
                           <div className="p-2">
                             <div className="text-xs text-gray-400 px-3 py-2 border-b border-gray-600">
                               Change Role

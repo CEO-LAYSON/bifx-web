@@ -75,7 +75,14 @@ export const changeUserRole = createAsyncThunk(
         default:
           throw new Error("Invalid role");
       }
-      return { userId, role, user: response.data };
+      // Transform the returned user object to match expected structure
+      const userData = response.data.data;
+      const transformedUser = {
+        ...userData,
+        roles: [{ name: `ROLE_${role}` }], // Set the new role as object
+        role: `ROLE_${role}`, // For backward compatibility
+      };
+      return { userId, role, user: transformedUser };
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message || "Failed to change user role"
@@ -141,10 +148,10 @@ const adminSlice = createSlice({
       })
       // Change user role
       .addCase(changeUserRole.fulfilled, (state, action) => {
-        const { userId, role } = action.payload;
+        const { userId, user } = action.payload;
         const userIndex = state.users.findIndex((u) => u.id === userId);
         if (userIndex !== -1) {
-          state.users[userIndex] = { ...state.users[userIndex], roles: [role] };
+          state.users[userIndex] = user;
         }
       });
   },
