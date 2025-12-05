@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeUserRole, fetchAllUsers } from "../../store/slices/adminSlice";
+import { addNotification } from "../../store/slices/uiSlice";
 import {
   Search,
   Filter,
@@ -16,6 +17,13 @@ import Loader from "../ui/Loader";
 const UserManagementTable = () => {
   const dispatch = useDispatch();
   const { users, isLoading } = useSelector((state) => state.admin);
+
+  // Fetch users on mount if not already loaded
+  useEffect(() => {
+    if (users.length === 0 && !isLoading) {
+      dispatch(fetchAllUsers());
+    }
+  }, [dispatch, users.length, isLoading]);
   const [searchTerm, setSearchTerm] = useState("");
   const [roleFilter, setRoleFilter] = useState("ALL");
   const [activeActions, setActiveActions] = useState(null);
@@ -25,7 +33,8 @@ const UserManagementTable = () => {
       user.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesRole =
-      roleFilter === "ALL" || (user.role || user.roles?.[0]) === roleFilter;
+      roleFilter === "ALL" ||
+      (user.role || user.roles?.[0]?.name) === roleFilter;
     return matchesSearch && matchesRole;
   });
 
@@ -33,28 +42,53 @@ const UserManagementTable = () => {
     try {
       await dispatch(changeUserRole({ userId, role: newRole })).unwrap();
       setActiveActions(null);
+
+      // Show success notification
+      const roleMessages = {
+        ADMIN: "User has been successfully promoted to Admin! 🎉",
+        INSTRUCTOR: "User has been successfully promoted to Instructor! 👨‍🏫",
+        USER: "User has been successfully demoted to regular User! 👤",
+      };
+
+      dispatch(
+        addNotification({
+          type: "success",
+          title: "Role Updated Successfully!",
+          message:
+            roleMessages[newRole] || "User role has been updated successfully!",
+          duration: 4000,
+        })
+      );
     } catch (error) {
       console.error("Failed to change role:", error);
+      dispatch(
+        addNotification({
+          type: "error",
+          title: "Role Update Failed",
+          message: error || "Failed to update user role. Please try again.",
+          duration: 5000,
+        })
+      );
     }
   };
 
   const getRoleBadge = (user) => {
-    const role = user.role || user.roles?.[0];
-    if (role === "ADMIN") {
+    const role = user.role || user.roles?.[0]?.name;
+    if (role === "ROLE_ADMIN") {
       return { label: "Admin", color: "bg-red-500 text-white" };
     }
-    if (role === "INSTRUCTOR") {
+    if (role === "ROLE_INSTRUCTOR") {
       return { label: "Instructor", color: "bg-purple-500 text-white" };
     }
     return { label: "User", color: "bg-gray-500 text-white" };
   };
 
   const getRoleIcon = (user) => {
-    const role = user.role || user.roles?.[0];
-    if (role === "ADMIN") {
+    const role = user.role || user.roles?.[0]?.name;
+    if (role === "ROLE_ADMIN") {
       return <Shield size={16} />;
     }
-    if (role === "INSTRUCTOR") {
+    if (role === "ROLE_INSTRUCTOR") {
       return <Award size={16} />;
     }
     return <User size={16} />;
@@ -103,9 +137,9 @@ const UserManagementTable = () => {
               className="px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-gold"
             >
               <option value="ALL">All Roles</option>
-              <option value="USER">Users</option>
-              <option value="INSTRUCTOR">Instructors</option>
-              <option value="ADMIN">Admins</option>
+              <option value="ROLE_USER">Users</option>
+              <option value="ROLE_INSTRUCTOR">Instructors</option>
+              <option value="ROLE_ADMIN">Admins</option>
             </select>
           </div>
         </div>
@@ -214,7 +248,8 @@ const UserManagementTable = () => {
                               Change Role
                             </div>
 
-                            {(user.role || user.roles?.[0]) !== "ADMIN" && (
+                            {(user.role || user.roles?.[0]?.name) !==
+                              "ROLE_ADMIN" && (
                               <button
                                 onClick={() =>
                                   handleRoleChange(user.id, "ADMIN")
@@ -226,8 +261,8 @@ const UserManagementTable = () => {
                               </button>
                             )}
 
-                            {(user.role || user.roles?.[0]) !==
-                              "INSTRUCTOR" && (
+                            {(user.role || user.roles?.[0]?.name) !==
+                              "ROLE_INSTRUCTOR" && (
                               <button
                                 onClick={() =>
                                   handleRoleChange(user.id, "INSTRUCTOR")
@@ -239,7 +274,8 @@ const UserManagementTable = () => {
                               </button>
                             )}
 
-                            {(user.role || user.roles?.[0]) !== "USER" && (
+                            {(user.role || user.roles?.[0]?.name) !==
+                              "ROLE_USER" && (
                               <button
                                 onClick={() =>
                                   handleRoleChange(user.id, "USER")
@@ -262,8 +298,8 @@ const UserManagementTable = () => {
         </table>
       </div>
 
-      {/* Empty State */}
-      {filteredUsers.length === 0 && (
+      {/* Empty State - Only show when not loading and no users */}
+      {!isLoading && filteredUsers.length === 0 && (
         <div className="text-center py-12">
           <User className="h-16 w-16 text-gray-500 mx-auto mb-4" />
           <h3 className="text-lg font-semibold text-white mb-2">

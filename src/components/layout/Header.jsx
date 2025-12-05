@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../store/slices/authSlice";
 import { ROUTES } from "../../utils/constants/routes";
-import { hasRole } from "../../utils/constants/roles";
+import { hasRole, ROLES } from "../../utils/constants/roles";
 import Button from "../ui/Button";
 import UserMenu from "../shared/UserMenu";
 
@@ -37,8 +37,8 @@ const Header = ({ onMenuClick }) => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            {/* Show Dashboard and Courses only for non-admin users */}
-            {!isAdmin && (
+            {/* Show Dashboard and Courses only for regular users */}
+            {!isAdmin && !isInstructor && (
               <>
                 <Link
                   to={ROUTES.DASHBOARD}
@@ -121,8 +121,8 @@ const Header = ({ onMenuClick }) => {
         {isMobileMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-800 rounded-lg mt-2">
-              {/* Show Dashboard and Courses only for non-admin users */}
-              {!isAdmin && (
+              {/* Show Dashboard and Courses only for regular users */}
+              {!isAdmin && !isInstructor && (
                 <>
                   <Link
                     to={ROUTES.DASHBOARD}

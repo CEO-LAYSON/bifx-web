@@ -7,11 +7,15 @@ const LoginPage = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   if (isAuthenticated && user) {
+    console.log("Login redirect check - user roles:", user.roles);
     if (user.roles?.includes("ROLE_ADMIN")) {
+      console.log("Redirecting to admin dashboard");
       return <Navigate to="/admin" replace />;
     } else if (user.roles?.includes("ROLE_INSTRUCTOR")) {
+      console.log("Redirecting to instructor dashboard");
       return <Navigate to="/instructor" replace />;
     } else {
+      console.log("Redirecting to user dashboard");
       return <Navigate to="/dashboard" replace />;
     }
   }

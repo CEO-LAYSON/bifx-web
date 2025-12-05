@@ -27,7 +27,7 @@ const InstructorSidebar = ({ onClose }) => {
   const isActive = (path) => location.pathname.startsWith(path);
 
   return (
-    <div className="flex flex-col w-64 bg-gray-900 border-r border-gray-700">
+    <div className="flex flex-col w-64 bg-gray-900 border-r border-gray-700 h-screen">
       {/* Sidebar Header */}
       <div className="flex items-center justify-center h-16 px-4 border-b border-gray-700">
         <div className="flex items-center">

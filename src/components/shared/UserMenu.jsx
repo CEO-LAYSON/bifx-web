@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../utils/constants/routes";
-import { hasRole } from "../../utils/constants/roles";
+import { hasRole, ROLES } from "../../utils/constants/roles";
 import { User, Settings, LogOut, ChevronDown } from "lucide-react";
 
 const UserMenu = ({ user, onLogout }) => {

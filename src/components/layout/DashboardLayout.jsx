@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { hasRole } from "../../utils/constants/roles";
+import { hasRole, ROLES } from "../../utils/constants/roles";
 import Header from "./Header";
 import UserSidebar from "./Sidebar/UserSidebar";
 import AdminSidebar from "./Sidebar/AdminSidebar";

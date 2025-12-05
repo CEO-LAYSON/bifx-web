@@ -118,8 +118,16 @@ const adminSlice = createSlice({
         state.error = action.payload;
       })
       // Fetch all users
+      .addCase(fetchAllUsers.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(fetchAllUsers.fulfilled, (state, action) => {
-        state.users = action.payload.data;
+        state.isLoading = false;
+        state.users = action.payload.data || [];
+      })
+      .addCase(fetchAllUsers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       })
       // Fetch pending enrollments
       .addCase(fetchPendingEnrollments.fulfilled, (state, action) => {
@@ -133,7 +141,7 @@ const adminSlice = createSlice({
       })
       // Change user role
       .addCase(changeUserRole.fulfilled, (state, action) => {
-        const { userId, role, user } = action.payload;
+        const { userId, role } = action.payload;
         const userIndex = state.users.findIndex((u) => u.id === userId);
         if (userIndex !== -1) {
           state.users[userIndex] = { ...state.users[userIndex], roles: [role] };
@@ -142,5 +150,4 @@ const adminSlice = createSlice({
   },
 });
 
-export const { clearAdminError, removePendingEnrollment } = adminSlice.actions;
 export default adminSlice.reducer;
