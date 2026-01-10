@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../utils/constants/routes";
 import {
   fetchAllCourses,
   updateCourse,
@@ -22,6 +24,7 @@ import Loader from "../ui/Loader";
 
 const CourseManagementTable = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { courses, isLoading } = useSelector((state) => state.admin);
 
   // Fetch courses on mount if not already loaded
@@ -40,7 +43,8 @@ const CourseManagementTable = () => {
   const filteredCourses = courses.filter((course) => {
     const matchesSearch =
       course.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      course.description?.toLowerCase().includes(searchTerm.toLowerCase());
+      course.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      course.slug?.toLowerCase().includes(searchTerm.toLowerCase());
     const courseStatus = course.isActive ? "PUBLISHED" : "DRAFT";
     const matchesStatus =
       statusFilter === "ALL" || courseStatus === statusFilter;
@@ -265,11 +269,9 @@ const CourseManagementTable = () => {
 
                   {/* Instructor */}
                   <td className="p-4">
-                    <div className="text-white">
-                      {course.instructor?.fullName || "Unknown"}
-                    </div>
+                    <div className="text-white">N/A</div>
                     <div className="text-gray-400 text-sm">
-                      {course.instructor?.email || ""}
+                      Instructor info not available
                     </div>
                   </td>
 
@@ -332,7 +334,7 @@ const CourseManagementTable = () => {
 
                             <button
                               onClick={() => {
-                                // Handle view course details
+                                navigate(`/courses/${course.id}`);
                                 setActiveActions(null);
                               }}
                               className="w-full text-left px-3 py-2 text-sm text-white hover:bg-gray-600 rounded transition-colors flex items-center"
@@ -343,7 +345,9 @@ const CourseManagementTable = () => {
 
                             <button
                               onClick={() => {
-                                // Handle edit course
+                                // For now, navigate to instructor courses page
+                                // In a full implementation, this would navigate to an admin edit page
+                                navigate(ROUTES.INSTRUCTOR.COURSES);
                                 setActiveActions(null);
                               }}
                               className="w-full text-left px-3 py-2 text-sm text-white hover:bg-gray-600 rounded transition-colors flex items-center"
