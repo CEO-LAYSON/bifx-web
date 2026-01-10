@@ -105,11 +105,83 @@ export const deleteUser = createAsyncThunk(
   }
 );
 
+// Course Management
+export const fetchAllCourses = createAsyncThunk(
+  "admin/fetchCourses",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await adminAPI.getAllAdminCourses();
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch courses"
+      );
+    }
+  }
+);
+
+export const createCourse = createAsyncThunk(
+  "admin/createCourse",
+  async (courseData, { rejectWithValue }) => {
+    try {
+      const response = await adminAPI.createCourse(courseData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to create course"
+      );
+    }
+  }
+);
+
+export const updateCourse = createAsyncThunk(
+  "admin/updateCourse",
+  async ({ id, courseData }, { rejectWithValue }) => {
+    try {
+      const response = await adminAPI.updateCourse(id, courseData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to update course"
+      );
+    }
+  }
+);
+
+export const deleteCourse = createAsyncThunk(
+  "admin/deleteCourse",
+  async (id, { rejectWithValue }) => {
+    try {
+      await adminAPI.deleteCourse(id);
+      return id;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to delete course"
+      );
+    }
+  }
+);
+
+export const hardDeleteCourse = createAsyncThunk(
+  "admin/hardDeleteCourse",
+  async (id, { rejectWithValue }) => {
+    try {
+      await adminAPI.hardDeleteCourse(id);
+      return id;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to hard delete course"
+      );
+    }
+  }
+);
+
 const adminSlice = createSlice({
   name: "admin",
   initialState: {
     dashboardStats: null,
     users: [],
+    courses: [],
     pendingEnrollments: [],
     isLoading: false,
     error: null,
@@ -172,6 +244,46 @@ const adminSlice = createSlice({
       .addCase(deleteUser.fulfilled, (state, action) => {
         const userId = action.payload;
         state.users = state.users.filter((user) => user.id !== userId);
+      })
+      // Fetch all courses
+      .addCase(fetchAllCourses.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchAllCourses.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.courses = action.payload.data || [];
+      })
+      .addCase(fetchAllCourses.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      // Create course
+      .addCase(createCourse.fulfilled, (state, action) => {
+        state.courses.push(action.payload.data);
+      })
+      // Update course
+      .addCase(updateCourse.fulfilled, (state, action) => {
+        const updatedCourse = action.payload.data;
+        const index = state.courses.findIndex(
+          (course) => course.id === updatedCourse.id
+        );
+        if (index !== -1) {
+          state.courses[index] = updatedCourse;
+        }
+      })
+      // Delete course
+      .addCase(deleteCourse.fulfilled, (state, action) => {
+        const courseId = action.payload;
+        state.courses = state.courses.filter(
+          (course) => course.id !== courseId
+        );
+      })
+      // Hard delete course
+      .addCase(hardDeleteCourse.fulfilled, (state, action) => {
+        const courseId = action.payload;
+        state.courses = state.courses.filter(
+          (course) => course.id !== courseId
+        );
       });
   },
 });

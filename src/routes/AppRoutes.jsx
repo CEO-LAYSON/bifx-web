@@ -29,6 +29,7 @@ import MyProgressPage from "../pages/user/Progress/MyProgressPage";
 // Admin Pages
 import AdminDashboard from "../pages/admin/Dashboard/AdminDashboard";
 import UserListPage from "../pages/admin/Users/UserListPage";
+import AdminCourseListPage from "../pages/admin/Courses/CourseListPage";
 import EnrollmentList from "../pages/admin/Enrollments/EnrollmentList";
 // Instructor Pages
 import InstructorDashboard from "../pages/instructor/Dashboard/InstructorDashboard";
@@ -79,6 +80,7 @@ const AppRoutes = () => {
           }
         />
         <Route path={ROUTES.ADMIN.USERS} element={<UserListPage />} />
+        <Route path={ROUTES.ADMIN.COURSES} element={<AdminCourseListPage />} />
         <Route path={ROUTES.ADMIN.ENROLLMENTS} element={<EnrollmentList />} />
 
         {/* Instructor Routes */}
