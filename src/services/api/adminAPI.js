@@ -13,6 +13,8 @@ export const adminAPI = {
   demoteToUser: (userId) =>
     axiosInstance.post(`/v1/admin/users/make-user/${userId}`),
 
+  deleteUser: (userId) => axiosInstance.delete(`/v1/admin/users/${userId}`),
+
   // Enrollment Management
   getPendingEnrollments: () =>
     axiosInstance.get("/v1/admin/enrollments/pending"),

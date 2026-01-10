@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changeUserRole, fetchAllUsers } from "../../store/slices/adminSlice";
+import {
+  changeUserRole,
+  deleteUser,
+  fetchAllUsers,
+} from "../../store/slices/adminSlice";
 import { addNotification } from "../../store/slices/uiSlice";
 import {
   Search,
@@ -10,6 +14,7 @@ import {
   User,
   Shield,
   Award,
+  Trash2,
 } from "lucide-react";
 import Button from "../ui/Button";
 import Loader from "../ui/Loader";
@@ -82,6 +87,38 @@ const UserManagementTable = () => {
           type: "error",
           title: "Role Update Failed",
           message: error || "Failed to update user role. Please try again.",
+          duration: 5000,
+        })
+      );
+    }
+  };
+
+  const handleDeleteUser = async (userId, userName) => {
+    const confirmed = window.confirm(
+      `Are you sure you want to delete the user "${userName}"? This action cannot be undone.`
+    );
+
+    if (!confirmed) return;
+
+    try {
+      await dispatch(deleteUser(userId)).unwrap();
+      setActiveActions(null);
+
+      dispatch(
+        addNotification({
+          type: "success",
+          title: "User Deleted Successfully!",
+          message: `User "${userName}" has been permanently deleted.`,
+          duration: 4000,
+        })
+      );
+    } catch (error) {
+      console.error("Failed to delete user:", error);
+      dispatch(
+        addNotification({
+          type: "error",
+          title: "Delete Failed",
+          message: error || "Failed to delete user. Please try again.",
           duration: 5000,
         })
       );
@@ -314,6 +351,21 @@ const UserManagementTable = () => {
                                 Make User
                               </button>
                             )}
+
+                            <div className="border-t border-gray-600 my-1"></div>
+
+                            <button
+                              onClick={() =>
+                                handleDeleteUser(
+                                  user.id,
+                                  user.fullName || user.email
+                                )
+                              }
+                              className="w-full text-left px-3 py-2 text-sm text-red-400 hover:bg-red-500/20 hover:text-red-300 rounded transition-colors flex items-center"
+                            >
+                              <Trash2 size={14} className="mr-2" />
+                              Delete User
+                            </button>
                           </div>
                         </div>
                       )}

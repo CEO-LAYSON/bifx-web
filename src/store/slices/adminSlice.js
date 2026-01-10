@@ -91,6 +91,20 @@ export const changeUserRole = createAsyncThunk(
   }
 );
 
+export const deleteUser = createAsyncThunk(
+  "admin/deleteUser",
+  async (userId, { rejectWithValue }) => {
+    try {
+      await adminAPI.deleteUser(userId);
+      return userId;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to delete user"
+      );
+    }
+  }
+);
+
 const adminSlice = createSlice({
   name: "admin",
   initialState: {
@@ -153,6 +167,11 @@ const adminSlice = createSlice({
         if (userIndex !== -1) {
           state.users[userIndex] = user;
         }
+      })
+      // Delete user
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        const userId = action.payload;
+        state.users = state.users.filter((user) => user.id !== userId);
       });
   },
 });
