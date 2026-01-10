@@ -365,7 +365,8 @@ const CourseManagementTable = () => {
                                 }
                                 className="w-full text-left px-3 py-2 text-sm text-green-400 hover:bg-green-500/20 hover:text-green-300 rounded transition-colors flex items-center"
                               >
-                                Publish Course
+                                <Eye size={14} className="mr-2" />
+                                Restore Course
                               </button>
                             )}
 
