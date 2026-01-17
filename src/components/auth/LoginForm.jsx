@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,18 +8,23 @@ import { loginSchema } from "../../utils/validation/authSchema";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
 import Alert from "../ui/Alert";
+import LockoutTimer from "./LockoutTimer";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const { isLoading, error } = useSelector((state) => state.auth);
+  const { email } = useSelector((state) => state.auth.lockoutInfo);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm({
     resolver: yupResolver(loginSchema),
   });
+
+  const emailValue = watch("email");
 
   const onSubmit = (data) => {
     dispatch(loginUser(data));
@@ -34,11 +39,7 @@ const LoginForm = () => {
 
       {error && <Alert type="error" message={error} className="mb-6" />}
       {error && error.includes("TOO_MANY_REQUESTS") && (
-        <Alert
-          type="warning"
-          message="Too many login attempts. Please try again in 30 minutes."
-          className="mb-6"
-        />
+        <LockoutTimer errorMessage={error} email={emailValue} />
       )}
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
