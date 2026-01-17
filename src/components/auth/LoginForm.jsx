@@ -33,6 +33,13 @@ const LoginForm = () => {
       </div>
 
       {error && <Alert type="error" message={error} className="mb-6" />}
+      {error && error.includes("TOO_MANY_REQUESTS") && (
+        <Alert
+          type="warning"
+          message="Too many login attempts. Please try again in 30 minutes."
+          className="mb-6"
+        />
+      )}
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <Input

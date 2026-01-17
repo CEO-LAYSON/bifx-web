@@ -8,9 +8,14 @@ export const loginUser = createAsyncThunk(
       const response = await authAPI.login({ email, password });
       return response.data;
     } catch (error) {
+      if (error.response?.status === 429) {
+        return rejectWithValue(
+          "Too many login attempts. Please try again in 30 minutes.",
+        );
+      }
       return rejectWithValue(error.response?.data?.message || "Login failed");
     }
-  }
+  },
 );
 
 export const registerUser = createAsyncThunk(
@@ -20,11 +25,16 @@ export const registerUser = createAsyncThunk(
       const response = await authAPI.register(userData);
       return response.data;
     } catch (error) {
+      if (error.response?.status === 429) {
+        return rejectWithValue(
+          "Too many registration attempts. Please try again in 30 minutes.",
+        );
+      }
       return rejectWithValue(
-        error.response?.data?.message || "Registration failed"
+        error.response?.data?.message || "Registration failed",
       );
     }
-  }
+  },
 );
 
 const authSlice = createSlice({
