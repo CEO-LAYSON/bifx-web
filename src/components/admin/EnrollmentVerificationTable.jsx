@@ -21,11 +21,25 @@ const EnrollmentVerificationTable = () => {
 
   const handleVerify = async (enrollmentId) => {
     try {
-      await dispatch(verifyEnrollment(enrollmentId)).unwrap();
+      await dispatch(
+        verifyEnrollment({ enrollmentId, action: "VERIFY" }),
+      ).unwrap();
       // Refresh the list
       dispatch(fetchPendingEnrollments());
     } catch (error) {
       console.error("Failed to verify enrollment:", error);
+    }
+  };
+
+  const handleReject = async (enrollmentId) => {
+    try {
+      await dispatch(
+        verifyEnrollment({ enrollmentId, action: "REJECT" }),
+      ).unwrap();
+      // Refresh the list
+      dispatch(fetchPendingEnrollments());
+    } catch (error) {
+      console.error("Failed to reject enrollment:", error);
     }
   };
 
@@ -125,7 +139,7 @@ const EnrollmentVerificationTable = () => {
                     <span className="text-gray-400">Method:</span>
                     <span
                       className={`px-2 py-1 rounded text-xs border ${getPaymentMethodColor(
-                        enrollment.paymentMethod
+                        enrollment.paymentMethod,
                       )}`}
                     >
                       {enrollment.paymentMethod}
@@ -157,7 +171,12 @@ const EnrollmentVerificationTable = () => {
                     Verify
                   </Button>
 
-                  <Button variant="outline" size="sm" className="flex-1">
+                  <Button
+                    onClick={() => handleReject(enrollment.id)}
+                    variant="outline"
+                    size="sm"
+                    className="flex-1"
+                  >
                     <XCircle size={16} className="mr-1" />
                     Reject
                   </Button>

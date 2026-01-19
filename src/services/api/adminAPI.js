@@ -19,8 +19,11 @@ export const adminAPI = {
   getPendingEnrollments: () =>
     axiosInstance.get("/v1/admin/enrollments/pending"),
 
-  verifyEnrollment: (enrollmentId) =>
-    axiosInstance.post(`/v1/admin/enrollments/${enrollmentId}/verify`),
+  verifyEnrollment: (enrollmentId, action, notes = "") =>
+    axiosInstance.post(`/v1/admin/enrollments/${enrollmentId}/verify`, {
+      action,
+      notes,
+    }),
 
   // Course Management
   createCourse: (courseData) =>

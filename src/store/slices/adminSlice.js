@@ -9,10 +9,10 @@ export const fetchDashboardStats = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to fetch dashboard stats"
+        error.response?.data?.message || "Failed to fetch dashboard stats",
       );
     }
-  }
+  },
 );
 
 export const fetchAllUsers = createAsyncThunk(
@@ -23,10 +23,10 @@ export const fetchAllUsers = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to fetch users"
+        error.response?.data?.message || "Failed to fetch users",
       );
     }
-  }
+  },
 );
 
 export const fetchPendingEnrollments = createAsyncThunk(
@@ -37,24 +37,28 @@ export const fetchPendingEnrollments = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to fetch pending enrollments"
+        error.response?.data?.message || "Failed to fetch pending enrollments",
       );
     }
-  }
+  },
 );
 
 export const verifyEnrollment = createAsyncThunk(
   "admin/verifyEnrollment",
-  async (enrollmentId, { rejectWithValue }) => {
+  async ({ enrollmentId, action, notes = "" }, { rejectWithValue }) => {
     try {
-      const response = await adminAPI.verifyEnrollment(enrollmentId);
+      const response = await adminAPI.verifyEnrollment(
+        enrollmentId,
+        action,
+        notes,
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to verify enrollment"
+        error.response?.data?.message || "Failed to verify enrollment",
       );
     }
-  }
+  },
 );
 
 export const changeUserRole = createAsyncThunk(
@@ -85,10 +89,10 @@ export const changeUserRole = createAsyncThunk(
       return { userId, role, user: transformedUser };
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to change user role"
+        error.response?.data?.message || "Failed to change user role",
       );
     }
-  }
+  },
 );
 
 export const deleteUser = createAsyncThunk(
@@ -99,10 +103,10 @@ export const deleteUser = createAsyncThunk(
       return userId;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to delete user"
+        error.response?.data?.message || "Failed to delete user",
       );
     }
-  }
+  },
 );
 
 // Course Management
@@ -114,10 +118,10 @@ export const fetchAllCourses = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to fetch courses"
+        error.response?.data?.message || "Failed to fetch courses",
       );
     }
-  }
+  },
 );
 
 export const createCourse = createAsyncThunk(
@@ -128,10 +132,10 @@ export const createCourse = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to create course"
+        error.response?.data?.message || "Failed to create course",
       );
     }
-  }
+  },
 );
 
 export const updateCourse = createAsyncThunk(
@@ -142,10 +146,10 @@ export const updateCourse = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to update course"
+        error.response?.data?.message || "Failed to update course",
       );
     }
-  }
+  },
 );
 
 export const deleteCourse = createAsyncThunk(
@@ -156,10 +160,10 @@ export const deleteCourse = createAsyncThunk(
       return id;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to delete course"
+        error.response?.data?.message || "Failed to delete course",
       );
     }
-  }
+  },
 );
 
 export const hardDeleteCourse = createAsyncThunk(
@@ -170,10 +174,10 @@ export const hardDeleteCourse = createAsyncThunk(
       return id;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to hard delete course"
+        error.response?.data?.message || "Failed to hard delete course",
       );
     }
-  }
+  },
 );
 
 const adminSlice = createSlice({
@@ -192,7 +196,7 @@ const adminSlice = createSlice({
     },
     removePendingEnrollment: (state, action) => {
       state.pendingEnrollments = state.pendingEnrollments.filter(
-        (enrollment) => enrollment.id !== action.payload
+        (enrollment) => enrollment.id !== action.payload,
       );
     },
   },
@@ -229,7 +233,7 @@ const adminSlice = createSlice({
       // Verify enrollment
       .addCase(verifyEnrollment.fulfilled, (state, action) => {
         state.pendingEnrollments = state.pendingEnrollments.filter(
-          (enrollment) => enrollment.id !== action.payload.data.id
+          (enrollment) => enrollment.id !== action.payload.data.id,
         );
       })
       // Change user role
@@ -265,7 +269,7 @@ const adminSlice = createSlice({
       .addCase(updateCourse.fulfilled, (state, action) => {
         const updatedCourse = action.payload.data;
         const index = state.courses.findIndex(
-          (course) => course.id === updatedCourse.id
+          (course) => course.id === updatedCourse.id,
         );
         if (index !== -1) {
           state.courses[index] = updatedCourse;
@@ -275,14 +279,14 @@ const adminSlice = createSlice({
       .addCase(deleteCourse.fulfilled, (state, action) => {
         const courseId = action.payload;
         state.courses = state.courses.filter(
-          (course) => course.id !== courseId
+          (course) => course.id !== courseId,
         );
       })
       // Hard delete course
       .addCase(hardDeleteCourse.fulfilled, (state, action) => {
         const courseId = action.payload;
         state.courses = state.courses.filter(
-          (course) => course.id !== courseId
+          (course) => course.id !== courseId,
         );
       });
   },
