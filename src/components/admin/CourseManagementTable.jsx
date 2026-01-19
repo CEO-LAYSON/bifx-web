@@ -68,7 +68,7 @@ const CourseManagementTable = () => {
   const handleUpdateCourse = async (courseId, updateData) => {
     try {
       await dispatch(
-        updateCourse({ id: courseId, courseData: updateData })
+        updateCourse({ id: courseId, courseData: updateData }),
       ).unwrap();
       setActiveActions(null);
 
@@ -78,7 +78,7 @@ const CourseManagementTable = () => {
           title: "Course Updated Successfully!",
           message: "Course has been updated successfully!",
           duration: 4000,
-        })
+        }),
       );
     } catch (error) {
       console.error("Failed to update course:", error);
@@ -88,7 +88,7 @@ const CourseManagementTable = () => {
           title: "Update Failed",
           message: error || "Failed to update course. Please try again.",
           duration: 5000,
-        })
+        }),
       );
     }
   };
@@ -96,7 +96,7 @@ const CourseManagementTable = () => {
   const handleDeleteCourse = async (
     courseId,
     courseTitle,
-    hardDelete = false
+    hardDelete = false,
   ) => {
     const action = hardDelete ? "permanently delete" : "soft delete";
     const confirmed = window.confirm(
@@ -104,7 +104,7 @@ const CourseManagementTable = () => {
         hardDelete
           ? "This action cannot be undone."
           : "The course can be restored later."
-      }`
+      }`,
     );
 
     if (!confirmed) return;
@@ -125,7 +125,7 @@ const CourseManagementTable = () => {
             hardDelete ? "permanently" : "soft"
           } deleted.`,
           duration: 4000,
-        })
+        }),
       );
     } catch (error) {
       console.error("Failed to delete course:", error);
@@ -135,7 +135,7 @@ const CourseManagementTable = () => {
           title: "Delete Failed",
           message: error || "Failed to delete course. Please try again.",
           duration: 5000,
-        })
+        }),
       );
     }
   };
@@ -186,6 +186,15 @@ const CourseManagementTable = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3">
+            {/* Create Course Button */}
+            <Button
+              onClick={() => navigate(ROUTES.ADMIN.CREATE_COURSE)}
+              variant="primary"
+              className="flex items-center gap-2"
+            >
+              <span className="text-sm">Create Course</span>
+            </Button>
+
             {/* Search */}
             <div className="relative">
               <Search
@@ -390,7 +399,7 @@ const CourseManagementTable = () => {
                                 handleDeleteCourse(
                                   course.id,
                                   course.title || "Untitled Course",
-                                  false
+                                  false,
                                 )
                               }
                               className="w-full text-left px-3 py-2 text-sm text-orange-400 hover:bg-orange-500/20 hover:text-orange-300 rounded transition-colors flex items-center"
@@ -404,7 +413,7 @@ const CourseManagementTable = () => {
                                 handleDeleteCourse(
                                   course.id,
                                   course.title || "Untitled Course",
-                                  true
+                                  true,
                                 )
                               }
                               className="w-full text-left px-3 py-2 text-sm text-red-400 hover:bg-red-500/20 hover:text-red-300 rounded transition-colors flex items-center"

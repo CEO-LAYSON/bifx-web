@@ -9,6 +9,10 @@ const CreateCourse = () => {
     navigate("/instructor/courses");
   };
 
+  const handleCancel = () => {
+    navigate("/instructor/courses");
+  };
+
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div>
@@ -16,7 +20,7 @@ const CreateCourse = () => {
         <p className="text-gray-400">Build your course step by step</p>
       </div>
 
-      <CourseCreationForm onSuccess={handleSuccess} />
+      <CourseCreationForm onSuccess={handleSuccess} onCancel={handleCancel} />
     </div>
   );
 };

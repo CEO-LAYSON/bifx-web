@@ -9,11 +9,13 @@ export const ROUTES = {
     DASHBOARD: "admin",
     USERS: "admin/users",
     COURSES: "admin/courses",
+    CREATE_COURSE: "admin/courses/create",
     ENROLLMENTS: "admin/enrollments",
   },
   INSTRUCTOR: {
     DASHBOARD: "instructor",
     COURSES: "instructor/courses",
+    CREATE_COURSE: "instructor/courses/create",
     STUDENTS: "instructor/students",
   },
 };

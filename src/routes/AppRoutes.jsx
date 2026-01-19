@@ -34,6 +34,7 @@ import EnrollmentList from "../pages/admin/Enrollments/EnrollmentList";
 // Instructor Pages
 import InstructorDashboard from "../pages/instructor/Dashboard/InstructorDashboard";
 import CreateCourse from "../pages/instructor/Courses/CreateCourse";
+import AdminCreateCourse from "../pages/admin/Courses/CreateCourse";
 import MyCourses from "../pages/instructor/Courses/MyCourses";
 
 // Error Pages
@@ -81,6 +82,10 @@ const AppRoutes = () => {
         />
         <Route path={ROUTES.ADMIN.USERS} element={<UserListPage />} />
         <Route path={ROUTES.ADMIN.COURSES} element={<AdminCourseListPage />} />
+        <Route
+          path={ROUTES.ADMIN.CREATE_COURSE}
+          element={<AdminCreateCourse />}
+        />
         <Route path={ROUTES.ADMIN.ENROLLMENTS} element={<EnrollmentList />} />
 
         {/* Instructor Routes */}

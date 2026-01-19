@@ -131,9 +131,11 @@ export const createCourse = createAsyncThunk(
       const response = await adminAPI.createCourse(courseData);
       return response.data;
     } catch (error) {
-      return rejectWithValue(
-        error.response?.data?.message || "Failed to create course",
-      );
+      // Return detailed error information including validation errors
+      if (error.response?.data) {
+        return rejectWithValue(error.response.data);
+      }
+      return rejectWithValue({ message: "Failed to create course" });
     }
   },
 );

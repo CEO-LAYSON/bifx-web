@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { createNewCourse } from "../../store/slices/instructorSlice";
+import { createCourse } from "../../store/slices/adminSlice";
 import { Upload, X, DollarSign } from "lucide-react";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
 import Alert from "../ui/Alert";
 
-const CourseCreationForm = ({ onSuccess }) => {
+const CourseCreationForm = ({ onSuccess, onCancel, isAdmin = false }) => {
   const dispatch = useDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
@@ -46,20 +47,40 @@ const CourseCreationForm = ({ onSuccess }) => {
     try {
       const courseData = {
         ...data,
-        priceCents: data.isFree ? 0 : parseInt(data.priceCents) * 100,
+        priceCents: data.isFree
+          ? 0
+          : Math.round(parseFloat(data.priceCents) * 100),
         level: data.level || "BEGINNER",
         isActive: true,
-        thumbnail: thumbnail, // This would be handled by file upload in real implementation
+        currency: "USD", // Ensure currency is always set
       };
 
-      await dispatch(createNewCourse(courseData)).unwrap();
+      if (isAdmin) {
+        await dispatch(createCourse(courseData)).unwrap();
+      } else {
+        await dispatch(createNewCourse(courseData)).unwrap();
+      }
 
       reset();
       setThumbnail(null);
       setThumbnailPreview("");
       onSuccess?.();
     } catch (err) {
-      setError(err);
+      console.error("Course creation error:", err);
+      // Display detailed validation errors if available
+      let errorMessage = "Failed to create course";
+      if (err?.response?.data?.data) {
+        // If we have field-level errors, display them
+        const validationErrors = Object.values(err.response.data.data).join(
+          ", ",
+        );
+        errorMessage = validationErrors;
+      } else if (err?.response?.data?.message) {
+        errorMessage = err.response.data.message;
+      } else if (err?.message) {
+        errorMessage = err.message;
+      }
+      setError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -324,6 +345,14 @@ const CourseCreationForm = ({ onSuccess }) => {
 
         {/* Submit Button */}
         <div className="flex space-x-4 pt-4 border-t border-gray-700">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onCancel}
+            className="flex-1"
+          >
+            Cancel
+          </Button>
           <Button
             type="button"
             variant="outline"
