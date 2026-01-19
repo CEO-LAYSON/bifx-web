@@ -4,6 +4,7 @@ import {
   verifyEnrollment,
   fetchPendingEnrollments,
 } from "../../store/slices/adminSlice";
+import { addNotification } from "../../store/slices/uiSlice";
 import {
   Clock,
   CheckCircle,
@@ -24,10 +25,27 @@ const EnrollmentVerificationTable = () => {
       await dispatch(
         verifyEnrollment({ enrollmentId, action: "VERIFY" }),
       ).unwrap();
+      // Show success notification
+      dispatch(
+        addNotification({
+          type: "success",
+          title: "Enrollment Verified!",
+          message: "The enrollment has been successfully verified.",
+          duration: 4000,
+        }),
+      );
       // Refresh the list
       dispatch(fetchPendingEnrollments());
     } catch (error) {
       console.error("Failed to verify enrollment:", error);
+      dispatch(
+        addNotification({
+          type: "error",
+          title: "Verification Failed",
+          message: error || "Failed to verify enrollment. Please try again.",
+          duration: 5000,
+        }),
+      );
     }
   };
 
@@ -36,10 +54,27 @@ const EnrollmentVerificationTable = () => {
       await dispatch(
         verifyEnrollment({ enrollmentId, action: "REJECT" }),
       ).unwrap();
+      // Show success notification
+      dispatch(
+        addNotification({
+          type: "success",
+          title: "Enrollment Rejected!",
+          message: "The enrollment has been successfully rejected.",
+          duration: 4000,
+        }),
+      );
       // Refresh the list
       dispatch(fetchPendingEnrollments());
     } catch (error) {
       console.error("Failed to reject enrollment:", error);
+      dispatch(
+        addNotification({
+          type: "error",
+          title: "Rejection Failed",
+          message: error || "Failed to reject enrollment. Please try again.",
+          duration: 5000,
+        }),
+      );
     }
   };
 
@@ -112,14 +147,14 @@ const EnrollmentVerificationTable = () => {
                   </div>
                   <div className="flex-1">
                     <h3 className="text-white font-semibold mb-1">
-                      {enrollment.user?.fullName || "Unknown User"}
+                      {enrollment.userFullName || "Unknown User"}
                     </h3>
                     <p className="text-gray-400 text-sm mb-2">
-                      {enrollment.user?.email}
+                      {enrollment.userEmail}
                     </p>
                     <div className="flex items-center text-gray-400 text-sm">
                       <BookOpen size={14} className="mr-1" />
-                      <span>{enrollment.course?.title}</span>
+                      <span>{enrollment.courseTitle}</span>
                     </div>
                   </div>
                 </div>
