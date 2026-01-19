@@ -7,6 +7,8 @@ import { Upload, X, DollarSign } from "lucide-react";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
 import Alert from "../ui/Alert";
+import { uploadAPI } from "../../services/api/uploadAPI";
+import axiosInstance from "../../services/api/axiosConfig";
 
 const CourseCreationForm = ({ onSuccess, onCancel, isAdmin = false }) => {
   const dispatch = useDispatch();
@@ -14,6 +16,7 @@ const CourseCreationForm = ({ onSuccess, onCancel, isAdmin = false }) => {
   const [error, setError] = useState(null);
   const [thumbnail, setThumbnail] = useState(null);
   const [thumbnailPreview, setThumbnailPreview] = useState("");
+  const [serverErrors, setServerErrors] = useState({});
 
   const {
     register,
@@ -43,17 +46,36 @@ const CourseCreationForm = ({ onSuccess, onCancel, isAdmin = false }) => {
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     setError(null);
+    setServerErrors({});
 
     try {
       const courseData = {
         ...data,
-        priceCents: data.isFree
-          ? 0
-          : Math.round(parseFloat(data.priceCents) * 100),
+        price: data.isFree
+          ? 0.0
+          : parseFloat(data.priceCents),
         level: data.level || "BEGINNER",
         isActive: true,
         currency: "USD", // Ensure currency is always set
       };
+
+      if (thumbnail) {
+        // Upload thumbnail to S3 and get URL
+        const presignResponse = await uploadAPI.getPresignedUrl(
+          thumbnail.name,
+          "THUMBNAIL",
+        );
+        const { uploadUrl, publicUrl } = presignResponse.data.data;
+
+        // Upload file to S3
+        await axiosInstance.put(uploadUrl, thumbnail, {
+          headers: {
+            "Content-Type": thumbnail.type,
+          },
+        });
+
+        courseData.thumbnailUrl = publicUrl;
+      }
 
       if (isAdmin) {
         await dispatch(createCourse(courseData)).unwrap();
@@ -64,23 +86,23 @@ const CourseCreationForm = ({ onSuccess, onCancel, isAdmin = false }) => {
       reset();
       setThumbnail(null);
       setThumbnailPreview("");
+      setServerErrors({});
       onSuccess?.();
     } catch (err) {
       console.error("Course creation error:", err);
       // Display detailed validation errors if available
-      let errorMessage = "Failed to create course";
-      if (err?.response?.data?.data) {
-        // If we have field-level errors, display them
-        const validationErrors = Object.values(err.response.data.data).join(
-          ", ",
-        );
-        errorMessage = validationErrors;
-      } else if (err?.response?.data?.message) {
-        errorMessage = err.response.data.message;
-      } else if (err?.message) {
-        errorMessage = err.message;
+      if (err?.data?.data) {
+        // If we have field-level errors, store them in state to display inline
+        setServerErrors(err.data.data);
+      } else {
+        let errorMessage = "Failed to create course";
+        if (err?.data?.message) {
+          errorMessage = err.data.message;
+        } else if (err?.message) {
+          errorMessage = err.message;
+        }
+        setError(errorMessage);
       }
-      setError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -152,7 +174,7 @@ const CourseCreationForm = ({ onSuccess, onCancel, isAdmin = false }) => {
         <Input
           label="Course Title"
           placeholder="e.g., Forex Trading Fundamentals"
-          error={errors.title?.message}
+          error={errors.title?.message || serverErrors.title}
           {...register("title", {
             required: "Course title is required",
             minLength: {
@@ -184,6 +206,11 @@ const CourseCreationForm = ({ onSuccess, onCancel, isAdmin = false }) => {
               {errors.description.message}
             </p>
           )}
+          {serverErrors.description && (
+            <p className="mt-1 text-sm text-red-500">
+              {serverErrors.description}
+            </p>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -207,13 +234,16 @@ const CourseCreationForm = ({ onSuccess, onCancel, isAdmin = false }) => {
                 {errors.level.message}
               </p>
             )}
+            {serverErrors.level && (
+              <p className="mt-1 text-sm text-red-500">{serverErrors.level}</p>
+            )}
           </div>
 
           {/* Course Slug */}
           <Input
             label="Course Slug"
             placeholder="forex-trading-fundamentals"
-            error={errors.slug?.message}
+            error={errors.slug?.message || serverErrors.slug}
             {...register("slug", {
               required: "Slug is required",
               pattern: {
@@ -298,9 +328,13 @@ const CourseCreationForm = ({ onSuccess, onCancel, isAdmin = false }) => {
                     className="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-purple focus:border-transparent"
                   />
                 </div>
-                {errors.priceCents && (
+                {(errors.priceCents ||
+                  serverErrors.priceCents ||
+                  serverErrors.price) && (
                   <p className="mt-1 text-sm text-red-500">
-                    {errors.priceCents.message}
+                    {errors.priceCents?.message ||
+                      serverErrors.priceCents ||
+                      serverErrors.price}
                   </p>
                 )}
                 {!watchIsFree && watchPrice > 0 && (
