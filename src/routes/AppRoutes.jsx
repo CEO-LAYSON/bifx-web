@@ -31,12 +31,19 @@ import AdminDashboard from "../pages/admin/Dashboard/AdminDashboard";
 import UserListPage from "../pages/admin/Users/UserListPage";
 import AdminCourseListPage from "../pages/admin/Courses/CourseListPage";
 import EnrollmentList from "../pages/admin/Enrollments/EnrollmentList";
+
+// General Pages
+import AnalyticsPage from "../pages/AnalyticsPage";
+import AssignmentsPage from "../pages/AssignmentsPage";
+import SettingsPage from "../pages/SettingsPage";
+
 // Instructor Pages
 import InstructorDashboard from "../pages/instructor/Dashboard/InstructorDashboard";
 import CreateCourse from "../pages/instructor/Courses/CreateCourse";
 import AdminCreateCourse from "../pages/admin/Courses/CreateCourse";
 import MyCourses from "../pages/instructor/Courses/MyCourses";
 import InstructorCourseDetailPage from "../pages/instructor/Courses/InstructorCourseDetailPage";
+import InstructorStudentsPage from "../pages/instructor/StudentsPage";
 
 // Error Pages
 import NotFound from "../pages/errors/NotFound";
@@ -68,10 +75,13 @@ const AppRoutes = () => {
         {/* User Routes */}
         <Route path={ROUTES.DASHBOARD} element={<UserDashboard />} />
         <Route path="my-courses" element={<MyCoursesPage />} />
-        <Route path="live-sessions" element={<LiveSessionsPage />} />
+        <Route path={ROUTES.LIVE_SESSIONS} element={<LiveSessionsPage />} />
         <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
         <Route path="progress/:courseId" element={<ProgressPage />} />
         <Route path="my-progress" element={<MyProgressPage />} />
+        <Route path={ROUTES.ANALYTICS} element={<AnalyticsPage />} />
+        <Route path={ROUTES.ASSIGNMENTS} element={<AssignmentsPage />} />
+        <Route path={ROUTES.SETTINGS} element={<SettingsPage />} />
         {/* Admin Routes */}
         <Route
           path={ROUTES.ADMIN.DASHBOARD}
@@ -99,6 +109,10 @@ const AppRoutes = () => {
           }
         />
         <Route path={ROUTES.INSTRUCTOR.COURSES} element={<MyCourses />} />
+        <Route
+          path={ROUTES.INSTRUCTOR.STUDENTS}
+          element={<InstructorStudentsPage />}
+        />
         <Route path="instructor/courses/create" element={<CreateCourse />} />
         <Route
           path="instructor/courses/:id"

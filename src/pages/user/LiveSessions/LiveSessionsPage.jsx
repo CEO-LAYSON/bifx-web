@@ -1,44 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Video, Calendar, Users, Play } from "lucide-react";
 import Button from "../../../components/ui/Button";
+import { liveMeetingAPI } from "../../../services/api/liveMeetingAPI";
+import { format } from "date-fns";
 
 const LiveSessionsPage = () => {
-  // Mock data - replace with actual API calls
-  const upcomingSessions = [
-    {
-      id: 1,
-      title: "Live Forex Trading Session",
-      instructor: "John Doe",
-      date: "2025-11-25",
-      time: "14:00",
-      duration: "60 min",
-      participants: 45,
-      maxParticipants: 100,
-    },
-    {
-      id: 2,
-      title: "Advanced Technical Analysis",
-      instructor: "Jane Smith",
-      date: "2025-11-27",
-      time: "16:00",
-      duration: "90 min",
-      participants: 32,
-      maxParticipants: 50,
-    },
-  ];
+  const [upcomingSessions, setUpcomingSessions] = useState([]);
+  const [pastSessions, setPastSessions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const pastSessions = [
-    {
-      id: 3,
-      title: "Introduction to Forex Markets",
-      instructor: "Mike Johnson",
-      date: "2025-11-20",
-      time: "15:00",
-      duration: "45 min",
-      participants: 78,
-      recordingUrl: "#",
-    },
-  ];
+  useEffect(() => {
+    const fetchLiveSessions = async () => {
+      try {
+        setLoading(true);
+        const [upcomingResponse, allMeetingsResponse] = await Promise.all([
+          liveMeetingAPI.getUpcomingMeetings(),
+          liveMeetingAPI.getLiveMeetings(),
+        ]);
+
+        // Assuming the API returns meetings with scheduledAt field
+        const now = new Date();
+        const upcoming = upcomingResponse.data.filter(
+          (meeting) => new Date(meeting.scheduledAt) > now,
+        );
+        const past = allMeetingsResponse.data.filter(
+          (meeting) => new Date(meeting.scheduledAt) <= now,
+        );
+
+        setUpcomingSessions(upcoming);
+        setPastSessions(past);
+      } catch (err) {
+        setError("Failed to load live sessions");
+        console.error("Error fetching live sessions:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLiveSessions();
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -57,7 +58,33 @@ const LiveSessionsPage = () => {
           Upcoming Sessions
         </h2>
 
-        {upcomingSessions.length === 0 ? (
+        {loading ? (
+          <div className="space-y-4">
+            {[...Array(2)].map((_, i) => (
+              <div
+                key={i}
+                className="bg-gray-700 rounded-lg p-4 border border-gray-600 animate-pulse"
+              >
+                <div className="flex justify-between items-start mb-3">
+                  <div className="space-y-2">
+                    <div className="h-5 bg-gray-600 rounded w-48"></div>
+                    <div className="h-4 bg-gray-600 rounded w-32"></div>
+                  </div>
+                  <div className="h-8 bg-gray-600 rounded w-24"></div>
+                </div>
+                <div className="flex space-x-4">
+                  <div className="h-4 bg-gray-600 rounded w-24"></div>
+                  <div className="h-4 bg-gray-600 rounded w-16"></div>
+                  <div className="h-4 bg-gray-600 rounded w-20"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : error ? (
+          <div className="text-center py-8">
+            <p className="text-red-400">{error}</p>
+          </div>
+        ) : upcomingSessions.length === 0 ? (
           <div className="text-center py-8">
             <Video className="h-12 w-12 text-gray-500 mx-auto mb-4" />
             <p className="text-gray-400">No upcoming live sessions</p>
@@ -75,7 +102,7 @@ const LiveSessionsPage = () => {
                       {session.title}
                     </h3>
                     <p className="text-gray-400 text-sm">
-                      Instructor: {session.instructor}
+                      Instructor: {session.instructorName || "Instructor"}
                     </p>
                   </div>
                   <Button variant="primary" size="sm">
@@ -87,12 +114,18 @@ const LiveSessionsPage = () => {
                 <div className="flex items-center space-x-4 text-sm text-gray-400">
                   <div className="flex items-center">
                     <Calendar size={14} className="mr-1" />
-                    {session.date} at {session.time}
+                    {session.scheduledAt
+                      ? format(
+                          new Date(session.scheduledAt),
+                          "MMM dd, yyyy 'at' HH:mm",
+                        )
+                      : "TBD"}
                   </div>
-                  <div>{session.duration}</div>
+                  <div>{session.duration || "60 min"}</div>
                   <div className="flex items-center">
                     <Users size={14} className="mr-1" />
-                    {session.participants}/{session.maxParticipants}
+                    {session.participantsCount || 0}/
+                    {session.maxParticipants || 100}
                   </div>
                 </div>
               </div>
@@ -105,7 +138,29 @@ const LiveSessionsPage = () => {
       <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
         <h2 className="text-xl font-bold text-white mb-4">Past Sessions</h2>
 
-        {pastSessions.length === 0 ? (
+        {loading ? (
+          <div className="space-y-4">
+            {[...Array(1)].map((_, i) => (
+              <div
+                key={i}
+                className="bg-gray-700 rounded-lg p-4 border border-gray-600 animate-pulse"
+              >
+                <div className="flex justify-between items-start mb-3">
+                  <div className="space-y-2">
+                    <div className="h-5 bg-gray-600 rounded w-48"></div>
+                    <div className="h-4 bg-gray-600 rounded w-32"></div>
+                  </div>
+                  <div className="h-8 bg-gray-600 rounded w-32"></div>
+                </div>
+                <div className="flex space-x-4">
+                  <div className="h-4 bg-gray-600 rounded w-24"></div>
+                  <div className="h-4 bg-gray-600 rounded w-16"></div>
+                  <div className="h-4 bg-gray-600 rounded w-20"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : pastSessions.length === 0 ? (
           <div className="text-center py-8">
             <Video className="h-12 w-12 text-gray-500 mx-auto mb-4" />
             <p className="text-gray-400">No past sessions available</p>
@@ -123,24 +178,31 @@ const LiveSessionsPage = () => {
                       {session.title}
                     </h3>
                     <p className="text-gray-400 text-sm">
-                      Instructor: {session.instructor}
+                      Instructor: {session.instructorName || "Instructor"}
                     </p>
                   </div>
-                  <Button variant="outline" size="sm">
-                    <Play size={16} className="mr-2" />
-                    Watch Recording
-                  </Button>
+                  {session.recordingUrl && (
+                    <Button variant="outline" size="sm">
+                      <Play size={16} className="mr-2" />
+                      Watch Recording
+                    </Button>
+                  )}
                 </div>
 
                 <div className="flex items-center space-x-4 text-sm text-gray-400">
                   <div className="flex items-center">
                     <Calendar size={14} className="mr-1" />
-                    {session.date} at {session.time}
+                    {session.scheduledAt
+                      ? format(
+                          new Date(session.scheduledAt),
+                          "MMM dd, yyyy 'at' HH:mm",
+                        )
+                      : "TBD"}
                   </div>
-                  <div>{session.duration}</div>
+                  <div>{session.duration || "60 min"}</div>
                   <div className="flex items-center">
                     <Users size={14} className="mr-1" />
-                    {session.participants} watched
+                    {session.participantsCount || 0} watched
                   </div>
                 </div>
               </div>

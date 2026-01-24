@@ -18,7 +18,7 @@ export const instructorAPI = {
   createLesson: (courseId, lessonData) =>
     axiosInstance.post(
       `/v1/instructor/courses/${courseId}/lessons`,
-      lessonData
+      lessonData,
     ),
 
   updateLesson: (lessonId, lessonData) =>
@@ -31,12 +31,14 @@ export const instructorAPI = {
     axiosInstance.get(`/v1/instructor/courses/${courseId}/lessons`),
 
   // Student Management
+  getAllStudents: () => axiosInstance.get("/v1/instructor/students"),
+
   getCourseStudents: (courseId) =>
     axiosInstance.get(`/v1/instructor/courses/${courseId}/students`),
 
   getStudentProgress: (courseId, studentId) =>
     axiosInstance.get(
-      `/v1/instructor/courses/${courseId}/students/${studentId}/progress`
+      `/v1/instructor/courses/${courseId}/students/${studentId}/progress`,
     ),
 
   // Analytics

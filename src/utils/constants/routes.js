@@ -5,6 +5,10 @@ export const ROUTES = {
   COURSES: "/courses",
   DASHBOARD: "dashboard",
   PROFILE: "profile",
+  ANALYTICS: "analytics",
+  ASSIGNMENTS: "assignments",
+  LIVE_SESSIONS: "live-sessions",
+  SETTINGS: "settings",
   ADMIN: {
     DASHBOARD: "admin",
     USERS: "admin/users",

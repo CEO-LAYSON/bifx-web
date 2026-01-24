@@ -1,6 +1,17 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, BookOpen, BarChart3, User, Video, Users, X } from "lucide-react";
+import {
+  Home,
+  BookOpen,
+  BarChart3,
+  User,
+  Video,
+  Users,
+  X,
+  Settings,
+  FileText,
+  TrendingUp,
+} from "lucide-react";
 import { ROUTES } from "../../../utils/constants/routes";
 
 const UserSidebar = ({ onClose }) => {
@@ -11,7 +22,10 @@ const UserSidebar = ({ onClose }) => {
     { name: "My Courses", href: "my-courses", icon: BookOpen },
     { name: "Courses", href: ROUTES.COURSES, icon: BookOpen },
     { name: "Progress", href: "my-progress", icon: BarChart3 },
-    { name: "Live Sessions", href: "live-sessions", icon: Video },
+    { name: "Live Sessions", href: ROUTES.LIVE_SESSIONS, icon: Video },
+    { name: "Analytics", href: ROUTES.ANALYTICS, icon: TrendingUp },
+    { name: "Assignments", href: ROUTES.ASSIGNMENTS, icon: FileText },
+    { name: "Settings", href: ROUTES.SETTINGS, icon: Settings },
     { name: "Profile", href: ROUTES.PROFILE, icon: User },
   ];
 
