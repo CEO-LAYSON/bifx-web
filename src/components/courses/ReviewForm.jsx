@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { createReview } from "../../../store/slices/reviewSlice";
 import { Star, Send } from "lucide-react";
-import Button from "../../ui/Button";
-import Alert from "../../ui/Alert";
+import Button from "../ui/Button";
+import Alert from "../ui/Alert";
 
 const ReviewForm = ({ courseId, onSuccess }) => {
   const dispatch = useDispatch();

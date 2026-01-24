@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Plus, Video, FileText, Edit, Trash2, Eye, EyeOff } from "lucide-react";
-import Button from "../../ui/Button";
+import Button from "../ui/Button";
 
 const LessonManagement = ({
   lessons = [],
@@ -10,10 +10,22 @@ const LessonManagement = ({
   onDeleteLesson,
 }) => {
   const [showLessonForm, setShowLessonForm] = useState(false);
+  const [editingLesson, setEditingLesson] = useState(null);
 
   const handleAddLesson = (lessonData) => {
     onAddLesson?.(courseId, lessonData);
     setShowLessonForm(false);
+  };
+
+  const handleEditLessonClick = (lesson) => {
+    setEditingLesson(lesson);
+    setShowLessonForm(true);
+  };
+
+  const handleUpdateLesson = (lessonData) => {
+    onEditLesson?.({ ...editingLesson, ...lessonData });
+    setShowLessonForm(false);
+    setEditingLesson(null);
   };
 
   const toggleLessonPreview = (lessonId) => {
@@ -162,27 +174,44 @@ const LessonManagement = ({
       {showLessonForm && (
         <LessonFormModal
           courseId={courseId}
-          onSave={handleAddLesson}
-          onCancel={() => setShowLessonForm(false)}
+          lesson={editingLesson}
+          onSave={editingLesson ? handleUpdateLesson : handleAddLesson}
+          onCancel={() => {
+            setShowLessonForm(false);
+            setEditingLesson(null);
+          }}
         />
       )}
     </div>
   );
 };
 
-// Simplified Lesson Form Modal Component
-const LessonFormModal = ({ courseId, onSave, onCancel }) => {
+// Comprehensive Lesson Form Modal Component
+const LessonFormModal = ({ courseId, lesson, onSave, onCancel }) => {
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    orderIndex: 0,
-    isPreview: false,
-    hasAssignment: false,
+    title: lesson?.title || "",
+    description: lesson?.description || "",
+    orderIndex: lesson?.orderIndex || 0,
+    isPreview: lesson?.isPreview || false,
+    hasAssignment: lesson?.hasAssignment || false,
+    durationMinutes: lesson?.durationMinutes || 0,
   });
 
-  const handleSave = () => {
-    if (formData.title.trim()) {
-      onSave(formData);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSave = async () => {
+    if (!formData.title.trim()) {
+      alert("Lesson title is required");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await onSave(formData);
+    } catch (error) {
+      console.error("Error saving lesson:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -190,31 +219,84 @@ const LessonFormModal = ({ courseId, onSave, onCancel }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-gray-800 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6 border-b border-gray-700">
-          <h3 className="text-xl font-bold text-white">Add New Lesson</h3>
+          <h3 className="text-xl font-bold text-white">
+            {lesson ? "Edit Lesson" : "Add New Lesson"}
+          </h3>
         </div>
 
-        <div className="p-6 space-y-4">
-          <input
-            type="text"
-            placeholder="Lesson Title"
-            value={formData.title}
-            onChange={(e) =>
-              setFormData({ ...formData, title: e.target.value })
-            }
-            className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-purple"
-          />
+        <div className="p-6 space-y-6">
+          {/* Title */}
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Lesson Title *
+            </label>
+            <input
+              type="text"
+              value={formData.title}
+              onChange={(e) =>
+                setFormData({ ...formData, title: e.target.value })
+              }
+              placeholder="e.g., Introduction to Forex Trading"
+              className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-purple"
+            />
+          </div>
 
-          <textarea
-            placeholder="Lesson Description"
-            value={formData.description}
-            onChange={(e) =>
-              setFormData({ ...formData, description: e.target.value })
-            }
-            rows={3}
-            className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-purple resize-none"
-          />
+          {/* Description */}
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Description
+            </label>
+            <textarea
+              value={formData.description}
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
+              placeholder="Describe what students will learn in this lesson..."
+              rows={3}
+              className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-purple resize-none"
+            />
+          </div>
 
-          <div className="flex items-center space-x-4">
+          {/* Duration and Order */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Duration (minutes)
+              </label>
+              <input
+                type="number"
+                min="0"
+                value={formData.durationMinutes}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    durationMinutes: parseInt(e.target.value) || 0,
+                  })
+                }
+                className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-purple"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Order Index
+              </label>
+              <input
+                type="number"
+                min="0"
+                value={formData.orderIndex}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    orderIndex: parseInt(e.target.value) || 0,
+                  })
+                }
+                className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-purple"
+              />
+            </div>
+          </div>
+
+          {/* Options */}
+          <div className="space-y-3">
             <label className="flex items-center">
               <input
                 type="checkbox"
@@ -222,9 +304,16 @@ const LessonFormModal = ({ courseId, onSave, onCancel }) => {
                 onChange={(e) =>
                   setFormData({ ...formData, isPreview: e.target.checked })
                 }
-                className="mr-2"
+                className="mr-3 w-4 h-4 text-primary-purple bg-gray-700 border-gray-600 rounded focus:ring-primary-purple"
               />
-              <span className="text-white text-sm">Available as preview</span>
+              <div>
+                <span className="text-white text-sm font-medium">
+                  Available as preview
+                </span>
+                <p className="text-gray-400 text-xs">
+                  Students can watch this lesson before enrolling
+                </p>
+              </div>
             </label>
 
             <label className="flex items-center">
@@ -234,9 +323,16 @@ const LessonFormModal = ({ courseId, onSave, onCancel }) => {
                 onChange={(e) =>
                   setFormData({ ...formData, hasAssignment: e.target.checked })
                 }
-                className="mr-2"
+                className="mr-3 w-4 h-4 text-primary-purple bg-gray-700 border-gray-600 rounded focus:ring-primary-purple"
               />
-              <span className="text-white text-sm">Includes assignment</span>
+              <div>
+                <span className="text-white text-sm font-medium">
+                  Includes assignment
+                </span>
+                <p className="text-gray-400 text-xs">
+                  This lesson has an assignment for students
+                </p>
+              </div>
             </label>
           </div>
         </div>
@@ -245,8 +341,13 @@ const LessonFormModal = ({ courseId, onSave, onCancel }) => {
           <Button variant="outline" onClick={onCancel} className="flex-1">
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleSave} className="flex-1">
-            Add Lesson
+          <Button
+            variant="primary"
+            onClick={handleSave}
+            loading={isSubmitting}
+            className="flex-1"
+          >
+            {lesson ? "Update Lesson" : "Add Lesson"}
           </Button>
         </div>
       </div>

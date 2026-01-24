@@ -7,8 +7,8 @@ import {
   CheckCircle,
   AlertCircle,
 } from "lucide-react";
-import Button from "../../ui/Button";
-import Alert from "../../ui/Alert";
+import Button from "../ui/Button";
+import Alert from "../ui/Alert";
 
 const VideoUploadForm = ({ lessonId, onUploadComplete }) => {
   const [isUploading, setIsUploading] = useState(false);
@@ -66,7 +66,7 @@ const VideoUploadForm = ({ lessonId, onUploadComplete }) => {
     try {
       // Step 1: Get presigned URL
       const presignedResponse = await uploadAPI.getPresignedUrl(
-        selectedFile.name
+        selectedFile.name,
       );
       const { uploadUrl, objectKey } = presignedResponse.data.data;
 
