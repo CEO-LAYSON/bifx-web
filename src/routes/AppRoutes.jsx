@@ -44,6 +44,7 @@ import AdminCreateCourse from "../pages/admin/Courses/CreateCourse";
 import MyCourses from "../pages/instructor/Courses/MyCourses";
 import InstructorCourseDetailPage from "../pages/instructor/Courses/InstructorCourseDetailPage";
 import InstructorStudentsPage from "../pages/instructor/StudentsPage";
+import InstructorUploadPage from "../pages/instructor/UploadPage";
 
 // Error Pages
 import NotFound from "../pages/errors/NotFound";
@@ -117,6 +118,10 @@ const AppRoutes = () => {
         <Route
           path="instructor/courses/:id"
           element={<InstructorCourseDetailPage />}
+        />
+        <Route
+          path={ROUTES.INSTRUCTOR.UPLOAD}
+          element={<InstructorUploadPage />}
         />
 
         {/* Learning Routes */}

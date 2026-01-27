@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import {
   Home,
   BookOpen,
+  Upload,
   Users,
   BarChart3,
   FileText,
@@ -17,6 +18,7 @@ const InstructorSidebar = ({ onClose }) => {
   const navigation = [
     { name: "Dashboard", href: ROUTES.INSTRUCTOR.DASHBOARD, icon: Home },
     { name: "My Courses", href: ROUTES.INSTRUCTOR.COURSES, icon: BookOpen },
+    { name: "Upload Content", href: ROUTES.INSTRUCTOR.UPLOAD, icon: Upload },
     { name: "Students", href: ROUTES.INSTRUCTOR.STUDENTS, icon: Users },
     { name: "Analytics", href: "analytics", icon: BarChart3 },
     { name: "Assignments", href: "assignments", icon: FileText },

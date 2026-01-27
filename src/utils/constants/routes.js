@@ -21,5 +21,6 @@ export const ROUTES = {
     COURSES: "instructor/courses",
     CREATE_COURSE: "instructor/courses/create",
     STUDENTS: "instructor/students",
+    UPLOAD: "instructor/upload",
   },
 };
