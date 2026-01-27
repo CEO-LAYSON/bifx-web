@@ -33,7 +33,6 @@ import AdminCourseListPage from "../pages/admin/Courses/CourseListPage";
 import EnrollmentList from "../pages/admin/Enrollments/EnrollmentList";
 
 // General Pages
-import AnalyticsPage from "../pages/AnalyticsPage";
 import AssignmentsPage from "../pages/AssignmentsPage";
 import SettingsPage from "../pages/SettingsPage";
 
@@ -45,6 +44,7 @@ import MyCourses from "../pages/instructor/Courses/MyCourses";
 import InstructorCourseDetailPage from "../pages/instructor/Courses/InstructorCourseDetailPage";
 import InstructorStudentsPage from "../pages/instructor/StudentsPage";
 import InstructorUploadPage from "../pages/instructor/UploadPage";
+import InstructorAnalyticsPage from "../pages/instructor/Analytics/AnalyticsPage";
 
 // Error Pages
 import NotFound from "../pages/errors/NotFound";
@@ -80,7 +80,6 @@ const AppRoutes = () => {
         <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
         <Route path="progress/:courseId" element={<ProgressPage />} />
         <Route path="my-progress" element={<MyProgressPage />} />
-        <Route path={ROUTES.ANALYTICS} element={<AnalyticsPage />} />
         <Route path={ROUTES.ASSIGNMENTS} element={<AssignmentsPage />} />
         <Route path={ROUTES.SETTINGS} element={<SettingsPage />} />
         {/* Admin Routes */}
@@ -122,6 +121,10 @@ const AppRoutes = () => {
         <Route
           path={ROUTES.INSTRUCTOR.UPLOAD}
           element={<InstructorUploadPage />}
+        />
+        <Route
+          path={ROUTES.INSTRUCTOR.ANALYTICS}
+          element={<InstructorAnalyticsPage />}
         />
 
         {/* Learning Routes */}

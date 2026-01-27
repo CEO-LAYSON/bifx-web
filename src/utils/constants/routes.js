@@ -5,7 +5,6 @@ export const ROUTES = {
   COURSES: "/courses",
   DASHBOARD: "dashboard",
   PROFILE: "profile",
-  ANALYTICS: "analytics",
   ASSIGNMENTS: "assignments",
   LIVE_SESSIONS: "live-sessions",
   SETTINGS: "settings",
@@ -22,5 +21,6 @@ export const ROUTES = {
     CREATE_COURSE: "instructor/courses/create",
     STUDENTS: "instructor/students",
     UPLOAD: "instructor/upload",
+    ANALYTICS: "instructor/analytics",
   },
 };

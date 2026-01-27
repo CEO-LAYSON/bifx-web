@@ -27,12 +27,14 @@ const Header = ({ onMenuClick }) => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link to={ROUTES.DASHBOARD} className="flex items-center">
-              <div className="w-8 h-8 bg-primary-purple rounded-lg flex items-center justify-center mr-3">
-                <span className="text-white font-bold text-sm">BIFX</span>
-              </div>
-              <span className="text-white font-bold text-xl">BIFX</span>
-            </Link>
+            {!isAdmin && !isInstructor && (
+              <Link to={ROUTES.DASHBOARD} className="flex items-center">
+                <div className="w-8 h-8 bg-primary-purple rounded-lg flex items-center justify-center mr-3">
+                  <span className="text-white font-bold text-sm">BIFX</span>
+                </div>
+                <span className="text-white font-bold text-xl">BIFX</span>
+              </Link>
+            )}
           </div>
 
           {/* Desktop Navigation */}

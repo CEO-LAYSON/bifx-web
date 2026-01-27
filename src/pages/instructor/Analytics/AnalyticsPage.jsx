@@ -7,7 +7,7 @@ import {
   Award,
   Clock,
 } from "lucide-react";
-import { instructorAPI } from "../services/api/instructorAPI";
+import { instructorAPI } from "../../../services/api/instructorAPI";
 
 const AnalyticsPage = () => {
   const [stats, setStats] = useState([]);

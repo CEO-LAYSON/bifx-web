@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 const InstructorDashboard = () => {
   const dispatch = useDispatch();
   const { stats, courses, isLoading } = useSelector(
-    (state) => state.instructor
+    (state) => state.instructor,
   );
 
   useEffect(() => {

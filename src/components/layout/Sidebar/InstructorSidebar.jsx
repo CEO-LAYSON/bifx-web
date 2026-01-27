@@ -20,7 +20,7 @@ const InstructorSidebar = ({ onClose }) => {
     { name: "My Courses", href: ROUTES.INSTRUCTOR.COURSES, icon: BookOpen },
     { name: "Upload Content", href: ROUTES.INSTRUCTOR.UPLOAD, icon: Upload },
     { name: "Students", href: ROUTES.INSTRUCTOR.STUDENTS, icon: Users },
-    { name: "Analytics", href: "analytics", icon: BarChart3 },
+    { name: "Analytics", href: ROUTES.INSTRUCTOR.ANALYTICS, icon: BarChart3 },
     { name: "Assignments", href: "assignments", icon: FileText },
     { name: "Live Sessions", href: "live-sessions", icon: Video },
     { name: "Settings", href: "settings", icon: Settings },
@@ -68,14 +68,14 @@ const InstructorSidebar = ({ onClose }) => {
       <div className="p-4 border-t border-gray-700">
         <div className="space-y-2">
           <Link
-            to="courses/create"
+            to="instructor/courses/create"
             onClick={onClose}
             className="block w-full bg-primary-purple text-white text-center py-2 px-3 rounded text-sm font-semibold hover:bg-purple-700 transition-colors"
           >
             Create Course
           </Link>
           <Link
-            to="upload"
+            to="instructor/upload"
             onClick={onClose}
             className="block w-full border border-primary-purple text-primary-purple text-center py-2 px-3 rounded text-sm font-semibold hover:bg-purple-900 transition-colors"
           >

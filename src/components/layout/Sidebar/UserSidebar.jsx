@@ -23,7 +23,6 @@ const UserSidebar = ({ onClose }) => {
     { name: "Courses", href: ROUTES.COURSES, icon: BookOpen },
     { name: "Progress", href: "my-progress", icon: BarChart3 },
     { name: "Live Sessions", href: ROUTES.LIVE_SESSIONS, icon: Video },
-    { name: "Analytics", href: ROUTES.ANALYTICS, icon: TrendingUp },
     { name: "Assignments", href: ROUTES.ASSIGNMENTS, icon: FileText },
     { name: "Settings", href: ROUTES.SETTINGS, icon: Settings },
     { name: "Profile", href: ROUTES.PROFILE, icon: User },
