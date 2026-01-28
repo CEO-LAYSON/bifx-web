@@ -126,6 +126,10 @@ const AppRoutes = () => {
           path={ROUTES.INSTRUCTOR.ANALYTICS}
           element={<InstructorAnalyticsPage />}
         />
+        <Route
+          path={ROUTES.INSTRUCTOR.ANALYTICS}
+          element={<InstructorAnalyticsPage />}
+        />
 
         {/* Learning Routes */}
         <Route
