@@ -94,12 +94,14 @@ const LockoutTimer = ({ errorMessage, email }) => {
     : lockoutInfo?.remainingAttempts || 0;
 
   return (
-    <div className="mb-6 p-4 bg-gray-800 rounded-lg border border-red-500/30">
-      <div className="flex items-start gap-3 mb-3">
-        <AlertCircle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
+    <div className="mb-6 p-5 bg-gray-900/80 backdrop-blur-sm rounded-2xl border border-red-500/30">
+      <div className="flex items-start gap-3 mb-4">
+        <div className="p-2 bg-red-500/20 rounded-xl">
+          <AlertCircle className="w-5 h-5 text-red-400" />
+        </div>
         <div>
           <h3 className="text-white font-semibold mb-1">Account Locked</h3>
-          <p className="text-gray-300 text-sm">
+          <p className="text-gray-400 text-sm">
             Too many failed login attempts. Please wait before trying again.
           </p>
         </div>
@@ -114,9 +116,9 @@ const LockoutTimer = ({ errorMessage, email }) => {
           <span className="text-gray-400 text-sm">remaining</span>
         </div>
 
-        <div className="w-full bg-gray-700 rounded-full h-2">
+        <div className="w-full bg-gray-800 rounded-full h-2 overflow-hidden">
           <div
-            className={`h-2 rounded-full transition-all duration-1000 ease-linear ${getProgressColor()}`}
+            className={`h-full rounded-full transition-all duration-1000 ease-linear ${getProgressColor()}`}
             style={{ width: `${progress}%` }}
           ></div>
         </div>
@@ -129,7 +131,7 @@ const LockoutTimer = ({ errorMessage, email }) => {
 
         <div className="relative">
           <div
-            className="flex items-center gap-2 text-xs text-gray-400 cursor-pointer"
+            className="flex items-center gap-2 text-xs text-gray-500 cursor-pointer hover:text-gray-400 transition-colors"
             onMouseEnter={() => setShowTooltip(true)}
             onMouseLeave={() => setShowTooltip(false)}
           >
@@ -137,11 +139,11 @@ const LockoutTimer = ({ errorMessage, email }) => {
             <span>Learn about our security policy</span>
           </div>
           {showTooltip && (
-            <div className="absolute z-10 p-3 bg-gray-900 border border-gray-700 rounded-md text-xs text-gray-300 mt-2 w-64">
+            <div className="absolute z-20 p-4 bg-gray-800 border border-gray-700 rounded-xl text-xs text-gray-300 mt-2 w-72 shadow-xl">
               <p className="mb-2">
-                <strong>Security Notice:</strong> After multiple failed
-                attempts, your account is temporarily locked to protect against
-                unauthorized access.
+                <strong className="text-white">Security Notice:</strong> After
+                multiple failed attempts, your account is temporarily locked to
+                protect against unauthorized access.
               </p>
               <p className="mb-2">
                 Lockout duration: 15 minutes after 5 failed attempts. Successful
