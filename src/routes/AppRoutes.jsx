@@ -53,15 +53,17 @@ import Unauthorized from "../pages/errors/Unauthorized";
 const AppRoutes = () => {
   return (
     <Routes>
+      {/* Public Routes - Home Page without layout (custom header) */}
+      <Route path="/" element={<HomePage />} />
+
       {/* Public Routes with Main Layout */}
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
 
-      <Route path="/" element={<MainLayout />}>
-        <Route index element={<HomePage />} />
-        <Route path={ROUTES.COURSES} element={<CourseListPage />} />
-        <Route path="/courses/:id" element={<CourseDetailPage />} />
-        <Route path="/upgrade" element={<UpgradePage />} />
+      <Route path="/courses" element={<MainLayout />}>
+        <Route path="" element={<CourseListPage />} />
+        <Route path=":id" element={<CourseDetailPage />} />
+        <Route path="upgrade" element={<UpgradePage />} />
       </Route>
 
       {/* Protected Routes with Dashboard Layout */}
