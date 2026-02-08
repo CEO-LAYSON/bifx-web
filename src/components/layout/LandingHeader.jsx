@@ -49,9 +49,9 @@ const LandingHeader = () => {
   const navLinks = [
     { name: "Home", href: ROUTES.HOME },
     { name: "Courses", href: ROUTES.COURSES },
-    { name: "Features", href: "#features" },
-    { name: "Testimonials", href: "#testimonials" },
-    { name: "About", href: "#about" },
+    { name: "Features", href: ROUTES.FEATURES },
+    { name: "Testimonials", href: ROUTES.TESTIMONIALS },
+    { name: "About", href: ROUTES.ABOUT },
   ];
 
   return (
@@ -81,14 +81,14 @@ const LandingHeader = () => {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-1">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.href}
+                to={link.href}
                 className="px-4 py-2 text-gray-300 hover:text-white font-medium transition-all duration-200 rounded-lg hover:bg-white/5 relative group"
               >
                 {link.name}
                 <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-primary-purple to-primary-gold transition-all duration-300 group-hover:w-full" />
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -171,14 +171,14 @@ const LandingHeader = () => {
       >
         <div className="px-4 py-6 space-y-4">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.name}
-              href={link.href}
+              to={link.href}
               onClick={() => setIsMobileMenuOpen(false)}
               className="block px-4 py-3 text-gray-300 hover:text-white font-medium rounded-lg hover:bg-white/5 transition-all duration-200"
             >
               {link.name}
-            </a>
+            </Link>
           ))}
           <div className="pt-4 space-y-3 border-t border-gray-800">
             {isAuthenticated ? (

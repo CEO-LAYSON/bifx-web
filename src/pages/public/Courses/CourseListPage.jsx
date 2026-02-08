@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCourses } from "../../../store/slices/courseSlice";
 import CourseGrid from "../../../components/courses/CourseGrid";
 import CourseFilter from "../../../components/courses/CourseFilter";
+import LandingHeader from "../../../components/layout/LandingHeader";
 import { BookOpen, Users, Award, TrendingUp } from "lucide-react";
 
 const CourseListPage = () => {
@@ -64,6 +65,8 @@ const CourseListPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+      <LandingHeader />
+
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         {/* Background Effects */}

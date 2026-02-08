@@ -1,6 +1,7 @@
 import React from "react";
 import { Check, Star, Zap, Crown } from "lucide-react";
 import Button from "../../../components/ui/Button";
+import LandingHeader from "../../../components/layout/LandingHeader";
 
 const UpgradePage = () => {
   const plans = [
@@ -54,6 +55,7 @@ const UpgradePage = () => {
 
   return (
     <div className="min-h-screen bg-black">
+      <LandingHeader />
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -91,9 +93,7 @@ const UpgradePage = () => {
               <div
                 key={plan.name}
                 className={`relative bg-gray-800 rounded-2xl border border-gray-700 p-8 hover:border-primary-purple transition-all duration-300 ${
-                  plan.popular
-                    ? "border-primary-purple"
-                    : ""
+                  plan.popular ? "border-primary-purple" : ""
                 }`}
               >
                 {plan.popular && (

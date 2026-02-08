@@ -19,6 +19,7 @@ import LessonList from "../../../components/courses/LessonList";
 import CourseEnrollmentModal from "../../../components/courses/CourseEnrollmentModal";
 import Button from "../../../components/ui/Button";
 import Loader from "../../../components/ui/Loader";
+import LandingHeader from "../../../components/layout/LandingHeader";
 
 const CourseDetailPage = () => {
   const { id } = useParams();
@@ -107,6 +108,7 @@ const CourseDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-black">
+      <LandingHeader />
       {/* Header */}
       <div className="bg-gradient-to-br from-purple-900 to-black py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -287,7 +289,7 @@ const CourseDetailPage = () => {
               <CourseProgress
                 progress={{
                   completedLessons: Object.values(userProgress).filter(
-                    (p) => p === 100
+                    (p) => p === 100,
                   ).length,
                   totalLessons: lessons.length,
                   progressPercentage:

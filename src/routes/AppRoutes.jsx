@@ -16,6 +16,9 @@ import HomePage from "../pages/public/Home/HomePage";
 import CourseListPage from "../pages/public/Courses/CourseListPage";
 import CourseDetailPage from "../pages/public/Courses/CourseDetailPage";
 import UpgradePage from "../pages/public/Upgrade/UpgradePage";
+import FeaturesPage from "../pages/public/Features/FeaturesPage";
+import TestimonialsPage from "../pages/public/Testimonials/TestimonialsPage";
+import AboutPage from "../pages/public/About/AboutPage";
 
 // User Pages
 import UserDashboard from "../pages/user/Dashboard/UserDashboard";
@@ -60,11 +63,15 @@ const AppRoutes = () => {
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
 
-      <Route path="/courses" element={<MainLayout />}>
-        <Route path="" element={<CourseListPage />} />
-        <Route path=":id" element={<CourseDetailPage />} />
-        <Route path="upgrade" element={<UpgradePage />} />
-      </Route>
+      {/* Public Routes with Landing Header */}
+      <Route path={ROUTES.FEATURES} element={<FeaturesPage />} />
+      <Route path={ROUTES.TESTIMONIALS} element={<TestimonialsPage />} />
+      <Route path={ROUTES.ABOUT} element={<AboutPage />} />
+
+      {/* Courses Routes with Landing Header */}
+      <Route path="/courses" element={<CourseListPage />} />
+      <Route path="/courses/:id" element={<CourseDetailPage />} />
+      <Route path="/courses/upgrade" element={<UpgradePage />} />
 
       {/* Protected Routes with Dashboard Layout */}
       <Route
