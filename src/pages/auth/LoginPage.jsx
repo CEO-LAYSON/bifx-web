@@ -1,10 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import LoginForm from "../../components/auth/LoginForm";
 
 const LoginPage = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const location = useLocation();
+
+  // Get the redirect path from location state
+  const from = location.state?.from || "/dashboard";
 
   if (isAuthenticated && user) {
     if (user.roles?.includes("ROLE_ADMIN")) {
@@ -12,7 +16,8 @@ const LoginPage = () => {
     } else if (user.roles?.includes("ROLE_INSTRUCTOR")) {
       return <Navigate to="/instructor" replace />;
     } else {
-      return <Navigate to="/dashboard" replace />;
+      // Redirect to the original page user was trying to access, or dashboard
+      return <Navigate to={from} replace />;
     }
   }
 

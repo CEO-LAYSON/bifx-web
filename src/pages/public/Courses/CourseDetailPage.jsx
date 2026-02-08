@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchCourseWithLessons,
@@ -20,13 +20,15 @@ import CourseEnrollmentModal from "../../../components/courses/CourseEnrollmentM
 import Button from "../../../components/ui/Button";
 import Loader from "../../../components/ui/Loader";
 import LandingHeader from "../../../components/layout/LandingHeader";
+import { ROUTES } from "../../../utils/constants/routes";
 
 const CourseDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const { currentCourse, isLoading } = useSelector((state) => state.courses);
-  const { user } = useSelector((state) => state.auth);
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
 
   const [isEnrollmentModalOpen, setIsEnrollmentModalOpen] = useState(false);
   const [userProgress, setUserProgress] = useState({});
@@ -101,6 +103,17 @@ const CourseDetailPage = () => {
   const handleEnrollmentSuccess = () => {
     // Refresh page or update enrollment status
     window.location.reload();
+  };
+
+  const handleEnrollmentClick = () => {
+    if (!isAuthenticated) {
+      // Redirect to login with return URL
+      navigate(ROUTES.LOGIN, {
+        state: { from: location.pathname },
+      });
+      return;
+    }
+    setIsEnrollmentModalOpen(true);
   };
 
   const previewLesson =
@@ -204,7 +217,7 @@ const CourseDetailPage = () => {
 
                     {!isFree && (
                       <Button
-                        onClick={() => setIsEnrollmentModalOpen(true)}
+                        onClick={handleEnrollmentClick}
                         variant="primary"
                         size="lg"
                       >
@@ -214,7 +227,7 @@ const CourseDetailPage = () => {
 
                     {isFree && (
                       <Button
-                        onClick={() => setIsEnrollmentModalOpen(true)}
+                        onClick={handleEnrollmentClick}
                         variant="gold"
                         size="lg"
                       >
