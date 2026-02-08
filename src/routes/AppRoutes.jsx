@@ -76,7 +76,7 @@ const AppRoutes = () => {
         }
       >
         {/* User Routes */}
-        <Route path={ROUTES.DASHBOARD} element={<UserDashboard />} />
+        <Route path="dashboard" element={<UserDashboard />} />
         <Route path="my-courses" element={<MyCoursesPage />} />
         <Route path={ROUTES.LIVE_SESSIONS} element={<LiveSessionsPage />} />
         <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
