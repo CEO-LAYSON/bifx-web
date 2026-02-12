@@ -120,10 +120,18 @@ const CourseDetailPage = () => {
     lessons.find((lesson) => lesson.isPreview) || lessons[0];
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
       <LandingHeader />
       {/* Header */}
-      <div className="bg-gradient-to-br from-purple-900 to-black py-8">
+      <div className="relative overflow-hidden py-8">
+        {/* Background accent circles to match /courses look */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-1/4 w-72 h-72 bg-primary-purple/15 rounded-full blur-3xl animate-pulse" />
+          <div
+            className="absolute bottom-0 right-1/4 w-72 h-72 bg-primary-gold/10 rounded-full blur-3xl animate-pulse"
+            style={{ animationDelay: "1s" }}
+          />
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Back Button */}
           <button
@@ -137,7 +145,10 @@ const CourseDetailPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Course Info */}
             <div className="lg:col-span-2">
-              <div className="flex items-center space-x-4 mb-4">
+              <div
+                className="flex items-center space-x-4 mb-4 animate-fade-up"
+                style={{ "--delay": "0.05s" }}
+              >
                 <div
                   className={`px-3 py-1 rounded-full text-sm font-medium ${
                     level === "BEGINNER"
@@ -161,29 +172,47 @@ const CourseDetailPage = () => {
                 )}
               </div>
 
-              <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4">
+              <h1
+                className="text-4xl lg:text-5xl font-bold text-white mb-4 animate-fade-up"
+                style={{ "--delay": "0.12s" }}
+              >
                 {title}
               </h1>
 
-              <p className="text-xl text-gray-300 mb-6 leading-relaxed">
+              <p
+                className="text-xl text-gray-300 mb-6 leading-relaxed animate-fade-up"
+                style={{ "--delay": "0.18s" }}
+              >
                 {description}
               </p>
 
               {/* Course Stats */}
               <div className="flex flex-wrap gap-6 text-gray-400 mb-6">
-                <div className="flex items-center">
+                <div
+                  className="flex items-center animate-fade-up"
+                  style={{ "--delay": "0.22s" }}
+                >
                   <BookOpen size={20} className="mr-2" />
                   <span>{lessonCount} lessons</span>
                 </div>
-                <div className="flex items-center">
+                <div
+                  className="flex items-center animate-fade-up"
+                  style={{ "--delay": "0.28s" }}
+                >
                   <Clock size={20} className="mr-2" />
                   <span>{formatDuration(totalDuration)}</span>
                 </div>
-                <div className="flex items-center">
+                <div
+                  className="flex items-center animate-fade-up"
+                  style={{ "--delay": "0.34s" }}
+                >
                   <Users size={20} className="mr-2" />
                   <span>500+ students</span>
                 </div>
-                <div className="flex items-center">
+                <div
+                  className="flex items-center animate-fade-up"
+                  style={{ "--delay": "0.40s" }}
+                >
                   <Star size={20} className="mr-2 text-yellow-400" />
                   <span>4.9/5 rating</span>
                 </div>
@@ -196,7 +225,8 @@ const CourseDetailPage = () => {
                     {previewLesson && (
                       <Link
                         to={`/learn/${id}/lesson/${previewLesson.id}`}
-                        className="flex items-center justify-center px-8 py-4 bg-primary-purple text-white rounded-lg font-semibold text-lg hover:bg-purple-700 transition-colors"
+                        className="flex items-center justify-center px-8 py-4 bg-primary-purple text-white rounded-lg font-semibold text-lg hover:bg-purple-700 transition-colors hover-lift"
+                        style={{ "--delay": "0.5s" }}
                       >
                         <Play size={20} className="mr-2" />
                         Continue Learning
@@ -208,7 +238,8 @@ const CourseDetailPage = () => {
                     {previewLesson && (
                       <Link
                         to={`/courses/${id}/preview/${previewLesson.id}`}
-                        className="flex items-center justify-center px-8 py-4 border border-primary-purple text-primary-purple rounded-lg font-semibold text-lg hover:bg-purple-900 transition-colors"
+                        className="flex items-center justify-center px-8 py-4 border border-primary-purple text-primary-purple rounded-lg font-semibold text-lg hover:bg-purple-900 transition-colors hover-lift"
+                        style={{ "--delay": "0.46s" }}
                       >
                         <Play size={20} className="mr-2" />
                         Preview Course
@@ -220,6 +251,7 @@ const CourseDetailPage = () => {
                         onClick={handleEnrollmentClick}
                         variant="primary"
                         size="lg"
+                        className="hover-lift"
                       >
                         Enroll for ${priceCents / 100}
                       </Button>
@@ -230,6 +262,7 @@ const CourseDetailPage = () => {
                         onClick={handleEnrollmentClick}
                         variant="gold"
                         size="lg"
+                        className="hover-lift"
                       >
                         Enroll for Free
                       </Button>
@@ -241,7 +274,7 @@ const CourseDetailPage = () => {
 
             {/* Course Thumbnail */}
             <div className="lg:col-span-1">
-              <div className="bg-gray-800 rounded-2xl overflow-hidden border border-gray-700">
+              <div className="bg-gray-800 rounded-2xl overflow-hidden border border-gray-700 hover-lift animate-float">
                 <img
                   src={thumbnailUrl || "/placeholder-course.jpg"}
                   alt={title}
@@ -249,7 +282,7 @@ const CourseDetailPage = () => {
                 />
                 <div className="p-6">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-primary-gold mb-2">
+                    <div className="text-3xl font-bold text-primary-gold mb-2 animate-pulse-glow">
                       {isFree ? "FREE" : `$${priceCents / 100}`}
                     </div>
                     <p className="text-gray-400 text-sm">
@@ -259,19 +292,31 @@ const CourseDetailPage = () => {
 
                   {/* Features List */}
                   <div className="mt-6 space-y-3">
-                    <div className="flex items-center text-sm text-gray-300">
+                    <div
+                      className="flex items-center text-sm text-gray-300 animate-fade-up"
+                      style={{ "--delay": "0.45s" }}
+                    >
                       <div className="w-2 h-2 bg-primary-purple rounded-full mr-3" />
                       {lessonCount} video lessons
                     </div>
-                    <div className="flex items-center text-sm text-gray-300">
+                    <div
+                      className="flex items-center text-sm text-gray-300 animate-fade-up"
+                      style={{ "--delay": "0.48s" }}
+                    >
                       <div className="w-2 h-2 bg-primary-purple rounded-full mr-3" />
                       Downloadable resources
                     </div>
-                    <div className="flex items-center text-sm text-gray-300">
+                    <div
+                      className="flex items-center text-sm text-gray-300 animate-fade-up"
+                      style={{ "--delay": "0.51s" }}
+                    >
                       <div className="w-2 h-2 bg-primary-purple rounded-full mr-3" />
                       Certificate of completion
                     </div>
-                    <div className="flex items-center text-sm text-gray-300">
+                    <div
+                      className="flex items-center text-sm text-gray-300 animate-fade-up"
+                      style={{ "--delay": "0.54s" }}
+                    >
                       <div className="w-2 h-2 bg-primary-purple rounded-full mr-3" />
                       Lifetime access
                     </div>

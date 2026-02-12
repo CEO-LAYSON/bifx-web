@@ -60,11 +60,12 @@ const LessonList = ({
           return (
             <div
               key={lesson.id}
-              className={`p-4 transition-colors ${
+              className={`p-4 transition-colors animate-fade-up ${
                 isCurrent
                   ? "bg-primary-purple/20 border-l-4 border-primary-purple"
                   : "hover:bg-gray-700/50"
               }`}
+              style={{ "--delay": `${index * 80}ms` }}
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4 flex-1 min-w-0">
@@ -138,7 +139,7 @@ const LessonList = ({
                           ? `/learn/${courseId}/lesson/${lesson.id}`
                           : `/courses/${id}`
                       }
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors hover-lift ${
                         isCurrent
                           ? "bg-white text-primary-purple hover:bg-gray-100"
                           : "bg-primary-purple text-white hover:bg-purple-700"
