@@ -4,6 +4,7 @@ import { fetchCourses } from "../../../store/slices/courseSlice";
 import CourseGrid from "../../../components/courses/CourseGrid";
 import CourseFilter from "../../../components/courses/CourseFilter";
 import LandingHeader from "../../../components/layout/LandingHeader";
+import AnimatedCounter from "../../../components/ui/AnimatedCounter";
 import { BookOpen, Users, Award, TrendingUp } from "lucide-react";
 
 const CourseListPage = () => {
@@ -92,11 +93,37 @@ const CourseListPage = () => {
               Explore Our Courses
             </h1>
 
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed mb-8">
               Master forex trading with our comprehensive curriculum designed
               for all skill levels. Learn from industry experts and start your
               trading journey today.
             </p>
+
+            {/* Jump to Courses Button */}
+            <button
+              onClick={() =>
+                document
+                  .getElementById("courses-section")
+                  .scrollIntoView({ behavior: "smooth" })
+              }
+              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-primary-purple to-purple-600 text-white font-semibold rounded-xl hover:from-purple-600 hover:to-purple-700 transition-all duration-300 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transform hover:scale-105"
+            >
+              <BookOpen size={20} className="mr-2" />
+              Browse Courses
+              <svg
+                className="w-5 h-5 ml-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                />
+              </svg>
+            </button>
           </div>
 
           {/* Stats Row */}
@@ -107,7 +134,7 @@ const CourseListPage = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold text-white">
-                  {courses.length}+
+                  <AnimatedCounter value={courses.length} duration={1500} />+
                 </p>
                 <p className="text-gray-400 text-sm">Courses</p>
               </div>
@@ -118,7 +145,9 @@ const CourseListPage = () => {
                 <Users size={24} className="text-black" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-white">10K+</p>
+                <p className="text-2xl font-bold text-white">
+                  <AnimatedCounter value="10000" suffix="+" duration={2000} />
+                </p>
                 <p className="text-gray-400 text-sm">Students</p>
               </div>
             </div>
@@ -128,7 +157,9 @@ const CourseListPage = () => {
                 <Award size={24} className="text-white" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-white">50+</p>
+                <p className="text-2xl font-bold text-white">
+                  <AnimatedCounter value="50" suffix="+" duration={1500} />
+                </p>
                 <p className="text-gray-400 text-sm">Instructors</p>
               </div>
             </div>
@@ -138,7 +169,9 @@ const CourseListPage = () => {
                 <TrendingUp size={24} className="text-white" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-white">95%</p>
+                <p className="text-2xl font-bold text-white">
+                  <AnimatedCounter value="95" suffix="%" duration={1500} />
+                </p>
                 <p className="text-gray-400 text-sm">Success Rate</p>
               </div>
             </div>
@@ -147,7 +180,10 @@ const CourseListPage = () => {
       </div>
 
       {/* Courses Content */}
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+      <div
+        id="courses-section"
+        className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16"
+      >
         {/* Filters */}
         <div className="mb-8">
           <CourseFilter
