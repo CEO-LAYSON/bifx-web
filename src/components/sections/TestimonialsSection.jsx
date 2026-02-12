@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import AnimatedSection from "../ui/AnimatedSection";
+import AnimatedCounter from "../ui/AnimatedCounter";
 
 const testimonials = [
   {
@@ -229,9 +230,9 @@ const TestimonialsSection = () => {
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4 mt-8">
             {[
-              { value: "50K+", label: "Happy Students" },
-              { value: "4.9/5", label: "Average Rating" },
-              { value: "98%", label: "Would Recommend" },
+              { value: "50000", suffix: "+", label: "Happy Students" },
+              { value: "4.9", label: "Average Rating" },
+              { value: "98", suffix: "%", label: "Would Recommend" },
             ].map((stat, index) => (
               <AnimatedSection
                 key={index}
@@ -240,7 +241,10 @@ const TestimonialsSection = () => {
               >
                 <div className="text-center p-4 rounded-xl bg-gray-900/30 border border-gray-800/50">
                   <div className="text-2xl font-bold text-white mb-1">
-                    {stat.value}
+                    <AnimatedCounter
+                      value={stat.value + (stat.suffix || "")}
+                      duration={1500}
+                    />
                   </div>
                   <div className="text-gray-500 text-sm">{stat.label}</div>
                 </div>

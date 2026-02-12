@@ -10,6 +10,7 @@ import {
   Play,
 } from "lucide-react";
 import AnimatedSection from "../ui/AnimatedSection";
+import AnimatedCounter from "../ui/AnimatedCounter";
 
 const AboutSection = () => {
   const highlights = [
@@ -34,9 +35,9 @@ const AboutSection = () => {
   ];
 
   const achievements = [
-    { value: "50K+", label: "Students Trained" },
-    { value: "150+", label: "Expert Courses" },
-    { value: "98%", label: "Satisfaction Rate" },
+    { value: "50000", suffix: "+", label: "Students Trained" },
+    { value: "150", suffix: "+", label: "Expert Courses" },
+    { value: "98", suffix: "%", label: "Satisfaction Rate" },
     { value: "24/7", label: "Support Available" },
   ];
 
@@ -174,7 +175,10 @@ const AboutSection = () => {
                         className="text-center p-4 rounded-xl bg-gray-800/80 backdrop-blur-sm"
                       >
                         <div className="text-2xl font-bold text-amber-400">
-                          {stat.value}
+                          <AnimatedCounter
+                            value={stat.value + (stat.suffix || "")}
+                            duration={1500}
+                          />
                         </div>
                         <div className="text-sm text-gray-400">
                           {stat.label}
