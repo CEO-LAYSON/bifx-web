@@ -6,83 +6,87 @@ import {
   BarChart3,
   User,
   Video,
-  Users,
-  X,
   Settings,
   FileText,
   TrendingUp,
+  Sparkles,
 } from "lucide-react";
 import { ROUTES } from "../../../utils/constants/routes";
+import NavItem from "./NavItem";
 
-const UserSidebar = ({ onClose }) => {
+const UserSidebar = ({ onClose, isMobile = false }) => {
   const location = useLocation();
 
   const navigation = [
     { name: "Dashboard", href: ROUTES.DASHBOARD, icon: Home },
     { name: "My Courses", href: "my-courses", icon: BookOpen },
-    { name: "Courses", href: ROUTES.COURSES, icon: BookOpen },
+    { name: "Browse Courses", href: ROUTES.COURSES, icon: BookOpen },
     { name: "Progress", href: "my-progress", icon: BarChart3 },
     { name: "Live Sessions", href: ROUTES.LIVE_SESSIONS, icon: Video },
     { name: "Assignments", href: ROUTES.ASSIGNMENTS, icon: FileText },
-    { name: "Settings", href: ROUTES.SETTINGS, icon: Settings },
     { name: "Profile", href: ROUTES.PROFILE, icon: User },
+    { name: "Settings", href: ROUTES.SETTINGS, icon: Settings },
   ];
 
-  const isActive = (path) => location.pathname.startsWith(path);
+  // Exact path matching only - no substring matching
+  const isActive = (path) => {
+    const normalizedPath = path.startsWith("/") ? path : "/" + path;
+    return location.pathname === normalizedPath;
+  };
 
   return (
-    <div className="flex flex-col w-64 bg-gray-900 border-r border-gray-700 h-screen">
+    <div
+      className={`flex flex-col w-64 ${
+        isMobile ? "h-full" : "h-screen"
+      } bg-gray-900 border-r border-gray-700`}
+    >
       {/* Sidebar Header */}
-      <div className="flex items-center justify-center h-16 px-4 border-b border-gray-700">
-        <div className="flex items-center">
-          <div className="w-8 h-8 bg-primary-purple rounded-lg flex items-center justify-center mr-3">
-            <span className="text-white font-bold text-sm">BIFX</span>
+      {!isMobile && (
+        <div className="flex items-center justify-center h-20 px-4 border-b border-gray-700">
+          <div className="w-10 h-10 bg-primary-purple rounded-lg flex items-center justify-center mr-3">
+            <Sparkles size={20} className="text-white" />
           </div>
-          <span className="text-white font-bold text-lg">Student Portal</span>
+          <div>
+            <span className="text-white font-bold block">Student Portal</span>
+            <span className="text-gray-500 text-xs">Learning Center</span>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Navigation */}
-      <nav className="flex-1 px-4 py-4 space-y-2">
-        {navigation.map((item) => {
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.name}
-              to={item.href}
-              onClick={onClose}
-              className={`flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
-                isActive(item.href)
-                  ? "bg-gray-700 text-white"
-                  : "text-gray-300 hover:bg-gray-800 hover:text-white"
-              }`}
-            >
-              <Icon size={20} className="mr-3" />
-              {item.name}
-            </Link>
-          );
-        })}
+      <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+        {navigation.map((item) => (
+          <NavItem
+            key={item.name}
+            item={item}
+            isActive={isActive(item.href)}
+            onClose={onClose}
+          />
+        ))}
       </nav>
 
       {/* Upgrade Section */}
-      <div className="p-4 border-t border-gray-700">
-        <div className="bg-gray-800 rounded-lg p-4">
-          <h3 className="text-white font-semibold text-sm mb-2">
-            Upgrade Your Learning
-          </h3>
-          <p className="text-gray-300 text-xs mb-3">
-            Access premium courses and live sessions
-          </p>
-          <Link
-            to="/upgrade"
-            onClick={onClose}
-            className="block w-full bg-primary-purple text-white text-center py-2 px-3 rounded text-sm font-semibold hover:bg-purple-700 transition-colors"
-          >
-            Upgrade Now
-          </Link>
+      {!isMobile && (
+        <div className="p-4 border-t border-gray-700">
+          <div className="bg-gray-800 rounded-xl p-4">
+            <div className="flex items-center mb-2">
+              <TrendingUp size={16} className="text-primary-gold mr-2" />
+              <h3 className="text-white text-sm font-medium">Upgrade Now</h3>
+            </div>
+            <p className="text-gray-500 text-xs mb-3">Unlock premium courses</p>
+            <Link
+              to="/upgrade"
+              onClick={onClose}
+              className="flex items-center justify-center px-4 py-2 bg-primary-purple text-white text-sm rounded-lg hover:bg-purple-700 transition-colors"
+            >
+              <Sparkles size={14} className="mr-2" />
+              Upgrade
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
+
 export default UserSidebar;

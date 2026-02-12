@@ -26,7 +26,7 @@ const DashboardLayout = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const getSidebar = (onClose) => {
+  const getSidebar = (onClose, isMobile = false) => {
     // On large screens, don't close sidebar on navigation
     const handleClose = () => {
       if (window.innerWidth < 1024) {
@@ -35,45 +35,50 @@ const DashboardLayout = () => {
     };
 
     if (hasRole(user?.roles, "ROLE_ADMIN")) {
-      return <AdminSidebar onClose={handleClose} />;
+      return <AdminSidebar onClose={handleClose} isMobile={isMobile} />;
     }
     if (hasRole(user?.roles, "ROLE_INSTRUCTOR")) {
-      return <InstructorSidebar onClose={handleClose} />;
+      return <InstructorSidebar onClose={handleClose} isMobile={isMobile} />;
     }
-    return <UserSidebar onClose={handleClose} />;
+    return <UserSidebar onClose={handleClose} isMobile={isMobile} />;
   };
 
   return (
-    <div className="h-screen overflow-hidden bg-black">
+    <div className="h-screen overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-black">
+      {/* Mobile Sidebar Overlay */}
       <MobileSidebar
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
-        sidebarComponent={getSidebar(() => setSidebarOpen(false))}
+        sidebarComponent={getSidebar(() => setSidebarOpen(false), true)}
       />
+
+      {/* Desktop Sidebar */}
       <div
-        className={`fixed left-0 top-0 h-full z-40 overflow-y-auto ${
-          sidebarOpen ? "block" : "hidden"
+        className={`fixed left-0 top-0 h-full z-40 overflow-y-auto transition-all duration-300 ease-in-out ${
+          sidebarOpen ? "w-64 translate-x-0" : "w-64 -translate-x-full lg:w-0 lg:translate-x-0 lg:overflow-hidden"
         }`}
       >
-        {getSidebar(() => setSidebarOpen(false))}
+        {getSidebar(() => setSidebarOpen(false), false)}
       </div>
+
+      {/* Header */}
       <div
-        className={
-          sidebarOpen
-            ? "fixed top-0 left-64 right-0 z-30"
-            : "fixed top-0 left-0 right-0 z-30"
-        }
+        className={`fixed top-0 right-0 z-30 transition-all duration-300 ease-in-out ${
+          sidebarOpen ? "left-64" : "left-0"
+        }`}
       >
         <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
       </div>
+
+      {/* Main Content */}
       <div
-        className={`absolute top-16 bottom-0 right-0 overflow-y-auto ${
+        className={`absolute top-0 right-0 bottom-0 overflow-y-auto transition-all duration-300 ease-in-out ${
           sidebarOpen ? "lg:left-64" : "left-0"
         }`}
       >
-        <main className="bg-black">
-          <div className="py-6">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <main className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black">
+          <div className="pt-16">
+            <div className="p-6">
               <Outlet />
             </div>
           </div>

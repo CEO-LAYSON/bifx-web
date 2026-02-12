@@ -8,10 +8,12 @@ import {
   MessageSquare,
   Upload,
   Settings,
+  Shield,
 } from "lucide-react";
 import { ROUTES } from "../../../utils/constants/routes";
+import NavItem from "./NavItem";
 
-const AdminSidebar = ({ onClose }) => {
+const AdminSidebar = ({ onClose, isMobile = false }) => {
   const location = useLocation();
 
   const navigation = [
@@ -24,48 +26,57 @@ const AdminSidebar = ({ onClose }) => {
     { name: "Settings", href: "settings", icon: Settings },
   ];
 
-  const isActive = (path) => location.pathname.startsWith(path);
+  // Exact path matching only - no substring matching
+  const isActive = (path) => {
+    const normalizedPath = path.startsWith("/") ? path : "/" + path;
+    return location.pathname === normalizedPath;
+  };
 
   return (
-    <div className="flex flex-col w-64 bg-gray-900 border-r border-gray-700 h-screen">
+    <div
+      className={`flex flex-col w-64 ${
+        isMobile ? "h-full" : "h-screen"
+      } bg-gray-900 border-r border-gray-700`}
+    >
       {/* Sidebar Header */}
-      <div className="flex items-center justify-center h-16 px-4 border-b border-gray-700">
-        <div className="flex items-center">
-          <div className="w-8 h-8 bg-primary-gold rounded-lg flex items-center justify-center mr-3">
-            <span className="text-black font-bold text-sm">AD</span>
+      {!isMobile && (
+        <div className="flex items-center justify-center h-20 px-4 border-b border-gray-700">
+          <div className="w-10 h-10 bg-primary-gold rounded-lg flex items-center justify-center mr-3">
+            <Shield size={20} className="text-gray-900" />
           </div>
-          <span className="text-white font-bold text-lg">Admin Portal</span>
+          <div>
+            <span className="text-white font-bold block">Admin Portal</span>
+            <span className="text-gray-500 text-xs">Management Console</span>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Navigation */}
-      <nav className="flex-1 px-4 py-4 space-y-2">
-        {navigation.map((item) => {
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.name}
-              to={item.href}
-              onClick={onClose}
-              className={`flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
-                isActive(item.href)
-                  ? "bg-gray-700 text-white"
-                  : "text-gray-300 hover:bg-gray-800 hover:text-white"
-              }`}
-            >
-              <Icon size={20} className="mr-3" />
-              {item.name}
-            </Link>
-          );
-        })}
+      <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+        {navigation.map((item) => (
+          <NavItem
+            key={item.name}
+            item={item}
+            isActive={isActive(item.href)}
+            onClose={onClose}
+          />
+        ))}
       </nav>
 
       {/* Admin Info */}
-      <div className="p-4 border-t border-gray-700">
-        <div className="bg-gray-800 rounded-lg p-3">
-          <p className="text-gray-300 text-xs">Admin privileges enabled</p>
+      {!isMobile && (
+        <div className="p-4 border-t border-gray-700">
+          <div className="bg-gray-800 rounded-xl p-4">
+            <div className="flex items-center mb-2">
+              <Shield size={16} className="text-primary-gold mr-2" />
+              <p className="text-white text-sm font-medium">Admin Access</p>
+            </div>
+            <p className="text-gray-500 text-xs">
+              Full system privileges enabled
+            </p>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
