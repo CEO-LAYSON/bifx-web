@@ -28,10 +28,17 @@ const InstructorStudentsPage = () => {
       try {
         setLoading(true);
         const response = await instructorAPI.getAllStudents();
-        setEnrollments(response.data);
+        // Ensure enrollments is always an array
+        const data = Array.isArray(response.data)
+          ? response.data
+          : Array.isArray(response.data?.data)
+          ? response.data.data
+          : [];
+        setEnrollments(data);
       } catch (err) {
         setError("Failed to load students");
         console.error("Error fetching students:", err);
+        setEnrollments([]);
       } finally {
         setLoading(false);
       }
@@ -231,7 +238,10 @@ const InstructorStudentsPage = () => {
         {loading ? (
           <div className="space-y-4">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="bg-gray-700 rounded-lg p-6 border border-gray-600 animate-pulse">
+              <div
+                key={i}
+                className="bg-gray-700 rounded-lg p-6 border border-gray-600 animate-pulse"
+              >
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex items-center space-x-3">
                     <div className="w-12 h-12 bg-gray-600 rounded-full"></div>
@@ -286,11 +296,13 @@ const InstructorStudentsPage = () => {
                     <div className="flex items-center space-x-4 text-sm text-gray-400 mb-3">
                       <span className="flex items-center">
                         <Calendar size={14} className="mr-1" />
-                        Joined: {format(new Date(student.joinDate), "MMM dd, yyyy")}
+                        Joined:{" "}
+                        {format(new Date(student.joinDate), "MMM dd, yyyy")}
                       </span>
                       <span className="flex items-center">
                         <Clock size={14} className="mr-1" />
-                        Last active: {format(new Date(student.lastActive), "MMM dd, yyyy")}
+                        Last active:{" "}
+                        {format(new Date(student.lastActive), "MMM dd, yyyy")}
                       </span>
                     </div>
                   </div>
@@ -316,7 +328,9 @@ const InstructorStudentsPage = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-gray-600">
                   <div>
-                    <p className="text-sm text-gray-400 mb-1">Enrolled Courses</p>
+                    <p className="text-sm text-gray-400 mb-1">
+                      Enrolled Courses
+                    </p>
                     <p className="text-lg font-semibold text-white">
                       {student.enrolledCourses}
                     </p>
@@ -330,7 +344,9 @@ const InstructorStudentsPage = () => {
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-400 mb-2">Overall Progress</p>
+                    <p className="text-sm text-gray-400 mb-2">
+                      Overall Progress
+                    </p>
                     <div className="flex items-center space-x-2">
                       <div className="flex-1 bg-gray-600 rounded-full h-2">
                         <div
