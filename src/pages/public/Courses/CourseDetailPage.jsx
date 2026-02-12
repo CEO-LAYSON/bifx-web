@@ -106,13 +106,16 @@ const CourseDetailPage = () => {
   };
 
   const handleEnrollmentClick = () => {
+    console.log("Enrollment button clicked, isAuthenticated:", isAuthenticated);
     if (!isAuthenticated) {
       // Redirect to login with return URL
+      console.log("User not authenticated, redirecting to login...");
       navigate(ROUTES.LOGIN, {
         state: { from: location.pathname },
       });
       return;
     }
+    console.log("Opening enrollment modal...");
     setIsEnrollmentModalOpen(true);
   };
 
@@ -120,7 +123,7 @@ const CourseDetailPage = () => {
     lessons.find((lesson) => lesson.isPreview) || lessons[0];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black pt-20">
       <LandingHeader />
       {/* Header */}
       <div className="relative overflow-hidden py-8">
@@ -247,14 +250,23 @@ const CourseDetailPage = () => {
                     )}
 
                     {!isFree && (
-                      <Button
-                        onClick={handleEnrollmentClick}
-                        variant="primary"
-                        size="lg"
-                        className="hover-lift"
+                      <button
+                        onClick={() => {
+                          console.log("Direct button click!");
+                          const isAuth = localStorage.getItem("token") !== null;
+                          console.log("Auth check:", isAuth);
+                          if (!isAuth) {
+                            navigate(ROUTES.LOGIN, {
+                              state: { from: location.pathname },
+                            });
+                          } else {
+                            setIsEnrollmentModalOpen(true);
+                          }
+                        }}
+                        className="px-8 py-4 bg-primary-purple text-white rounded-lg font-semibold text-lg hover:bg-purple-700 transition-colors hover-lift cursor-pointer"
                       >
                         Enroll for ${priceCents / 100}
-                      </Button>
+                      </button>
                     )}
 
                     {isFree && (

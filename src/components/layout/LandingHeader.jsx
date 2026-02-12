@@ -23,12 +23,18 @@ const LandingHeader = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Check auth state
-    const authState = localStorage.getItem("auth");
-    if (authState) {
-      const parsed = JSON.parse(authState);
+    // Check auth state - check both "auth" (for LandingHeader) and "token" (for Redux) compatibility
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+    if (token) {
       setIsAuthenticated(true);
-      setUser(parsed.user);
+      if (user) {
+        try {
+          setUser(JSON.parse(user));
+        } catch (e) {
+          console.error("Error parsing user from localStorage:", e);
+        }
+      }
     }
   }, []);
 
