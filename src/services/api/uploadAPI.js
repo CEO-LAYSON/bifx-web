@@ -4,6 +4,17 @@ export const uploadAPI = {
   getPresignedUrl: (filename, fileType) =>
     axiosInstance.post("/v1/admin/uploads/presign", { filename, fileType }),
 
+  uploadFileDirectly: (file, fileType) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("fileType", fileType);
+    return axiosInstance.post("/v1/admin/uploads/direct", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  },
+
   confirmUpload: (lessonId, objectKey) =>
     axiosInstance.post("/v1/admin/uploads/confirm", { lessonId, objectKey }),
 

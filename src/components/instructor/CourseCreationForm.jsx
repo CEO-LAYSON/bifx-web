@@ -51,29 +51,21 @@ const CourseCreationForm = ({ onSuccess, onCancel, isAdmin = false }) => {
     try {
       const courseData = {
         ...data,
-        price: data.isFree
-          ? 0.0
-          : parseFloat(data.priceCents),
+        price: data.isFree ? 0.0 : parseFloat(data.priceCents),
         level: data.level || "BEGINNER",
         isActive: true,
         currency: "USD", // Ensure currency is always set
       };
 
       if (thumbnail) {
-        // Upload thumbnail to S3 and get URL
-        const presignResponse = await uploadAPI.getPresignedUrl(
-          thumbnail.name,
+        // Upload thumbnail directly through backend (avoids CORS issues with S3)
+        const uploadResponse = await uploadAPI.uploadFileDirectly(
+          thumbnail,
           "THUMBNAIL",
         );
-        const { uploadUrl, publicUrl } = presignResponse.data.data;
 
-        // Upload file to S3
-        await axiosInstance.put(uploadUrl, thumbnail, {
-          headers: {
-            "Content-Type": thumbnail.type,
-          },
-        });
-
+        // Get the S3 URL from the response (backend returns publicUrl)
+        const { publicUrl } = uploadResponse.data.data;
         courseData.thumbnailUrl = publicUrl;
       }
 
