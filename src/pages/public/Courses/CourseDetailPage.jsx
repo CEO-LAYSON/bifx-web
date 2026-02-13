@@ -127,8 +127,8 @@ const CourseDetailPage = () => {
       <LandingHeader />
       {/* Header */}
       <div className="relative overflow-hidden py-8">
-        {/* Background accent circles to match /courses look */}
-        <div className="absolute inset-0">
+        {/* Background accent circles to match /courses look - pointer-events-none to prevent blocking clicks */}
+        <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 left-1/4 w-72 h-72 bg-primary-purple/15 rounded-full blur-3xl animate-pulse" />
           <div
             className="absolute bottom-0 right-1/4 w-72 h-72 bg-primary-gold/10 rounded-full blur-3xl animate-pulse"
