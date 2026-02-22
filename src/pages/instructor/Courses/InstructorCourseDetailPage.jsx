@@ -12,7 +12,14 @@ import {
 } from "../../../store/slices/instructorSlice";
 import LessonManagement from "../../../components/instructor/LessonManagement";
 import StudentProgressTable from "../../../components/instructor/StudentProgressTable";
-import { ArrowLeft, Settings, BarChart3, Users, Video } from "lucide-react";
+import {
+  ArrowLeft,
+  Settings,
+  BarChart3,
+  Users,
+  Video,
+  Pencil,
+} from "lucide-react";
 import Button from "../../../components/ui/Button";
 import Loader from "../../../components/ui/Loader";
 
@@ -101,6 +108,12 @@ const InstructorCourseDetailPage = () => {
               {currentCourse.totalStudents || 0}
             </div>
           </div>
+          <Link to={`/instructor/courses/${id}/edit`}>
+            <Button variant="secondary" size="sm">
+              <Pencil size={16} className="mr-2" />
+              Edit Course
+            </Button>
+          </Link>
           <Link to={`/courses/${id}`}>
             <Button variant="outline" size="sm">
               <Settings size={16} className="mr-2" />

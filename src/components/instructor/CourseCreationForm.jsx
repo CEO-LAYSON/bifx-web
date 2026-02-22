@@ -1,8 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { createNewCourse } from "../../store/slices/instructorSlice";
-import { createCourse } from "../../store/slices/adminSlice";
+import {
+  createNewCourse,
+  updateExistingCourse,
+} from "../../store/slices/instructorSlice";
+import {
+  createCourse,
+  updateCourse as adminUpdateCourse,
+} from "../../store/slices/adminSlice";
 import { Upload, X, DollarSign } from "lucide-react";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
@@ -10,8 +16,15 @@ import Alert from "../ui/Alert";
 import { uploadAPI } from "../../services/api/uploadAPI";
 import axiosInstance from "../../services/api/axiosConfig";
 
-const CourseCreationForm = ({ onSuccess, onCancel, isAdmin = false }) => {
+const CourseCreationForm = ({
+  onSuccess,
+  onCancel,
+  isAdmin = false,
+  initialData = null,
+  courseId = null,
+}) => {
   const dispatch = useDispatch();
+  const isEditMode = !!initialData;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [thumbnail, setThumbnail] = useState(null);
@@ -25,6 +38,32 @@ const CourseCreationForm = ({ onSuccess, onCancel, isAdmin = false }) => {
     watch,
     reset,
   } = useForm();
+
+  // Pre-fill form with initial data for edit mode
+  useEffect(() => {
+    if (initialData) {
+      const formData = {
+        title: initialData.title || "",
+        description: initialData.description || "",
+        level: initialData.level || "BEGINNER",
+        slug: initialData.slug || "",
+        isFree:
+          initialData.price === 0 ||
+          initialData.price === null ||
+          initialData.price === undefined,
+        priceCents: initialData.price
+          ? (initialData.price * 100).toString()
+          : "0",
+        objectives: initialData.objectives || "",
+        requirements: initialData.requirements || "",
+      };
+      reset(formData);
+      // Set existing thumbnail preview
+      if (initialData.thumbnailUrl) {
+        setThumbnailPreview(initialData.thumbnailUrl);
+      }
+    }
+  }, [initialData, reset]);
 
   const watchIsFree = watch("isFree", false);
   const watchPrice = watch("priceCents", 0);
@@ -67,12 +106,29 @@ const CourseCreationForm = ({ onSuccess, onCancel, isAdmin = false }) => {
         // Get the S3 URL from the response (backend returns publicUrl)
         const { publicUrl } = uploadResponse.data.data;
         courseData.thumbnailUrl = publicUrl;
+      } else if (isEditMode && initialData?.thumbnailUrl) {
+        // Keep existing thumbnail if no new one uploaded
+        courseData.thumbnailUrl = initialData.thumbnailUrl;
       }
 
-      if (isAdmin) {
-        await dispatch(createCourse(courseData)).unwrap();
+      if (isEditMode && courseId) {
+        // Update existing course
+        if (isAdmin) {
+          await dispatch(
+            adminUpdateCourse({ id: courseId, courseData }),
+          ).unwrap();
+        } else {
+          await dispatch(
+            updateExistingCourse({ id: courseId, courseData }),
+          ).unwrap();
+        }
       } else {
-        await dispatch(createNewCourse(courseData)).unwrap();
+        // Create new course
+        if (isAdmin) {
+          await dispatch(createCourse(courseData)).unwrap();
+        } else {
+          await dispatch(createNewCourse(courseData)).unwrap();
+        }
       }
 
       reset();
@@ -81,13 +137,15 @@ const CourseCreationForm = ({ onSuccess, onCancel, isAdmin = false }) => {
       setServerErrors({});
       onSuccess?.();
     } catch (err) {
-      console.error("Course creation error:", err);
+      console.error("Course save error:", err);
       // Display detailed validation errors if available
       if (err?.data?.data) {
         // If we have field-level errors, store them in state to display inline
         setServerErrors(err.data.data);
       } else {
-        let errorMessage = "Failed to create course";
+        let errorMessage = isEditMode
+          ? "Failed to update course"
+          : "Failed to create course";
         if (err?.data?.message) {
           errorMessage = err.data.message;
         } else if (err?.message) {
@@ -108,7 +166,9 @@ const CourseCreationForm = ({ onSuccess, onCancel, isAdmin = false }) => {
 
   return (
     <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-      <h2 className="text-2xl font-bold text-white mb-6">Create New Course</h2>
+      <h2 className="text-2xl font-bold text-white mb-6">
+        {isEditMode ? "Edit Course" : "Create New Course"}
+      </h2>
 
       {error && <Alert type="error" message={error} className="mb-6" />}
 
@@ -397,7 +457,7 @@ const CourseCreationForm = ({ onSuccess, onCancel, isAdmin = false }) => {
             loading={isSubmitting}
             className="flex-1"
           >
-            Create Course
+            {isEditMode ? "Update Course" : "Create Course"}
           </Button>
         </div>
       </form>

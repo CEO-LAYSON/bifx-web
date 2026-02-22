@@ -42,6 +42,7 @@ import SettingsPage from "../pages/SettingsPage";
 // Instructor Pages
 import InstructorDashboard from "../pages/instructor/Dashboard/InstructorDashboard";
 import CreateCourse from "../pages/instructor/Courses/CreateCourse";
+import EditCourse from "../pages/instructor/Courses/EditCourse";
 import AdminCreateCourse from "../pages/admin/Courses/CreateCourse";
 import MyCourses from "../pages/instructor/Courses/MyCourses";
 import InstructorCourseDetailPage from "../pages/instructor/Courses/InstructorCourseDetailPage";
@@ -123,6 +124,7 @@ const AppRoutes = () => {
           element={<InstructorStudentsPage />}
         />
         <Route path="instructor/courses/create" element={<CreateCourse />} />
+        <Route path="instructor/courses/:id/edit" element={<EditCourse />} />
         <Route
           path="instructor/courses/:id"
           element={<InstructorCourseDetailPage />}
