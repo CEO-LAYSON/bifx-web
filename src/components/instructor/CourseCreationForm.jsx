@@ -138,21 +138,31 @@ const CourseCreationForm = ({
       onSuccess?.();
     } catch (err) {
       console.error("Course save error:", err);
-      // Display detailed validation errors if available
-      if (err?.data?.data) {
-        // If we have field-level errors, store them in state to display inline
-        setServerErrors(err.data.data);
-      } else {
-        let errorMessage = isEditMode
-          ? "Failed to update course"
-          : "Failed to create course";
-        if (err?.data?.message) {
-          errorMessage = err.data.message;
-        } else if (err?.message) {
-          errorMessage = err.message;
+
+      // Try to extract the actual error message from the backend response
+      let errorMessage = isEditMode
+        ? "Failed to update course"
+        : "Failed to create course";
+
+      // Check for different error response structures
+      if (err?.response?.data) {
+        const responseData = err.response.data;
+        // Backend returns: { success: false, message: "...", data: "actual error message" }
+        if (responseData.data) {
+          errorMessage = responseData.data;
+        } else if (responseData.message) {
+          errorMessage = responseData.message;
         }
-        setError(errorMessage);
+      } else if (err?.message) {
+        errorMessage = err.message;
+      } else if (err?.data?.data) {
+        // Fallback for axios error structure
+        errorMessage = err.data.data;
+      } else if (err?.data?.message) {
+        errorMessage = err.data.message;
       }
+
+      setError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }

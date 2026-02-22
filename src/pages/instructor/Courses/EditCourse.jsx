@@ -16,6 +16,7 @@ const EditCourse = () => {
   } = useSelector((state) => state.courses);
   const [initialData, setInitialData] = useState(null);
   const [fetchError, setFetchError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -48,7 +49,11 @@ const EditCourse = () => {
   }, [id, dispatch]);
 
   const handleSuccess = () => {
-    navigate("/instructor/courses");
+    setSuccessMessage("Course updated successfully!");
+    // Show success message for 2 seconds then navigate
+    setTimeout(() => {
+      navigate("/instructor/courses");
+    }, 2000);
   };
 
   const handleCancel = () => {
@@ -111,6 +116,10 @@ const EditCourse = () => {
         <h1 className="text-2xl font-bold text-white">Edit Course</h1>
         <p className="text-gray-400">Update your course details</p>
       </div>
+
+      {successMessage && (
+        <Alert type="success" message={successMessage} className="mb-4" />
+      )}
 
       <CourseCreationForm
         onSuccess={handleSuccess}
