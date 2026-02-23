@@ -9,10 +9,10 @@ export const fetchCourses = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to fetch courses"
+        error.response?.data?.message || "Failed to fetch courses",
       );
     }
-  }
+  },
 );
 
 export const fetchCourseById = createAsyncThunk(
@@ -23,10 +23,10 @@ export const fetchCourseById = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to fetch course"
+        error.response?.data?.message || "Failed to fetch course",
       );
     }
-  }
+  },
 );
 
 export const fetchCourseWithLessons = createAsyncThunk(
@@ -37,10 +37,10 @@ export const fetchCourseWithLessons = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to fetch course with lessons"
+        error.response?.data?.message || "Failed to fetch course with lessons",
       );
     }
-  }
+  },
 );
 
 export const fetchFreeCourses = createAsyncThunk(
@@ -51,10 +51,24 @@ export const fetchFreeCourses = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to fetch free courses"
+        error.response?.data?.message || "Failed to fetch free courses",
       );
     }
-  }
+  },
+);
+
+export const fetchStatistics = createAsyncThunk(
+  "courses/fetchStatistics",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await courseAPI.getStatistics();
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch statistics",
+      );
+    }
+  },
 );
 
 const courseSlice = createSlice({
@@ -64,6 +78,12 @@ const courseSlice = createSlice({
     currentCourse: null,
     freeCourses: [],
     enrolledCourses: [],
+    statistics: {
+      totalCourses: 0,
+      totalStudents: 0,
+      totalInstructors: 0,
+      successRate: 0,
+    },
     isLoading: false,
     error: null,
   },
@@ -129,6 +149,25 @@ const courseSlice = createSlice({
         state.freeCourses = action.payload.data;
       })
       .addCase(fetchFreeCourses.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      // Fetch statistics
+      .addCase(fetchStatistics.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchStatistics.fulfilled, (state, action) => {
+        state.isLoading = false;
+        // Map backend field names to frontend expected field names
+        state.statistics = {
+          totalCourses: action.payload.courses || 0,
+          totalStudents: action.payload.students || 0,
+          totalInstructors: action.payload.instructors || 0,
+          successRate: action.payload.successRate || 0,
+        };
+      })
+      .addCase(fetchStatistics.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

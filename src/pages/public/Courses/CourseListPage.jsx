@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCourses } from "../../../store/slices/courseSlice";
+import {
+  fetchCourses,
+  fetchStatistics,
+} from "../../../store/slices/courseSlice";
 import CourseGrid from "../../../components/courses/CourseGrid";
 import CourseFilter from "../../../components/courses/CourseFilter";
 import LandingHeader from "../../../components/layout/LandingHeader";
@@ -9,7 +12,9 @@ import { BookOpen, Users, Award, TrendingUp } from "lucide-react";
 
 const CourseListPage = () => {
   const dispatch = useDispatch();
-  const { courses, isLoading } = useSelector((state) => state.courses);
+  const { courses, isLoading, statistics } = useSelector(
+    (state) => state.courses,
+  );
 
   const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState({});
@@ -17,6 +22,7 @@ const CourseListPage = () => {
 
   useEffect(() => {
     dispatch(fetchCourses());
+    dispatch(fetchStatistics());
   }, [dispatch]);
 
   useEffect(() => {
@@ -134,7 +140,11 @@ const CourseListPage = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold text-white">
-                  <AnimatedCounter value={courses.length} duration={1500} />+
+                  <AnimatedCounter
+                    value={statistics.totalCourses || 0}
+                    suffix="+"
+                    duration={1500}
+                  />
                 </p>
                 <p className="text-gray-400 text-sm">Courses</p>
               </div>
@@ -146,7 +156,11 @@ const CourseListPage = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold text-white">
-                  <AnimatedCounter value="10000" suffix="+" duration={2000} />
+                  <AnimatedCounter
+                    value={statistics.totalStudents || 0}
+                    suffix="+"
+                    duration={2000}
+                  />
                 </p>
                 <p className="text-gray-400 text-sm">Students</p>
               </div>
@@ -158,7 +172,11 @@ const CourseListPage = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold text-white">
-                  <AnimatedCounter value="50" suffix="+" duration={1500} />
+                  <AnimatedCounter
+                    value={statistics.totalInstructors || 0}
+                    suffix="+"
+                    duration={1500}
+                  />
                 </p>
                 <p className="text-gray-400 text-sm">Instructors</p>
               </div>
@@ -170,7 +188,11 @@ const CourseListPage = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold text-white">
-                  <AnimatedCounter value="95" suffix="%" duration={1500} />
+                  <AnimatedCounter
+                    value={statistics.successRate || 0}
+                    suffix="%"
+                    duration={1500}
+                  />
                 </p>
                 <p className="text-gray-400 text-sm">Success Rate</p>
               </div>

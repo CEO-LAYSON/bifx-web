@@ -13,6 +13,8 @@ export const courseAPI = {
 
   getFreeCourses: () => axiosInstance.get("/v1/courses/free"),
 
+  getStatistics: () => axiosInstance.get("/v1/courses/statistics"),
+
   getLessonsByCourse: (courseId) =>
     axiosInstance.get(`/v1/lessons/course/${courseId}`),
 
