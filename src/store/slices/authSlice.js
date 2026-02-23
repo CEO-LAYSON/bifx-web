@@ -20,8 +20,10 @@ export const loginUser = createAsyncThunk(
         );
 
         // Get lockout expiry from headers if available
-        const lockoutExpiryHeader = error.response?.headers['x-lockout-expiry'];
-        const lockoutExpiry = lockoutExpiryHeader ? new Date(parseInt(lockoutExpiryHeader) * 1000) : null;
+        const lockoutExpiryHeader = error.response?.headers["x-lockout-expiry"];
+        const lockoutExpiry = lockoutExpiryHeader
+          ? new Date(parseInt(lockoutExpiryHeader) * 1000)
+          : null;
 
         if (lockoutMatch) {
           return rejectWithValue({
@@ -64,7 +66,9 @@ export const checkLockoutStatus = createAsyncThunk(
       const response = await authAPI.checkLockoutStatus(email);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || "Failed to check lockout status");
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to check lockout status",
+      );
     }
   },
 );
@@ -83,6 +87,20 @@ export const registerUser = createAsyncThunk(
       }
       return rejectWithValue(
         error.response?.data?.message || "Registration failed",
+      );
+    }
+  },
+);
+
+export const uploadAvatar = createAsyncThunk(
+  "auth/uploadAvatar",
+  async (file, { rejectWithValue }) => {
+    try {
+      const response = await authAPI.uploadAvatar(file);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to upload avatar",
       );
     }
   },
@@ -168,10 +186,12 @@ const authSlice = createSlice({
               isLocked: action.payload.isLocked,
               lockoutDuration: action.payload.lockoutDuration || 15,
               remainingAttempts: action.payload.remainingAttempts || 0,
-              lockoutEndTime: action.payload.lockoutEndTime ||
+              lockoutEndTime:
+                action.payload.lockoutEndTime ||
                 (action.payload.isLocked
                   ? new Date(
-                      Date.now() + (action.payload.lockoutDuration || 15) * 60 * 1000,
+                      Date.now() +
+                        (action.payload.lockoutDuration || 15) * 60 * 1000,
                     )
                   : null),
             };
@@ -218,6 +238,23 @@ const authSlice = createSlice({
         localStorage.setItem("user", JSON.stringify(action.payload.data));
       })
       .addCase(registerUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      // Upload Avatar
+      .addCase(uploadAvatar.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(uploadAvatar.fulfilled, (state, action) => {
+        state.isLoading = false;
+        // Update user with new avatar
+        if (action.payload.data) {
+          state.user = action.payload.data;
+          localStorage.setItem("user", JSON.stringify(action.payload.data));
+        }
+      })
+      .addCase(uploadAvatar.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

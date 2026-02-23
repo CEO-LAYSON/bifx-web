@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { uploadAvatar } from "../../../store/slices/authSlice";
 import {
   User,
   Mail,
@@ -21,14 +22,50 @@ import {
   Camera,
   CheckCircle,
   X,
+  Loader2,
 } from "lucide-react";
 import Button from "../../../components/ui/Button";
 
 const ProfilePage = () => {
-  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const { user, isLoading } = useSelector((state) => state.auth);
   const [isEditing, setIsEditing] = useState(false);
+  const fileInputRef = useRef(null);
+  const [isUploading, setIsUploading] = useState(false);
 
-  // Mock additional data - replace with API calls
+  const handleAvatarClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+    if (!allowedTypes.includes(file.type)) {
+      alert("Please select a valid image file (JPEG, PNG, GIF, or WebP)");
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    const maxSize = 5 * 1024 * 1024;
+    if (file.size > maxSize) {
+      alert("File size must be less than 5MB");
+      return;
+    }
+
+    setIsUploading(true);
+    try {
+      await dispatch(uploadAvatar(file)).unwrap();
+    } catch (error) {
+      console.error("Failed to upload avatar:", error);
+      alert("Failed to upload avatar. Please try again.");
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   const profileStats = {
     enrolledCourses: 3,
     completedCourses: 1,
@@ -112,7 +149,7 @@ const ProfilePage = () => {
             {/* Avatar */}
             <div className="relative">
               <div className="w-28 h-28 rounded-2xl bg-gradient-to-br from-primary-purple via-blue-500 to-cyan-400 p-1">
-                <div className="w-full h-full rounded-xl bg-gray-900 flex items-center justify-center">
+                <div className="w-full h-full rounded-xl bg-gray-900 flex items-center justify-center overflow-hidden">
                   {user?.avatar ? (
                     <img
                       src={user.avatar}
@@ -126,9 +163,24 @@ const ProfilePage = () => {
                   )}
                 </div>
               </div>
-              <button className="absolute -bottom-2 -right-2 w-8 h-8 bg-primary-gold rounded-full flex items-center justify-center text-black hover:scale-110 transition-transform shadow-lg">
-                <Camera size={14} />
+              <button
+                onClick={handleAvatarClick}
+                disabled={isUploading}
+                className="absolute -bottom-2 -right-2 w-8 h-8 bg-primary-gold rounded-full flex items-center justify-center text-black hover:scale-110 transition-transform shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isUploading ? (
+                  <Loader2 size={14} className="animate-spin" />
+                ) : (
+                  <Camera size={14} />
+                )}
               </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/gif,image/webp"
+                onChange={handleFileChange}
+                className="hidden"
+              />
             </div>
 
             {/* User Info */}

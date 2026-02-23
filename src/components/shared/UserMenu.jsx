@@ -65,9 +65,17 @@ const UserMenu = ({ user, onLogout }) => {
       >
         <div className="relative">
           <div
-            className={`w-10 h-10 bg-gradient-to-br ${roleGradient} rounded-xl flex items-center justify-center shadow-lg`}
+            className={`w-10 h-10 bg-gradient-to-br ${roleGradient} rounded-xl flex items-center justify-center shadow-lg overflow-hidden`}
           >
-            <User size={18} className="text-white" />
+            {user?.avatar ? (
+              <img
+                src={user.avatar}
+                alt={user.fullName}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <User size={18} className="text-white" />
+            )}
           </div>
           <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-gray-900 rounded-full flex items-center justify-center">
             <RoleIcon size={10} className="text-primary-gold" />
@@ -96,9 +104,17 @@ const UserMenu = ({ user, onLogout }) => {
           <div className="px-4 py-3 border-b border-gray-700/50 bg-gradient-to-r from-gray-800/50 to-gray-900/50">
             <div className="flex items-center space-x-3">
               <div
-                className={`w-12 h-12 bg-gradient-to-br ${roleGradient} rounded-xl flex items-center justify-center shadow-lg`}
+                className={`w-12 h-12 bg-gradient-to-br ${roleGradient} rounded-xl flex items-center justify-center shadow-lg overflow-hidden`}
               >
-                <User size={20} className="text-white" />
+                {user?.avatar ? (
+                  <img
+                    src={user.avatar}
+                    alt={user.fullName}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <User size={20} className="text-white" />
+                )}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="text-sm font-semibold text-white truncate">

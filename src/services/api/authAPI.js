@@ -9,4 +9,14 @@ export const authAPI = {
 
   refreshToken: (refreshToken) =>
     axiosInstance.post("/v1/auth/refresh", { refreshToken }),
+
+  uploadAvatar: (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    return axiosInstance.post("/v1/auth/avatar", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  },
 };
