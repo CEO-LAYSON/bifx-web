@@ -5,7 +5,7 @@ import Footer from "../../../components/sections/Footer";
 
 const AboutPage = () => {
   return (
-    <div className="min-h-screen bg-gray-950">
+    <div className="min-h-screen bg-dark-950">
       <LandingHeader />
       <div className="pt-20">
         <AboutSection />

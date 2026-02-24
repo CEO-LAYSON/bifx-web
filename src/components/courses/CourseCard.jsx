@@ -19,7 +19,7 @@ const CourseCard = ({ course }) => {
 
   const formatPrice = (price, priceCents) => {
     if (isFree) return "Free";
-    return `$${price || priceCents / 100}`;
+    return `${price || priceCents / 100}`;
   };
 
   const formatDuration = (minutes) => {
@@ -32,32 +32,37 @@ const CourseCard = ({ course }) => {
   const getLevelColor = (level) => {
     switch (level) {
       case "BEGINNER":
-        return "bg-gradient-to-r from-green-500 to-green-600";
+        return "bg-gradient-to-r from-emerald-500 to-teal-600";
       case "INTERMEDIATE":
-        return "bg-gradient-to-r from-yellow-500 to-yellow-600";
+        return "bg-gradient-to-r from-accent-gold to-yellow-500";
       case "ADVANCED":
-        return "bg-gradient-to-r from-red-500 to-red-600";
+        return "bg-gradient-to-r from-rose-500 to-red-600";
       default:
         return "bg-gradient-to-r from-gray-500 to-gray-600";
     }
   };
 
   return (
-    <div className="group relative bg-gray-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-700/50 hover:border-primary-purple/50 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/10 hover:-translate-y-2">
+    <div className="group relative bg-gradient-to-br from-dark-800/80 to-dark-900/80 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/10 hover:border-accent-purple/50 transition-all duration-500 hover:shadow-premium-xl hover:shadow-accent-purple/20 hover:-translate-y-2">
+      {/* Glow effect on hover */}
+      <div className="absolute inset-0 bg-gradient-to-r from-accent-purple/0 via-accent-purple/5 to-accent-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
       {/* Course Thumbnail */}
       <div className="relative h-48 overflow-hidden">
         <img
           src={thumbnailUrl || "/placeholder-course.jpg"}
           alt={title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
 
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+        {/* Enhanced Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-900/50 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-accent-purple/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
         {/* Play Button Overlay */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-          <div className="w-16 h-16 bg-primary-purple/90 backdrop-blur-sm rounded-full flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300">
+          <div className="absolute inset-0 bg-dark-950/50 backdrop-blur-sm"></div>
+          <div className="relative w-16 h-16 bg-gradient-to-r from-accent-purple to-purple-600 rounded-full flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300 shadow-premium-glow">
             <Play size={28} className="text-white ml-1" />
           </div>
         </div>
@@ -65,12 +70,12 @@ const CourseCard = ({ course }) => {
         {/* Badges */}
         <div className="absolute top-4 left-4 flex flex-col gap-2">
           {!isFree && (
-            <div className="bg-gradient-to-r from-primary-gold to-yellow-500 text-black px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+            <div className="bg-gradient-to-r from-accent-gold to-yellow-400 text-dark-950 px-3 py-1 rounded-full text-xs font-bold shadow-lg shadow-accent-gold/30 animate-pulse">
               PREMIUM
             </div>
           )}
           {isFree && (
-            <div className="bg-gradient-to-r from-green-500 to-green-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+            <div className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg shadow-emerald-500/30">
               FREE
             </div>
           )}
@@ -89,32 +94,34 @@ const CourseCard = ({ course }) => {
 
         {/* Price Badge */}
         <div className="absolute bottom-4 right-4">
-          <div className="bg-gray-900/90 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+          <div className="bg-dark-950/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-sm font-bold shadow-lg border border-white/10">
             {formatPrice(price, priceCents)}
           </div>
         </div>
       </div>
 
       {/* Course Content */}
-      <div className="p-6">
-        <h3 className="text-lg font-bold text-white mb-2 line-clamp-2 group-hover:text-primary-gold transition-colors duration-300">
+      <div className="relative p-6">
+        <h3 className="text-lg font-bold text-white mb-2 line-clamp-2 group-hover:text-accent-gold transition-all duration-300 group-hover:translate-x-1">
           {title}
         </h3>
 
-        <p className="text-gray-400 text-sm mb-4 line-clamp-2">{description}</p>
+        <p className="text-gray-400 text-sm mb-4 line-clamp-2 group-hover:text-gray-300 transition-colors duration-300">
+          {description}
+        </p>
 
         {/* Course Stats */}
         <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
           <div className="flex items-center space-x-4">
-            <div className="flex items-center">
-              <div className="w-8 h-8 bg-gray-700/50 rounded-lg flex items-center justify-center mr-2">
-                <BookOpen size={14} className="text-primary-purple" />
+            <div className="flex items-center group-hover:scale-105 transition-transform duration-300">
+              <div className="w-8 h-8 bg-gradient-to-br from-dark-950 to-dark-800 rounded-lg flex items-center justify-center mr-2 border border-white/5">
+                <BookOpen size={14} className="text-accent-purple" />
               </div>
               <span>{lessonCount || 0} lessons</span>
             </div>
-            <div className="flex items-center">
-              <div className="w-8 h-8 bg-gray-700/50 rounded-lg flex items-center justify-center mr-2">
-                <Clock size={14} className="text-primary-gold" />
+            <div className="flex items-center group-hover:scale-105 transition-transform duration-300">
+              <div className="w-8 h-8 bg-gradient-to-br from-dark-950 to-dark-800 rounded-lg flex items-center justify-center mr-2 border border-white/5">
+                <Clock size={14} className="text-accent-gold" />
               </div>
               <span>{formatDuration(totalDuration)}</span>
             </div>
@@ -134,22 +141,28 @@ const CourseCard = ({ course }) => {
               />
             ))}
           </div>
-          <span className="text-gray-400 text-sm ml-2">4.8 (1.2k reviews)</span>
+          <span className="text-gray-400 text-sm ml-2 group-hover:text-white transition-colors duration-300">
+            4.8 (1.2k reviews)
+          </span>
         </div>
 
         {/* Divider */}
-        <div className="border-t border-gray-700/50 mb-4"></div>
+        <div className="border-t border-white/10 mb-4"></div>
 
         {/* Action Button */}
         <Link
           to={`/courses/${id}`}
-          className="w-full bg-gradient-to-r from-primary-purple to-purple-600 text-white py-3 rounded-xl text-sm font-semibold hover:from-purple-600 hover:to-purple-700 transition-all duration-300 flex items-center justify-center space-x-2 group-hover:shadow-lg group-hover:shadow-purple-500/25"
+          className="w-full bg-gradient-to-r from-accent-purple via-purple-600 to-purple-700 text-white py-3.5 rounded-xl text-sm font-semibold hover:from-purple-600 hover:to-purple-800 transition-all duration-300 flex items-center justify-center space-x-2 group-hover:shadow-premium-glow group-hover:shadow-accent-purple/30 relative overflow-hidden"
         >
-          <span>{isFree ? "Enroll Free" : "View Details"}</span>
+          <span className="relative z-10">
+            {isFree ? "Enroll Free" : "View Details"}
+          </span>
           <Play
             size={14}
-            className="transition-transform duration-300 group-hover:translate-x-1"
+            className="transition-transform duration-300 group-hover:translate-x-1 relative z-10"
           />
+          {/* Shimmer effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
         </Link>
       </div>
     </div>

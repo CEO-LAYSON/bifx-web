@@ -123,101 +123,131 @@ const CourseDetailPage = () => {
     lessons.find((lesson) => lesson.isPreview) || lessons[0];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black pt-20">
+    <div className="min-h-screen bg-gradient-to-br from-dark-950 via-dark-900 to-black pt-20 relative">
+      {/* Background Effects */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-primary-purple/15 rounded-full blur-[100px] animate-pulse" />
+        <div
+          className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-primary-gold/10 rounded-full blur-[100px] animate-pulse"
+          style={{ animationDelay: "1s" }}
+        />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent-purple/5 rounded-full blur-[150px]"></div>
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(139,92,246,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,0.02)_1px,transparent_1px)] bg-[size:60px_60px]"></div>
+      </div>
+
       <LandingHeader />
       {/* Header */}
-      <div className="relative overflow-hidden py-8">
-        {/* Background accent circles to match /courses look - pointer-events-none to prevent blocking clicks */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-1/4 w-72 h-72 bg-primary-purple/15 rounded-full blur-3xl animate-pulse" />
-          <div
-            className="absolute bottom-0 right-1/4 w-72 h-72 bg-primary-gold/10 rounded-full blur-3xl animate-pulse"
-            style={{ animationDelay: "1s" }}
-          />
-        </div>
+      <div className="relative overflow-hidden py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Back Button */}
           <button
             onClick={() => navigate("/courses")}
-            className="flex items-center text-gray-400 hover:text-white mb-6 transition-colors"
+            className="group flex items-center text-gray-400 hover:text-white mb-8 transition-all duration-300 hover:translate-x-1"
           >
-            <ArrowLeft size={20} className="mr-2" />
+            <ArrowLeft
+              size={20}
+              className="mr-2 group-hover:-translate-x-1 transition-transform duration-300"
+            />
             Back to Courses
           </button>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Course Info */}
             <div className="lg:col-span-2">
+              {/* Level & Badges */}
               <div
-                className="flex items-center space-x-4 mb-4 animate-fade-up"
+                className="flex flex-wrap items-center gap-3 mb-6 animate-fade-up"
                 style={{ "--delay": "0.05s" }}
               >
                 <div
-                  className={`px-3 py-1 rounded-full text-sm font-medium ${
+                  className={`px-4 py-1.5 rounded-full text-sm font-semibold ${
                     level === "BEGINNER"
-                      ? "bg-green-500 text-white"
+                      ? "bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg shadow-green-500/20"
                       : level === "INTERMEDIATE"
-                      ? "bg-yellow-500 text-black"
-                      : "bg-red-500 text-white"
+                      ? "bg-gradient-to-r from-yellow-500 to-amber-500 text-black shadow-lg shadow-yellow-500/20"
+                      : "bg-gradient-to-r from-red-500 to-rose-500 text-white shadow-lg shadow-red-500/20"
                   }`}
                 >
                   {level}
                 </div>
                 {isFree && (
-                  <div className="bg-primary-gold text-black px-3 py-1 rounded-full text-sm font-bold">
+                  <div className="bg-gradient-to-r from-primary-gold to-yellow-400 text-black px-4 py-1.5 rounded-full text-sm font-bold shadow-lg shadow-primary-gold/30">
                     FREE
                   </div>
                 )}
                 {isPremium && (
-                  <div className="bg-primary-purple text-white px-3 py-1 rounded-full text-sm font-bold">
+                  <div className="bg-gradient-to-r from-primary-purple to-purple-500 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-lg shadow-primary-purple/30">
                     PREMIUM
                   </div>
                 )}
               </div>
 
               <h1
-                className="text-4xl lg:text-5xl font-bold text-white mb-4 animate-fade-up"
+                className="text-4xl lg:text-6xl font-bold text-white mb-6 bg-gradient-to-r from-white via-purple-100 to-white bg-clip-text text-transparent animate-fade-up"
                 style={{ "--delay": "0.12s" }}
               >
                 {title}
               </h1>
 
               <p
-                className="text-xl text-gray-300 mb-6 leading-relaxed animate-fade-up"
+                className="text-xl text-gray-300 mb-8 leading-relaxed animate-fade-up max-w-3xl"
                 style={{ "--delay": "0.18s" }}
               >
                 {description}
               </p>
 
               {/* Course Stats */}
-              <div className="flex flex-wrap gap-6 text-gray-400 mb-6">
+              <div className="flex flex-wrap gap-6 mb-8">
                 <div
-                  className="flex items-center animate-fade-up"
+                  className="flex items-center space-x-3 bg-dark-800/60 backdrop-blur-sm px-5 py-3 rounded-xl border border-dark-700/50 animate-fade-up"
                   style={{ "--delay": "0.22s" }}
                 >
-                  <BookOpen size={20} className="mr-2" />
-                  <span>{lessonCount} lessons</span>
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary-purple to-purple-600 rounded-lg flex items-center justify-center">
+                    <BookOpen size={20} className="text-white" />
+                  </div>
+                  <div>
+                    <p className="text-white font-bold">{lessonCount}</p>
+                    <p className="text-gray-400 text-xs">lessons</p>
+                  </div>
                 </div>
                 <div
-                  className="flex items-center animate-fade-up"
+                  className="flex items-center space-x-3 bg-dark-800/60 backdrop-blur-sm px-5 py-3 rounded-xl border border-dark-700/50 animate-fade-up"
                   style={{ "--delay": "0.28s" }}
                 >
-                  <Clock size={20} className="mr-2" />
-                  <span>{formatDuration(totalDuration)}</span>
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary-gold to-yellow-500 rounded-lg flex items-center justify-center">
+                    <Clock size={20} className="text-black" />
+                  </div>
+                  <div>
+                    <p className="text-white font-bold">
+                      {formatDuration(totalDuration)}
+                    </p>
+                    <p className="text-gray-400 text-xs">duration</p>
+                  </div>
                 </div>
                 <div
-                  className="flex items-center animate-fade-up"
+                  className="flex items-center space-x-3 bg-dark-800/60 backdrop-blur-sm px-5 py-3 rounded-xl border border-dark-700/50 animate-fade-up"
                   style={{ "--delay": "0.34s" }}
                 >
-                  <Users size={20} className="mr-2" />
-                  <span>500+ students</span>
+                  <div className="w-10 h-10 bg-gradient-to-br from-accent-emerald to-green-500 rounded-lg flex items-center justify-center">
+                    <Users size={20} className="text-white" />
+                  </div>
+                  <div>
+                    <p className="text-white font-bold">500+</p>
+                    <p className="text-gray-400 text-xs">students</p>
+                  </div>
                 </div>
                 <div
-                  className="flex items-center animate-fade-up"
+                  className="flex items-center space-x-3 bg-dark-800/60 backdrop-blur-sm px-5 py-3 rounded-xl border border-dark-700/50 animate-fade-up"
                   style={{ "--delay": "0.40s" }}
                 >
-                  <Star size={20} className="mr-2 text-yellow-400" />
-                  <span>4.9/5 rating</span>
+                  <div className="w-10 h-10 bg-gradient-to-r from-yellow-500 to-amber-400 rounded-lg flex items-center justify-center">
+                    <Star size={20} className="text-black fill-black" />
+                  </div>
+                  <div>
+                    <p className="text-white font-bold">4.9/5</p>
+                    <p className="text-gray-400 text-xs">rating</p>
+                  </div>
                 </div>
               </div>
 
@@ -228,10 +258,10 @@ const CourseDetailPage = () => {
                     {previewLesson && (
                       <Link
                         to={`/learn/${id}/lesson/${previewLesson.id}`}
-                        className="flex items-center justify-center px-8 py-4 bg-primary-purple text-white rounded-lg font-semibold text-lg hover:bg-purple-700 transition-colors hover-lift"
+                        className="group flex items-center justify-center px-10 py-5 bg-gradient-to-r from-primary-purple to-purple-600 text-white rounded-2xl font-bold text-lg hover:from-purple-600 hover:to-purple-700 transition-all duration-300 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:scale-105"
                         style={{ "--delay": "0.5s" }}
                       >
-                        <Play size={20} className="mr-2" />
+                        <Play size={22} className="mr-2" />
                         Continue Learning
                       </Link>
                     )}
@@ -241,10 +271,13 @@ const CourseDetailPage = () => {
                     {previewLesson && (
                       <Link
                         to={`/courses/${id}/preview/${previewLesson.id}`}
-                        className="flex items-center justify-center px-8 py-4 border border-primary-purple text-primary-purple rounded-lg font-semibold text-lg hover:bg-purple-900 transition-colors hover-lift"
+                        className="group flex items-center justify-center px-10 py-5 border-2 border-primary-purple text-primary-purple rounded-2xl font-bold text-lg hover:bg-primary-purple hover:text-white transition-all duration-300 hover:shadow-premium-glow"
                         style={{ "--delay": "0.46s" }}
                       >
-                        <Play size={20} className="mr-2" />
+                        <Play
+                          size={22}
+                          className="mr-2 group-hover:scale-110 transition-transform"
+                        />
                         Preview Course
                       </Link>
                     )}
@@ -263,9 +296,12 @@ const CourseDetailPage = () => {
                             setIsEnrollmentModalOpen(true);
                           }
                         }}
-                        className="px-8 py-4 bg-primary-purple text-white rounded-lg font-semibold text-lg hover:bg-purple-700 transition-colors hover-lift cursor-pointer"
+                        className="group px-10 py-5 bg-gradient-to-r from-primary-purple to-purple-600 text-white rounded-2xl font-bold text-lg hover:from-purple-600 hover:to-purple-700 transition-all duration-300 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:scale-105 cursor-pointer"
                       >
-                        Enroll for ${priceCents / 100}
+                        <span className="flex items-center justify-center">
+                          <Shield size={22} className="mr-2" />
+                          Enroll for ${priceCents / 100}
+                        </span>
                       </button>
                     )}
 
@@ -286,16 +322,19 @@ const CourseDetailPage = () => {
 
             {/* Course Thumbnail */}
             <div className="lg:col-span-1">
-              <div className="bg-gray-800 rounded-2xl overflow-hidden border border-gray-700 hover-lift animate-float">
-                <img
-                  src={thumbnailUrl || "/placeholder-course.jpg"}
-                  alt={title}
-                  className="w-full h-48 object-cover"
-                />
+              <div className="bg-dark-800/80 backdrop-blur-xl rounded-2xl overflow-hidden border border-dark-700/50 hover:border-primary-purple/50 transition-all duration-500 hover:shadow-premium-glow animate-float">
+                <div className="relative overflow-hidden">
+                  <img
+                    src={thumbnailUrl || "/placeholder-course.jpg"}
+                    alt={title}
+                    className="w-full h-52 object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent to-transparent"></div>
+                </div>
                 <div className="p-6">
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-primary-gold mb-2 animate-pulse-glow">
-                      {isFree ? "FREE" : `$${priceCents / 100}`}
+                  <div className="text-center mb-6">
+                    <div className="text-4xl font-bold bg-gradient-to-r from-primary-gold to-yellow-400 bg-clip-text text-transparent mb-2 animate-pulse-glow">
+                      {isFree ? "FREE" : `${priceCents / 100}`}
                     </div>
                     <p className="text-gray-400 text-sm">
                       {isFree ? "Lifetime access" : "One-time payment"}
@@ -303,33 +342,41 @@ const CourseDetailPage = () => {
                   </div>
 
                   {/* Features List */}
-                  <div className="mt-6 space-y-3">
+                  <div className="mt-6 space-y-4">
                     <div
                       className="flex items-center text-sm text-gray-300 animate-fade-up"
                       style={{ "--delay": "0.45s" }}
                     >
-                      <div className="w-2 h-2 bg-primary-purple rounded-full mr-3" />
+                      <div className="w-8 h-8 bg-gradient-to-br from-primary-purple/30 to-accent-purple/10 rounded-lg flex items-center justify-center mr-3">
+                        <div className="w-2 h-2 bg-primary-purple rounded-full" />
+                      </div>
                       {lessonCount} video lessons
                     </div>
                     <div
                       className="flex items-center text-sm text-gray-300 animate-fade-up"
                       style={{ "--delay": "0.48s" }}
                     >
-                      <div className="w-2 h-2 bg-primary-purple rounded-full mr-3" />
+                      <div className="w-8 h-8 bg-gradient-to-br from-primary-purple/30 to-accent-purple/10 rounded-lg flex items-center justify-center mr-3">
+                        <div className="w-2 h-2 bg-primary-purple rounded-full" />
+                      </div>
                       Downloadable resources
                     </div>
                     <div
                       className="flex items-center text-sm text-gray-300 animate-fade-up"
                       style={{ "--delay": "0.51s" }}
                     >
-                      <div className="w-2 h-2 bg-primary-purple rounded-full mr-3" />
+                      <div className="w-8 h-8 bg-gradient-to-br from-primary-purple/30 to-accent-purple/10 rounded-lg flex items-center justify-center mr-3">
+                        <div className="w-2 h-2 bg-primary-purple rounded-full" />
+                      </div>
                       Certificate of completion
                     </div>
                     <div
                       className="flex items-center text-sm text-gray-300 animate-fade-up"
                       style={{ "--delay": "0.54s" }}
                     >
-                      <div className="w-2 h-2 bg-primary-purple rounded-full mr-3" />
+                      <div className="w-8 h-8 bg-gradient-to-br from-primary-purple/30 to-accent-purple/10 rounded-lg flex items-center justify-center mr-3">
+                        <div className="w-2 h-2 bg-primary-purple rounded-full" />
+                      </div>
                       Lifetime access
                     </div>
                   </div>
@@ -341,8 +388,11 @@ const CourseDetailPage = () => {
       </div>
 
       {/* Course Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* Decorative Line */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-dark-700 to-transparent"></div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
           {/* Lessons List */}
           <div className="lg:col-span-3">
             <LessonList
@@ -373,25 +423,33 @@ const CourseDetailPage = () => {
                 course={currentCourse}
               />
             ) : (
-              <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-                <h3 className="text-xl font-bold text-white mb-4">
+              <div className="bg-dark-800/80 backdrop-blur-xl rounded-2xl p-8 border border-dark-700/50 hover:border-primary-purple/30 transition-all duration-500">
+                <h3 className="text-2xl font-bold text-white mb-6">
                   What You'll Learn
                 </h3>
-                <ul className="space-y-3 text-gray-300">
+                <ul className="space-y-4 text-gray-300">
                   <li className="flex items-center">
-                    <div className="w-2 h-2 bg-primary-purple rounded-full mr-3" />
+                    <div className="w-8 h-8 bg-gradient-to-br from-primary-purple/30 to-accent-purple/10 rounded-lg flex items-center justify-center mr-4 shrink-0">
+                      <div className="w-2 h-2 bg-primary-purple rounded-full" />
+                    </div>
                     Forex market fundamentals
                   </li>
                   <li className="flex items-center">
-                    <div className="w-2 h-2 bg-primary-purple rounded-full mr-3" />
+                    <div className="w-8 h-8 bg-gradient-to-br from-primary-purple/30 to-accent-purple/10 rounded-lg flex items-center justify-center mr-4 shrink-0">
+                      <div className="w-2 h-2 bg-primary-purple rounded-full" />
+                    </div>
                     Technical analysis techniques
                   </li>
                   <li className="flex items-center">
-                    <div className="w-2 h-2 bg-primary-purple rounded-full mr-3" />
+                    <div className="w-8 h-8 bg-gradient-to-br from-primary-purple/30 to-accent-purple/10 rounded-lg flex items-center justify-center mr-4 shrink-0">
+                      <div className="w-2 h-2 bg-primary-purple rounded-full" />
+                    </div>
                     Risk management strategies
                   </li>
                   <li className="flex items-center">
-                    <div className="w-2 h-2 bg-primary-purple rounded-full mr-3" />
+                    <div className="w-8 h-8 bg-gradient-to-br from-primary-purple/30 to-accent-purple/10 rounded-lg flex items-center justify-center mr-4 shrink-0">
+                      <div className="w-2 h-2 bg-primary-purple rounded-full" />
+                    </div>
                     Live trading practice
                   </li>
                 </ul>

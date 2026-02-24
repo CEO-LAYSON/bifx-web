@@ -72,13 +72,20 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gray-950 border-t border-gray-800">
+    <footer className="relative bg-dark-950 border-t border-white/10 overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -left-40 w-80 h-80 bg-gradient-to-br from-accent-purple/20 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -right-40 w-80 h-80 bg-gradient-to-tl from-accent-gold/10 to-transparent rounded-full blur-3xl"></div>
+      </div>
+
       {/* Newsletter Section */}
-      <div className="border-b border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="relative border-b border-white/10">
+        <div className="absolute inset-0 bg-gradient-to-r from-accent-purple/5 to-accent-gold/5 pointer-events-none"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="text-center md:text-left">
-              <h3 className="text-xl font-bold text-white mb-2">
+              <h3 className="text-2xl font-bold text-white mb-2 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                 Stay Ahead of the Markets
               </h3>
               <p className="text-gray-400">
@@ -90,22 +97,24 @@ const Footer = () => {
               onSubmit={handleSubscribe}
               className="flex w-full md:w-auto gap-3"
             >
-              <div className="relative flex-1 md:w-80">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+              <div className="relative flex-1 md:w-80 group">
+                <div className="absolute inset-0 bg-gradient-to-r from-accent-purple/20 to-accent-gold/10 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300"></div>
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 group-hover:text-accent-purple transition-colors duration-300" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="w-full pl-12 pr-4 py-3 bg-gray-900 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors"
+                  className="relative w-full pl-12 pr-4 py-3.5 bg-dark-900/50 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-accent-purple/50 focus:ring-2 focus:ring-accent-purple/20 transition-all duration-300 hover:bg-dark-900/70"
                 />
               </div>
               <button
                 type="submit"
-                className="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-semibold rounded-xl hover:from-purple-500 hover:to-purple-600 transition-all duration-300 flex items-center gap-2"
+                className="px-6 py-3.5 bg-gradient-to-r from-accent-purple via-purple-600 to-purple-700 text-white font-semibold rounded-xl hover:from-purple-500 hover:to-purple-600 transition-all duration-300 flex items-center gap-2 shadow-premium-glow hover:shadow-accent-purple/30 group"
               >
-                Subscribe
-                <ArrowRight className="w-4 h-4" />
+                <span className="relative z-10">Subscribe</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300 relative z-10" />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-xl"></div>
               </button>
             </form>
           </div>
@@ -113,17 +122,19 @@ const Footer = () => {
       </div>
 
       {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-1">
-            <Link to="/" className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-amber-500 flex items-center justify-center">
+            <Link to="/" className="flex items-center gap-2 mb-4 group">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-purple to-accent-gold flex items-center justify-center shadow-premium-glow group-hover:scale-105 transition-transform duration-300">
                 <TrendingUp className="w-6 h-6 text-white" />
               </div>
-              <span className="text-xl font-bold text-white">BIFX</span>
+              <span className="text-xl font-bold text-white group-hover:text-accent-gold transition-colors duration-300">
+                BIFX
+              </span>
             </Link>
-            <p className="text-gray-400 text-sm mb-6">
+            <p className="text-gray-400 text-sm mb-6 group-hover:text-gray-300 transition-colors duration-300">
               Empowering traders worldwide with world-class forex trading
               education and tools.
             </p>
@@ -135,10 +146,10 @@ const Footer = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-lg bg-gray-900 border border-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-800 hover:border-purple-500 transition-all duration-300"
+                  className="w-10 h-10 rounded-xl bg-dark-900/50 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-dark-800 hover:border-accent-purple/50 hover:shadow-premium-glow hover:shadow-accent-purple/20 transition-all duration-300 group"
                   aria-label={social.label}
                 >
-                  <social.icon className="w-5 h-5" />
+                  <social.icon className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
                 </a>
               ))}
             </div>
@@ -146,14 +157,20 @@ const Footer = () => {
 
           {/* Product Links */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Product</h4>
+            <h4 className="text-white font-semibold mb-4 flex items-center gap-2">
+              <div className="w-1 h-4 bg-gradient-to-b from-accent-purple to-accent-cyan rounded-full"></div>
+              Product
+            </h4>
             <ul className="space-y-3">
               {footerLinks.product.map((link, index) => (
                 <li key={index}>
                   <Link
                     to={link.href}
-                    className="text-gray-400 hover:text-purple-400 text-sm transition-colors duration-200"
+                    className="text-gray-400 hover:text-accent-purple text-sm transition-all duration-200 hover:translate-x-1 inline-flex items-center"
                   >
+                    <span className="opacity-0 group-hover:opacity-100 mr-1 text-xs">
+                      →
+                    </span>
                     {link.label}
                   </Link>
                 </li>
@@ -163,13 +180,16 @@ const Footer = () => {
 
           {/* Company Links */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Company</h4>
+            <h4 className="text-white font-semibold mb-4 flex items-center gap-2">
+              <div className="w-1 h-4 bg-gradient-to-b from-accent-gold to-yellow-400 rounded-full"></div>
+              Company
+            </h4>
             <ul className="space-y-3">
               {footerLinks.company.map((link, index) => (
                 <li key={index}>
                   <Link
                     to={link.href}
-                    className="text-gray-400 hover:text-purple-400 text-sm transition-colors duration-200"
+                    className="text-gray-400 hover:text-accent-purple text-sm transition-all duration-200 hover:translate-x-1 inline-flex items-center"
                   >
                     {link.label}
                   </Link>
@@ -180,13 +200,16 @@ const Footer = () => {
 
           {/* Resources Links */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Resources</h4>
+            <h4 className="text-white font-semibold mb-4 flex items-center gap-2">
+              <div className="w-1 h-4 bg-gradient-to-b from-accent-emerald to-teal-400 rounded-full"></div>
+              Resources
+            </h4>
             <ul className="space-y-3">
               {footerLinks.resources.map((link, index) => (
                 <li key={index}>
                   <Link
                     to={link.href}
-                    className="text-gray-400 hover:text-purple-400 text-sm transition-colors duration-200"
+                    className="text-gray-400 hover:text-accent-purple text-sm transition-all duration-200 hover:translate-x-1 inline-flex items-center"
                   >
                     {link.label}
                   </Link>
@@ -197,13 +220,16 @@ const Footer = () => {
 
           {/* Legal Links */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Legal</h4>
+            <h4 className="text-white font-semibold mb-4 flex items-center gap-2">
+              <div className="w-1 h-4 bg-gradient-to-b from-rose-500 to-red-400 rounded-full"></div>
+              Legal
+            </h4>
             <ul className="space-y-3">
               {footerLinks.legal.map((link, index) => (
                 <li key={index}>
                   <Link
                     to={link.href}
-                    className="text-gray-400 hover:text-purple-400 text-sm transition-colors duration-200"
+                    className="text-gray-400 hover:text-accent-purple text-sm transition-all duration-200 hover:translate-x-1 inline-flex items-center"
                   >
                     {link.label}
                   </Link>
@@ -214,12 +240,14 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-12 pt-8 border-t border-gray-800">
+        <div className="mt-12 pt-8 border-t border-white/10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             {/* Copyright */}
             <div className="text-gray-500 text-sm text-center md:text-left">
-              © {new Date().getFullYear()} BIFX. All rights reserved. Trading
-              involves risk. Past performance does not guarantee future results.
+              © {new Date().getFullYear()}{" "}
+              <span className="text-accent-gold font-semibold">BIFX</span>. All
+              rights reserved. Trading involves risk. Past performance does not
+              guarantee future results.
             </div>
 
             {/* Trust Badges */}
@@ -227,9 +255,9 @@ const Footer = () => {
               {trustBadges.map((badge, index) => (
                 <div
                   key={index}
-                  className="flex items-center gap-2 text-gray-400 text-sm"
+                  className="flex items-center gap-2 text-gray-400 text-sm hover:text-white transition-colors duration-300"
                 >
-                  <badge.icon className="w-4 h-4 text-purple-400" />
+                  <badge.icon className="w-4 h-4 text-accent-purple" />
                   <span>{badge.label}</span>
                 </div>
               ))}
@@ -241,7 +269,7 @@ const Footer = () => {
       {/* Success Toast */}
       {isSubscribed && (
         <div className="fixed bottom-8 right-8 z-50 animate-bounce">
-          <div className="px-6 py-3 bg-green-500 text-white rounded-xl shadow-lg flex items-center gap-2">
+          <div className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl shadow-lg flex items-center gap-2 shadow-emerald-500/30">
             <svg
               className="w-5 h-5"
               fill="none"

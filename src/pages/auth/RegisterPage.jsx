@@ -25,6 +25,8 @@ const RegisterPage = () => {
           <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl animate-pulse"></div>
           <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-purple-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
           <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-purple-600/20 rounded-full blur-3xl animate-pulse delay-500"></div>
+          {/* Gold accent orb */}
+          <div className="absolute top-1/3 left-1/4 w-40 h-40 bg-primary-gold/10 rounded-full blur-3xl animate-pulse delay-700"></div>
         </div>
 
         {/* Grid Pattern Overlay */}
@@ -33,36 +35,47 @@ const RegisterPage = () => {
         {/* Content */}
         <div className="relative z-10 flex flex-col justify-center items-center w-full px-12 text-white">
           {/* Logo */}
-          <div className="mb-8">
+          <div className="mb-8 relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-purple/40 to-primary-gold/20 blur-2xl rounded-2xl"></div>
             <img
               src="/bifx-black-logo.jpeg"
               alt="BIFX Logo"
-              className="w-48 h-48 object-contain rounded-2xl shadow-2xl"
+              className="w-48 h-48 object-contain rounded-2xl shadow-2xl relative z-10"
             />
           </div>
 
           {/* Brand Text */}
-          <h1 className="text-5xl font-bold mb-4 text-center">Join BIFX</h1>
+          <h1 className="text-5xl font-bold mb-4 text-center bg-gradient-to-r from-white via-purple-100 to-purple-200 bg-clip-text text-transparent">
+            Join BIFX
+          </h1>
           <p className="text-xl text-purple-200 mb-8 text-center max-w-md">
             Start your forex trading journey with world-class education
           </p>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 gap-6 w-full max-w-sm">
-            <div className="text-center p-4 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10">
-              <div className="text-3xl font-bold text-primary-gold">10K+</div>
+          <div className="grid grid-cols-2 gap-4 w-full max-w-sm">
+            <div className="text-center p-4 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10 hover:border-primary-gold/30 hover:bg-white/10 transition-all duration-300 group">
+              <div className="text-3xl font-bold bg-gradient-to-r from-primary-gold to-yellow-400 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
+                10K+
+              </div>
               <div className="text-sm text-purple-200">Students</div>
             </div>
-            <div className="text-center p-4 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10">
-              <div className="text-3xl font-bold text-primary-gold">50+</div>
+            <div className="text-center p-4 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10 hover:border-primary-gold/30 hover:bg-white/10 transition-all duration-300 group">
+              <div className="text-3xl font-bold bg-gradient-to-r from-primary-gold to-yellow-400 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
+                50+
+              </div>
               <div className="text-sm text-purple-200">Courses</div>
             </div>
-            <div className="text-center p-4 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10">
-              <div className="text-3xl font-bold text-primary-gold">100+</div>
+            <div className="text-center p-4 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10 hover:border-primary-gold/30 hover:bg-white/10 transition-all duration-300 group">
+              <div className="text-3xl font-bold bg-gradient-to-r from-primary-gold to-yellow-400 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
+                100+
+              </div>
               <div className="text-sm text-purple-200">Live Sessions</div>
             </div>
-            <div className="text-center p-4 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10">
-              <div className="text-3xl font-bold text-primary-gold">4.9</div>
+            <div className="text-center p-4 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10 hover:border-primary-gold/30 hover:bg-white/10 transition-all duration-300 group">
+              <div className="text-3xl font-bold bg-gradient-to-r from-primary-gold to-yellow-400 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
+                4.9
+              </div>
               <div className="text-sm text-purple-200">Rating</div>
             </div>
           </div>
