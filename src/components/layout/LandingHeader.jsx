@@ -75,7 +75,7 @@ const LandingHeader = () => {
             <img
               src="/bifx-black-logo.jpeg"
               alt="BIFX Logo"
-              className="h-14 w-auto object-contain rounded-2xl shadow-lg"
+              className="h-20 w-auto object-contain rounded-2xl shadow-lg"
             />
           </Link>
 

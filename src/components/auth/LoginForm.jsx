@@ -38,7 +38,7 @@ const LoginForm = () => {
         <img
           src="/bifx-black-logo.jpeg"
           alt="BIFX Logo"
-          className="w-24 h-24 object-contain mx-auto mb-4 rounded-2xl shadow-lg"
+          className="w-40 h-40 object-contain mx-auto mb-4 rounded-2xl shadow-lg"
         />
         <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
         <p className="text-gray-400">Sign in to your BIFX account</p>

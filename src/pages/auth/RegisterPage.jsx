@@ -37,7 +37,7 @@ const RegisterPage = () => {
             <img
               src="/bifx-black-logo.jpeg"
               alt="BIFX Logo"
-              className="w-32 h-32 object-contain rounded-2xl shadow-2xl"
+              className="w-48 h-48 object-contain rounded-2xl shadow-2xl"
             />
           </div>
 
