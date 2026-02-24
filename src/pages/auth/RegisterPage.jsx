@@ -34,9 +34,11 @@ const RegisterPage = () => {
         <div className="relative z-10 flex flex-col justify-center items-center w-full px-12 text-white">
           {/* Logo */}
           <div className="mb-8">
-            <div className="w-20 h-20 bg-white/10 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-white/20">
-              <span className="text-3xl font-bold">B</span>
-            </div>
+            <img
+              src="/bifx-black-logo.jpeg"
+              alt="BIFX Logo"
+              className="w-32 h-32 object-contain rounded-2xl shadow-2xl"
+            />
           </div>
 
           {/* Brand Text */}

@@ -35,9 +35,11 @@ const LoginForm = () => {
     <div className="w-full max-w-md">
       {/* Mobile Logo - Only visible on small screens */}
       <div className="lg:hidden text-center mb-8">
-        <div className="w-16 h-16 bg-primary-purple/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <span className="text-2xl font-bold text-primary-purple">B</span>
-        </div>
+        <img
+          src="/bifx-black-logo.jpeg"
+          alt="BIFX Logo"
+          className="w-24 h-24 object-contain mx-auto mb-4 rounded-2xl shadow-lg"
+        />
         <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
         <p className="text-gray-400">Sign in to your BIFX account</p>
       </div>

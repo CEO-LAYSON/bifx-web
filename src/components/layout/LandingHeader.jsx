@@ -72,16 +72,11 @@ const LandingHeader = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to={ROUTES.HOME} className="flex items-center space-x-3 group">
-            <div className="relative">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary-purple to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-purple-500/25 transition-all duration-300 group-hover:scale-110">
-                <TrendingUp className="w-5 h-5 text-white" />
-              </div>
-              <div className="absolute -inset-1 bg-gradient-to-br from-primary-purple to-purple-600 rounded-xl opacity-0 group-hover:opacity-20 blur transition-all duration-300" />
-            </div>
-            <span className="text-2xl font-bold text-white">
-              BIFX
-              <span className="text-primary-gold">.</span>
-            </span>
+            <img
+              src="/bifx-black-logo.jpeg"
+              alt="BIFX Logo"
+              className="h-14 w-auto object-contain rounded-2xl shadow-lg"
+            />
           </Link>
 
           {/* Desktop Navigation */}
