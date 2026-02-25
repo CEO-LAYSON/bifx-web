@@ -222,7 +222,7 @@ const CourseListPage = () => {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-primary-purple to-transparent rounded-full"></div>
 
         {/* Filters */}
-        <div className="mb-10">
+        <div className="sticky top-4 z-50 mb-10">
           <CourseFilter
             onSearchChange={setSearchQuery}
             onFilterChange={setFilters}

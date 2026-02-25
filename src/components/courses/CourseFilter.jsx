@@ -123,7 +123,7 @@ const CourseFilter = ({
   );
 
   return (
-    <div className="relative bg-gradient-to-br from-dark-800/80 to-dark-900/80 backdrop-blur-xl rounded-2xl p-6 border border-white/10 shadow-premium-xl">
+    <div className="relative isolate bg-gradient-to-br from-dark-800/80 to-dark-900/80 backdrop-blur-xl rounded-2xl p-6 border border-white/10 shadow-premium-xl">
       {/* Decorative gradient orbs */}
       <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-accent-purple/20 to-transparent rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-gradient-to-br from-accent-gold/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
