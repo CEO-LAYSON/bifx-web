@@ -368,3 +368,13 @@ html {
   opacity: 0;
   animation: ripple 0.6s ease-out;
 }
+
+/* Responsive scale for auth pages - 75% zoom on large screens */
+@media (min-width: 1024px) {
+  .lg\:scale-75 {
+    transform: scale(0.75);
+  }
+  .lg\:origin-top {
+    transform-origin: top center;
+  }
+}
