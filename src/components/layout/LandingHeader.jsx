@@ -83,10 +83,10 @@ const LandingHeader = () => {
               <img
                 src="/bifx-black-logo.jpeg"
                 alt="BIFX Logo"
-                className="h-20 w-auto object-contain rounded-2xl shadow-premium-lg transition-all duration-300 group-hover:shadow-premium-glow"
+                className="h-20 w-auto object-contain rounded-full shadow-premium-lg transition-all duration-300 group-hover:shadow-premium-glow"
               />
               {/* Glow effect on hover */}
-              <div className="absolute inset-0 rounded-2xl bg-accent-purple/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl" />
+              <div className="absolute inset-0 rounded-full bg-accent-purple/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl" />
             </div>
           </Link>
 

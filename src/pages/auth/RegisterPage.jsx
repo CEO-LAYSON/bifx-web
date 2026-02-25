@@ -38,11 +38,11 @@ const RegisterPage = () => {
         <div className="relative z-10 flex flex-col justify-center items-center w-full px-8 text-white lg:scale-75 lg:origin-top">
           {/* Logo */}
           <div className="mb-6 relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary-purple/40 to-primary-gold/20 blur-2xl rounded-2xl"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-purple/40 to-primary-gold/20 blur-2xl rounded-full"></div>
             <img
               src="/bifx-black-logo.jpeg"
               alt="BIFX Logo"
-              className="w-48 h-48 object-contain rounded-2xl shadow-2xl relative z-10"
+              className="w-48 h-48 object-contain rounded-full shadow-2xl relative z-10"
             />
           </div>
 
