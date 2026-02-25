@@ -97,7 +97,7 @@ const Header = ({ onMenuClick }) => {
                   </button>
                 </Link>
                 <Link to={ROUTES.REGISTER}>
-                  <button className="px-5 py-2 rounded-lg text-sm font-semibold text-gray-900 bg-gradient-to-r from-primary-gold to-yellow-400 hover:from-yellow-400 hover:to-yellow-500 shadow-lg shadow-yellow-500/25 hover:shadow-yellow-500/40 transition-all duration-200 transform hover:scale-105">
+                  <button className="px-5 py-2 rounded-lg text-sm font-semibold text-gray-900 bg-gradient-to-r from-amber-600 to-yellow-500 hover:from-amber-500 hover:to-yellow-400 shadow-lg shadow-amber-900/20 hover:shadow-amber-800/30 transition-all duration-200 transform hover:scale-105">
                     Sign Up
                   </button>
                 </Link>
