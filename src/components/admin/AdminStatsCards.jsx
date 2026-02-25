@@ -90,12 +90,12 @@ const AdminStatsCards = ({ stats }) => {
           >
             {/* Gradient Background */}
             <div
-              className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} opacity-50 group-hover:opacity-75 transition-opacity duration-500`}
+              className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} opacity-50 group-hover:opacity-60 transition-opacity duration-500`}
             />
 
             {/* Glow Effect */}
             <div
-              className={`absolute inset-0 ${stat.glowColor} opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl`}
+              className={`absolute inset-0 ${stat.glowColor} opacity-0 group-hover:opacity-50 transition-all duration-500 blur-xl`}
             />
 
             {/* Card Content */}

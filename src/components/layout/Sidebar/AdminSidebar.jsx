@@ -41,7 +41,7 @@ const AdminSidebar = ({ onClose, isMobile = false }) => {
       {/* Sidebar Header */}
       {!isMobile && (
         <div className="flex items-center justify-center h-20 px-4 border-b border-gray-700">
-          <div className="w-10 h-10 bg-primary-gold rounded-lg flex items-center justify-center mr-3">
+          <div className="w-10 h-10 bg-primary-gold rounded-full flex items-center justify-center mr-3">
             <Shield size={20} className="text-gray-900" />
           </div>
           <div>
