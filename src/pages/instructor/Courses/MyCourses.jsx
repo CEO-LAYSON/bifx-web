@@ -145,7 +145,7 @@ const MyCourses = () => {
         {courses.map((course, index) => (
           <div
             key={course.id}
-            className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/80 via-gray-900/80 to-black/80 border border-white/10 backdrop-blur-xl hover:border-purple-500/30 transition-all duration-500 hover:shadow-[0_0_40px_rgba(139,92,246,0.3)] hover:-translate-y-1"
+            className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/80 via-gray-900/80 to-black/80 border border-white/10 backdrop-blur-xl hover:border-purple-500/20 transition-all duration-500 hover:shadow-[0_0_40px_rgba(139,92,246,0.2)] hover:-translate-y-1"
           >
             {/* Animated Background Effect */}
             <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

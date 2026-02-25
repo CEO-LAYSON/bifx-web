@@ -401,7 +401,7 @@ const AnalyticsPage = () => {
               </div>
 
               {/* Content Performance */}
-              <div className="relative group bg-gradient-to-br from-gray-900/60 to-gray-800/60 rounded-2xl p-6 border border-gray-700/50 hover:border-purple-500/30 transition-all duration-500">
+              <div className="relative group bg-gradient-to-br from-gray-900/60 to-gray-800/60 rounded-2xl p-6 border border-gray-700/50 hover:border-purple-500/20 transition-all duration-500">
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-600/5 to-pink-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
                 <div className="relative">
                   <div className="flex items-center space-x-3 mb-6">

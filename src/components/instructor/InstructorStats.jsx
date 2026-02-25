@@ -92,14 +92,14 @@ const InstructorStats = ({ stats }) => {
         return (
           <div
             key={index}
-            className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${stat.gradient} border ${stat.borderColor} ${stat.hoverBorder} transition-all duration-500 hover:shadow-[0_0_30px_rgba(0,0,0,0.5)] hover:-translate-y-1`}
+            className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${stat.gradient} border ${stat.borderColor} ${stat.hoverBorder} transition-all duration-500 hover:shadow-[0_0_20px_rgba(0,0,0,0.3)] hover:-translate-y-1`}
           >
             {/* Animated Background Effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent opacity-0 group-hover:opacity-50 transition-opacity duration-500" />
 
             {/* Glow Effect */}
             <div
-              className={`absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl bg-gradient-to-r ${stat.color} blur-sm ${stat.glowColor}`}
+              className={`absolute -inset-px opacity-0 group-hover:opacity-50 transition-opacity duration-500 rounded-2xl bg-gradient-to-r ${stat.color} blur-sm ${stat.glowColor}`}
               style={{ margin: "-1px" }}
             />
 
@@ -110,7 +110,7 @@ const InstructorStats = ({ stats }) => {
                   className={`relative p-3 rounded-xl bg-gradient-to-br ${stat.color} shadow-lg ${stat.glowColor} transition-transform duration-300 group-hover:scale-110`}
                 >
                   <Icon className="h-5 w-5 text-white" />
-                  <div className="absolute inset-0 rounded-xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 rounded-xl bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
                 <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 border border-white/10">
                   <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
@@ -141,13 +141,13 @@ const InstructorStats = ({ stats }) => {
               {/* Decorative Elements */}
               <div className="absolute top-0 right-0 w-16 h-16">
                 <div
-                  className={`absolute top-[-20px] right-[-20px] w-24 h-24 rounded-full bg-gradient-to-br ${stat.color} opacity-5 group-hover:opacity-10 transition-opacity duration-500`}
+                  className={`absolute top-[-20px] right-[-20px] w-24 h-24 rounded-full bg-gradient-to-br ${stat.color} opacity-5 group-hover:opacity-5 transition-opacity duration-500`}
                 />
               </div>
 
               {/* Animated underline on hover */}
               <div
-                className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${stat.color} opacity-0 group-hover:opacity-100 transition-all duration-500 transform scale-x-0 group-hover:scale-x-100`}
+                className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${stat.color} opacity-0 group-hover:opacity-60 transition-all duration-500 transform scale-x-0 group-hover:scale-x-100`}
               />
             </div>
 

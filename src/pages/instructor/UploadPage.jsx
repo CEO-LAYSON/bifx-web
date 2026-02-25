@@ -396,7 +396,7 @@ const InstructorUploadPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Upload Configuration */}
           <div className="space-y-6">
-            <div className="relative bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl rounded-2xl p-6 border border-purple-500/20 shadow-xl hover:border-purple-500/30 transition-all duration-500">
+            <div className="relative bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl rounded-2xl p-6 border border-purple-500/20 shadow-xl hover:border-purple-500/20 transition-all duration-500">
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 via-transparent to-transparent"></div>
 
               <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
@@ -542,7 +542,7 @@ const InstructorUploadPage = () => {
           {/* File Upload Section */}
           <div className="space-y-6">
             {/* Video Upload */}
-            <div className="relative bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl rounded-2xl p-6 border border-purple-500/20 shadow-xl hover:border-purple-500/30 transition-all duration-500">
+            <div className="relative bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl rounded-2xl p-6 border border-purple-500/20 shadow-xl hover:border-purple-500/20 transition-all duration-500">
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 via-transparent to-transparent"></div>
 
               <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
@@ -577,7 +577,7 @@ const InstructorUploadPage = () => {
                       : "border-gray-700 hover:border-purple-500/50 hover:bg-gray-900/60"
                   }`}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-600/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-600/5 to-transparent opacity-0 hover:opacity-50 transition-opacity duration-300"></div>
                   <div
                     className={`absolute inset-0 border-2 border-purple-500/30 rounded-2xl opacity-0 transition-opacity duration-300 ${
                       isDragOver ? "opacity-100" : ""
@@ -657,7 +657,7 @@ const InstructorUploadPage = () => {
             </div>
 
             {/* Thumbnail Upload */}
-            <div className="relative bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl rounded-2xl p-6 border border-purple-500/20 shadow-xl hover:border-purple-500/30 transition-all duration-500">
+            <div className="relative bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl rounded-2xl p-6 border border-purple-500/20 shadow-xl hover:border-purple-500/20 transition-all duration-500">
               <div className="absolute inset-0 bg-gradient-to-r from-gold-600/5 via-transparent to-transparent"></div>
 
               <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
@@ -684,7 +684,7 @@ const InstructorUploadPage = () => {
                   htmlFor="thumbnail-upload"
                   className="relative flex items-center justify-center w-full h-32 rounded-2xl border-2 border-dashed border-gray-700 hover:border-gold-500/50 cursor-pointer transition-all duration-300 hover:bg-gray-900/60"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-gold-600/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-gold-600/5 to-transparent opacity-0 hover:opacity-50 transition-opacity duration-300"></div>
                   <div className="relative text-center">
                     <div className="relative mx-auto mb-3">
                       <div className="absolute inset-0 bg-gradient-to-r from-gold-600 to-gold-400 rounded-full blur-lg opacity-50"></div>
@@ -790,7 +790,7 @@ const InstructorUploadPage = () => {
             size="lg"
             className="px-16 relative overflow-hidden"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-700 to-gold-600 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-800 to-gold-700 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
             {isUploading ? (
               <span className="relative flex items-center gap-2">
                 <div className="relative">

@@ -371,7 +371,7 @@ const InstructorStudentsPage = () => {
               {filteredStudents.map((student, index) => (
                 <div
                   key={student.id}
-                  className="relative group bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-xl rounded-2xl p-6 border border-gray-700/50 hover:border-purple-500/30 transition-all duration-500 animate-fade-up"
+                  className="relative group bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-xl rounded-2xl p-6 border border-gray-700/50 hover:border-purple-500/20 transition-all duration-500 animate-fade-up"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 via-transparent to-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
