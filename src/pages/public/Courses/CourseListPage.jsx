@@ -71,9 +71,9 @@ const CourseListPage = () => {
   }, [courses, searchQuery, filters]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-dark-950 via-dark-900 to-black relative">
+    <div className="min-h-screen bg-gradient-to-br from-dark-950 via-dark-900 to-black relative overflow-x-hidden hide-scrollbar">
       {/* Background Effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none overflow-x-hidden">
         {/* Gradient Orbs */}
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary-purple/20 rounded-full blur-[120px] animate-pulse"></div>
         <div
@@ -89,7 +89,7 @@ const CourseListPage = () => {
       <LandingHeader />
 
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden overflow-x-hidden">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           {/* Page Header */}
           <div className="text-center mb-16">
