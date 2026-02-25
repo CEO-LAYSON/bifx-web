@@ -80,19 +80,9 @@ const CourseFilter = ({
     onChange,
     isOpen,
     setIsOpen,
-    label,
-    colorClass,
+    selectRef,
   }) => (
-    <div
-      className="relative group"
-      ref={
-        isOpen === levelFilterOpen
-          ? levelRef
-          : isOpen === priceFilterOpen
-          ? priceRef
-          : durationRef
-      }
-    >
+    <div className="relative group" ref={selectRef}>
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
@@ -103,13 +93,13 @@ const CourseFilter = ({
         </span>
         <ChevronDown
           size={16}
-          className={`text-gray-400 pointer-events-none transition-transform duration-300 ${
-            isOpen ? "rotate-180" : ""
+          className={`text-gray-400 pointer-events-none transition ${
+            isOpen ? "rotate-transform duration-300-180" : ""
           }`}
         />
       </button>
       {isOpen && (
-        <div className="absolute z-50 w-full mt-2 bg-dark-800 border border-white/10 rounded-xl shadow-premium-xl overflow-hidden">
+        <div className="absolute z-[9999] w-full mt-2 bg-dark-800 border border-white/10 rounded-xl shadow-premium-xl overflow-hidden max-h-60 overflow-y-auto">
           {options.map((option) => (
             <button
               key={option.value}
@@ -133,7 +123,7 @@ const CourseFilter = ({
   );
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-br from-dark-800/80 to-dark-900/80 backdrop-blur-xl rounded-2xl p-6 border border-white/10 shadow-premium-xl">
+    <div className="relative bg-gradient-to-br from-dark-800/80 to-dark-900/80 backdrop-blur-xl rounded-2xl p-6 border border-white/10 shadow-premium-xl">
       {/* Decorative gradient orbs */}
       <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-accent-purple/20 to-transparent rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-gradient-to-br from-accent-gold/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
@@ -211,6 +201,7 @@ const CourseFilter = ({
               onChange={(value) => handleFilterChange("level", value)}
               isOpen={levelFilterOpen}
               setIsOpen={setLevelFilterOpen}
+              selectRef={levelRef}
             />
           </div>
 
@@ -226,6 +217,7 @@ const CourseFilter = ({
               onChange={(value) => handleFilterChange("price", value)}
               isOpen={priceFilterOpen}
               setIsOpen={setPriceFilterOpen}
+              selectRef={priceRef}
             />
           </div>
 
@@ -241,6 +233,7 @@ const CourseFilter = ({
               onChange={(value) => handleFilterChange("duration", value)}
               isOpen={durationFilterOpen}
               setIsOpen={setDurationFilterOpen}
+              selectRef={durationRef}
             />
           </div>
         </div>
