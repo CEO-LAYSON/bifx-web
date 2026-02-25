@@ -186,7 +186,7 @@ const CourseManagementTable = () => {
   return (
     <div className="relative group">
       {/* Glow Effect */}
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-gold/30 via-primary-purple/20 to-primary-gold/30 rounded-2xl blur opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-gold/30 via-primary-purple/20 to-primary-gold/30 rounded-2xl blur opacity-40 group-hover:opacity-30 transition-opacity duration-500" />
 
       <div className="relative bg-gray-800/90 backdrop-blur-xl rounded-2xl border border-gray-700/50 overflow-hidden">
         {/* Header */}

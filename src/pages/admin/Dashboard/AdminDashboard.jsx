@@ -161,7 +161,7 @@ const AdminDashboard = () => {
           {/* Quick Actions */}
           <div className="lg:col-span-2">
             <div className="relative group">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-purple/20 to-primary-gold/20 rounded-2xl blur opacity-50 group-hover:opacity-75 transition-opacity duration-500" />
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-purple/20 to-primary-gold/20 rounded-2xl blur opacity-50 group-hover:opacity-40 transition-opacity duration-500" />
               <div className="relative bg-gray-800/80 backdrop-blur-xl rounded-2xl p-6 border border-gray-700/50">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-primary-purple/20 rounded-lg">
@@ -204,7 +204,7 @@ const AdminDashboard = () => {
           {/* Recent Activity */}
           <div className="lg:col-span-1">
             <div className="relative group h-full">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-gold/20 to-primary-purple/20 rounded-2xl blur opacity-50 group-hover:opacity-75 transition-opacity duration-500" />
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-gold/20 to-primary-purple/20 rounded-2xl blur opacity-50 group-hover:opacity-40 transition-opacity duration-500" />
               <div className="relative bg-gray-800/80 backdrop-blur-xl rounded-2xl p-6 border border-gray-700/50 h-full">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-primary-gold/20 rounded-lg">

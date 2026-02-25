@@ -45,7 +45,7 @@ const EnrollmentList = () => {
             {/* Title and Description */}
             <div className="flex items-start gap-4">
               <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-gold to-primary-purple rounded-xl blur opacity-50 group-hover:opacity-75 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-gold to-primary-purple rounded-xl blur opacity-50 group-hover:opacity-40 transition-opacity" />
                 <div className="relative p-3 bg-gradient-to-br from-primary-gold to-primary-purple rounded-xl">
                   <BookOpen size={28} className="text-white" />
                 </div>
@@ -68,7 +68,7 @@ const EnrollmentList = () => {
             {/* Quick Stats */}
             <div className="flex gap-4">
               <div className="relative group/stat">
-                <div className="absolute inset-0 bg-yellow-500/20 rounded-xl blur-md opacity-0 group-hover/stat:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-yellow-500/20 rounded-xl blur-md opacity-0 group-hover/stat:opacity-50 transition-opacity" />
                 <div className="relative bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl px-5 py-3 flex items-center gap-3">
                   <div className="p-2 bg-yellow-500/20 rounded-lg">
                     <Clock size={20} className="text-yellow-400" />
@@ -83,7 +83,7 @@ const EnrollmentList = () => {
               </div>
 
               <div className="relative group/stat">
-                <div className="absolute inset-0 bg-green-500/20 rounded-xl blur-md opacity-0 group-hover/stat:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-green-500/20 rounded-xl blur-md opacity-0 group-hover/stat:opacity-50 transition-opacity" />
                 <div className="relative bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl px-5 py-3 flex items-center gap-3">
                   <div className="p-2 bg-green-500/20 rounded-lg">
                     <CheckCircle size={20} className="text-green-400" />
@@ -98,7 +98,7 @@ const EnrollmentList = () => {
               </div>
 
               <div className="relative group/stat">
-                <div className="absolute inset-0 bg-purple-500/20 rounded-xl blur-md opacity-0 group-hover/stat:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-purple-500/20 rounded-xl blur-md opacity-0 group-hover/stat:opacity-50 transition-opacity" />
                 <div className="relative bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl px-5 py-3 flex items-center gap-3">
                   <div className="p-2 bg-purple-500/20 rounded-lg">
                     <Users size={20} className="text-purple-400" />
