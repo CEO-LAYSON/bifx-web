@@ -51,7 +51,7 @@ const RegisterForm = () => {
   return (
     <div className="w-full max-w-md">
       {/* Mobile Logo - Only visible on small screens */}
-      <div className="lg:hidden text-center mb-8">
+      <div className="lg:hidden text-center mb-6">
         <div className="relative inline-block mb-4">
           <img
             src="/bifx-black-logo.jpeg"
@@ -65,7 +65,7 @@ const RegisterForm = () => {
       </div>
 
       {/* Desktop Welcome - Only visible on large screens */}
-      <div className="hidden lg:block text-center mb-8">
+      <div className="hidden lg:block text-center mb-6">
         <div className="relative inline-block mb-4">
           <div className="absolute inset-0 bg-gradient-to-br from-primary-purple/30 to-primary-gold/20 blur-2xl rounded-full"></div>
           <img
@@ -93,7 +93,7 @@ const RegisterForm = () => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Full Name Input */}
         <div className="relative group">
           <label
@@ -111,7 +111,7 @@ const RegisterForm = () => {
               type="text"
               placeholder="Enter your full name"
               autoComplete="name"
-              className={`w-full pl-12 pr-4 py-4 bg-gray-900/60 border rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-purple/50 focus:border-primary-purple transition-all duration-300 backdrop-blur-sm ${
+              className={`w-full pl-12 pr-4 py-3 bg-gray-900/60 border rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-purple/50 focus:border-primary-purple transition-all duration-300 backdrop-blur-sm ${
                 errors.fullName
                   ? "border-red-500 bg-red-500/5"
                   : "border-gray-700 hover:border-gray-600 hover:bg-gray-900/80"
@@ -144,7 +144,7 @@ const RegisterForm = () => {
               type="email"
               placeholder="Enter your email"
               autoComplete="username"
-              className={`w-full pl-12 pr-4 py-4 bg-gray-900/60 border rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-purple/50 focus:border-primary-purple transition-all duration-300 backdrop-blur-sm ${
+              className={`w-full pl-12 pr-4 py-3 bg-gray-900/60 border rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-purple/50 focus:border-primary-purple transition-all duration-300 backdrop-blur-sm ${
                 errors.email
                   ? "border-red-500 bg-red-500/5"
                   : "border-gray-700 hover:border-gray-600 hover:bg-gray-900/80"
@@ -177,7 +177,7 @@ const RegisterForm = () => {
               type="tel"
               placeholder="Enter your phone number"
               autoComplete="tel"
-              className={`w-full pl-12 pr-4 py-4 bg-gray-900/60 border rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-purple/50 focus:border-primary-purple transition-all duration-300 backdrop-blur-sm ${
+              className={`w-full pl-12 pr-4 py-3 bg-gray-900/60 border rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-purple/50 focus:border-primary-purple transition-all duration-300 backdrop-blur-sm ${
                 errors.phone
                   ? "border-red-500 bg-red-500/5"
                   : "border-gray-700 hover:border-gray-600 hover:bg-gray-900/80"
@@ -210,7 +210,7 @@ const RegisterForm = () => {
               type={showPassword ? "text" : "password"}
               placeholder="Create a password"
               autoComplete="new-password"
-              className={`w-full pl-12 pr-14 py-4 bg-gray-900/60 border rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-purple/50 focus:border-primary-purple transition-all duration-300 backdrop-blur-sm ${
+              className={`w-full pl-12 pr-14 py-3 bg-gray-900/60 border rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-purple/50 focus:border-primary-purple transition-all duration-300 backdrop-blur-sm ${
                 errors.password
                   ? "border-red-500 bg-red-500/5"
                   : "border-gray-700 hover:border-gray-600 hover:bg-gray-900/80"
@@ -366,20 +366,20 @@ const RegisterForm = () => {
         <Button
           type="submit"
           variant="primary"
-          size="lg"
+          size="md"
           loading={isLoading}
           className="w-full group relative overflow-hidden mt-2"
         >
           <span className="flex items-center justify-center gap-2 relative z-10">
             Create Account
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
           </span>
           <div className="absolute inset-0 bg-gradient-to-r from-primary-purple to-primary-gold opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </Button>
       </form>
 
       {/* Login Link */}
-      <div className="mt-8 text-center">
+      <div className="mt-6 text-center">
         <p className="text-gray-400">
           Already have an account?{" "}
           <Link

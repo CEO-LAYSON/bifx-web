@@ -37,9 +37,9 @@ const LoginPage = () => {
         <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%239C92AC%22 fill-opacity=%220.05%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
 
         {/* Content */}
-        <div className="relative z-10 flex flex-col justify-center items-center w-full px-12 text-white">
+        <div className="relative z-10 flex flex-col justify-center items-center w-full px-8 text-white">
           {/* Logo */}
-          <div className="mb-8">
+          <div className="mb-6">
             <img
               src="/bifx-black-logo.jpeg"
               alt="BIFX Logo"
@@ -48,16 +48,16 @@ const LoginPage = () => {
           </div>
 
           {/* Brand Text */}
-          <h1 className="text-5xl font-bold mb-4 text-center">BIFX</h1>
-          <p className="text-xl text-purple-200 mb-8 text-center max-w-md">
+          <h1 className="text-4xl font-bold mb-3 text-center">BIFX</h1>
+          <p className="text-lg text-purple-200 mb-6 text-center max-w-md">
             Master the art of forex trading with our professional education
             platform
           </p>
 
           {/* Features List */}
-          <div className="space-y-4 w-full max-w-sm">
-            <div className="flex items-center gap-3 text-purple-100">
-              <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center">
+          <div className="space-y-3 w-full max-w-sm">
+            <div className="flex items-center gap-2 text-purple-100">
+              <div className="w-6 h-6 bg-white/10 rounded-lg flex items-center justify-center">
                 <svg
                   className="w-4 h-4"
                   fill="currentColor"
@@ -109,7 +109,7 @@ const LoginPage = () => {
       </div>
 
       {/* Right Panel - Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-12 bg-black">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-8 bg-black">
         <LoginForm />
       </div>
     </div>

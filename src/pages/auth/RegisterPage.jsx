@@ -13,7 +13,7 @@ const RegisterPage = () => {
   return (
     <div className="min-h-screen w-full flex">
       {/* Left Panel - Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-12 bg-black order-2 lg:order-1">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-8 bg-black order-2 lg:order-1">
         <RegisterForm />
       </div>
 
@@ -33,9 +33,9 @@ const RegisterPage = () => {
         <div className="absolute inset-0 bg-[url('data:image/svgCsvg width=%2260%22 height=%2260+xml,%3%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%239C92AC%22 fill-opacity=%220.05%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
 
         {/* Content */}
-        <div className="relative z-10 flex flex-col justify-center items-center w-full px-12 text-white">
+        <div className="relative z-10 flex flex-col justify-center items-center w-full px-8 text-white">
           {/* Logo */}
-          <div className="mb-8 relative">
+          <div className="mb-6 relative">
             <div className="absolute inset-0 bg-gradient-to-br from-primary-purple/40 to-primary-gold/20 blur-2xl rounded-2xl"></div>
             <img
               src="/bifx-black-logo.jpeg"
@@ -45,38 +45,38 @@ const RegisterPage = () => {
           </div>
 
           {/* Brand Text */}
-          <h1 className="text-5xl font-bold mb-4 text-center bg-gradient-to-r from-white via-purple-100 to-purple-200 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold mb-3 text-center bg-gradient-to-r from-white via-purple-100 to-purple-200 bg-clip-text text-transparent">
             Join BIFX
           </h1>
-          <p className="text-xl text-purple-200 mb-8 text-center max-w-md">
+          <p className="text-lg text-purple-200 mb-6 text-center max-w-md">
             Start your forex trading journey with world-class education
           </p>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 gap-4 w-full max-w-sm">
-            <div className="text-center p-4 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10 hover:border-primary-gold/30 hover:bg-white/10 transition-all duration-300 group">
-              <div className="text-3xl font-bold bg-gradient-to-r from-primary-gold to-yellow-400 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
+          <div className="grid grid-cols-2 gap-3 w-full max-w-sm">
+            <div className="text-center p-3 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10 hover:border-primary-gold/30 hover:bg-white/10 transition-all duration-300 group">
+              <div className="text-2xl font-bold bg-gradient-to-r from-primary-gold to-yellow-400 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
                 10K+
               </div>
-              <div className="text-sm text-purple-200">Students</div>
+              <div className="text-xs text-purple-200">Students</div>
             </div>
-            <div className="text-center p-4 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10 hover:border-primary-gold/30 hover:bg-white/10 transition-all duration-300 group">
-              <div className="text-3xl font-bold bg-gradient-to-r from-primary-gold to-yellow-400 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
+            <div className="text-center p-3 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10 hover:border-primary-gold/30 hover:bg-white/10 transition-all duration-300 group">
+              <div className="text-2xl font-bold bg-gradient-to-r from-primary-gold to-yellow-400 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
                 50+
               </div>
-              <div className="text-sm text-purple-200">Courses</div>
+              <div className="text-xs text-purple-200">Courses</div>
             </div>
-            <div className="text-center p-4 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10 hover:border-primary-gold/30 hover:bg-white/10 transition-all duration-300 group">
-              <div className="text-3xl font-bold bg-gradient-to-r from-primary-gold to-yellow-400 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
+            <div className="text-center p-3 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10 hover:border-primary-gold/30 hover:bg-white/10 transition-all duration-300 group">
+              <div className="text-2xl font-bold bg-gradient-to-r from-primary-gold to-yellow-400 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
                 100+
               </div>
-              <div className="text-sm text-purple-200">Live Sessions</div>
+              <div className="text-xs text-purple-200">Live Sessions</div>
             </div>
-            <div className="text-center p-4 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10 hover:border-primary-gold/30 hover:bg-white/10 transition-all duration-300 group">
-              <div className="text-3xl font-bold bg-gradient-to-r from-primary-gold to-yellow-400 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
+            <div className="text-center p-3 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10 hover:border-primary-gold/30 hover:bg-white/10 transition-all duration-300 group">
+              <div className="text-2xl font-bold bg-gradient-to-r from-primary-gold to-yellow-400 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
                 4.9
               </div>
-              <div className="text-sm text-purple-200">Rating</div>
+              <div className="text-xs text-purple-200">Rating</div>
             </div>
           </div>
         </div>
