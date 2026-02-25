@@ -369,8 +369,11 @@ html {
   animation: ripple 0.6s ease-out;
 }
 
-/* Responsive scale for auth pages - 75% zoom on large screens */
+/* Responsive scale for auth pages - 90% zoom on large screens */
 @media (min-width: 1024px) {
+  .lg\:scale-90 {
+    transform: scale(0.9);
+  }
   .lg\:scale-75 {
     transform: scale(0.75);
   }
