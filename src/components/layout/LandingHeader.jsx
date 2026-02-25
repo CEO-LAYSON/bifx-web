@@ -62,7 +62,7 @@ const LandingHeader = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-500 ${
         isScrolled
           ? "bg-dark-900/95 backdrop-blur-xl shadow-premium border-b border-dark-700/50"
           : "bg-transparent"
