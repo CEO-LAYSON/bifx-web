@@ -131,7 +131,7 @@ const InstructorDashboard = () => {
         {/* Quick Actions */}
         <div className="lg:col-span-2">
           <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/80 via-gray-900/80 to-black/80 p-6 border border-white/10 backdrop-blur-xl">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 opacity-0 hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 opacity-0 hover:opacity-30 transition-opacity duration-500" />
             <div className="relative z-10">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-1 h-6 bg-gradient-to-b from-blue-400 to-purple-600 rounded-full" />
@@ -146,7 +146,7 @@ const InstructorDashboard = () => {
                       to={action.href}
                       className={`relative group overflow-hidden rounded-xl p-4 bg-gray-800/50 border ${action.borderColor} ${action.hoverBorder} transition-all duration-500`}
                     >
-                      <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       <div className="flex items-center gap-4 relative z-10">
                         <div
                           className={`p-3 rounded-xl bg-gradient-to-br ${action.color} shadow-lg ${action.shadowColor}`}
@@ -163,7 +163,7 @@ const InstructorDashboard = () => {
                           </p>
                         </div>
                       </div>
-                      <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-white/10 to-transparent rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-white/10 to-transparent rounded-full blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-500" />
                     </Link>
                   );
                 })}
@@ -175,7 +175,7 @@ const InstructorDashboard = () => {
         {/* Recent Courses */}
         <div className="lg:col-span-1">
           <div className="relative overflow-hidden rounded-2xl bg-gray-900/80 p-6 border border-gray-800 backdrop-blur-xl h-full">
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-pink-500/5 to-yellow-500/5 opacity-0 hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-pink-500/5 to-yellow-500/5 opacity-0 hover:opacity-30 transition-opacity duration-500" />
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
@@ -198,7 +198,7 @@ const InstructorDashboard = () => {
                   <Link
                     key={course.id}
                     to={`/instructor/courses/${course.id}`}
-                    className="relative group overflow-hidden rounded-xl p-4 bg-gray-800/50 border border-gray-700 hover:border-purple-500/50 transition-all duration-300"
+                    className="relative group overflow-hidden rounded-xl p-4 bg-gray-800/50 border border-gray-700 hover:border-purple-500/30 transition-all duration-300"
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-lg bg-gray-800 border border-gray-700 flex items-center justify-center overflow-hidden">
@@ -259,7 +259,7 @@ const InstructorDashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Top Performing Courses */}
         <div className="relative overflow-hidden rounded-2xl bg-gray-900/80 p-6 border border-gray-800 backdrop-blur-xl">
-          <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/5 via-orange-500/5 to-red-500/5 opacity-0 hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/5 via-orange-500/5 to-red-500/5 opacity-0 hover:opacity-30 transition-opacity duration-500" />
           <div className="relative z-10">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-1 h-6 bg-gradient-to-b from-yellow-400 to-orange-600 rounded-full" />
@@ -271,7 +271,7 @@ const InstructorDashboard = () => {
               {courses.slice(0, 3).map((course, index) => (
                 <div
                   key={course.id}
-                  className="relative group overflow-hidden rounded-xl p-3 bg-black/20 border border-white/5 hover:border-yellow-500/30 transition-all duration-300"
+                  className="relative group overflow-hidden rounded-xl p-3 bg-black/20 border border-white/5 hover:border-yellow-500/20 transition-all duration-300"
                 >
                   <div className="flex items-center gap-3">
                     <div
@@ -305,7 +305,7 @@ const InstructorDashboard = () => {
 
         {/* Student Engagement */}
         <div className="relative overflow-hidden rounded-2xl bg-gray-900/80 p-6 border border-gray-800 backdrop-blur-xl">
-          <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 via-teal-500/5 to-cyan-500/5 opacity-0 hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 via-teal-500/5 to-cyan-500/5 opacity-0 hover:opacity-30 transition-opacity duration-500" />
           <div className="relative z-10">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-1 h-6 bg-gradient-to-b from-green-400 to-teal-600 rounded-full" />
@@ -346,7 +346,7 @@ const InstructorDashboard = () => {
               ].map((item, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center justify-between p-4 rounded-xl bg-black/20 border border-white/5 hover:border-green-500/30 transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,197,94,0.1)]"
+                  className="flex items-center justify-between p-4 rounded-xl bg-black/20 border border-white/5 hover:border-green-500/20 transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,197,94,0.05)]"
                 >
                   <div className="flex items-center gap-3">
                     <div className={`p-2 rounded-lg ${item.bgColor}`}>
