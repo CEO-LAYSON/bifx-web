@@ -110,18 +110,18 @@ const AssignmentsPage = () => {
     <div className="space-y-8">
       {/* Premium Header */}
       <div className="relative overflow-hidden rounded-2xl">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-purple/20 via-blue-500/10 to-cyan-500/10 animate-gradient"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary-purple/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-purple-900/10 rounded-full blur-3xl animate-pulse"></div>
         <div
-          className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"
+          className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-900/10 rounded-full blur-3xl animate-pulse"
           style={{ animationDelay: "1s" }}
         ></div>
 
-        <div className="relative glass rounded-2xl p-8 border border-white/10">
+        <div className="relative bg-gray-900/80 rounded-2xl p-8 border border-gray-800">
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
               <h1 className="text-4xl font-bold text-white mb-2 animate-fade-up">
-                <span className="text-gradient bg-gradient-to-r from-primary-purple via-blue-400 to-cyan-400">
+                <span className="text-gradient bg-gradient-to-r from-purple-700 via-blue-400 to-cyan-400">
                   Assignments
                 </span>
               </h1>
@@ -133,9 +133,9 @@ const AssignmentsPage = () => {
               </p>
             </div>
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 px-4 py-2 bg-primary-purple/20 rounded-full border border-primary-purple/30">
-                <Target className="w-4 h-4 text-primary-purple" />
-                <span className="text-primary-purple text-sm font-medium">
+              <div className="flex items-center gap-2 px-4 py-2 bg-gray-800/50 rounded-full border border-gray-700">
+                <Target className="w-4 h-4 text-purple-500" />
+                <span className="text-purple-400 text-sm font-medium">
                   Complete all to earn certificate
                 </span>
               </div>
@@ -146,7 +146,7 @@ const AssignmentsPage = () => {
 
       {/* Premium Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="group glass rounded-xl p-4 border border-white/10 hover-lift card-glow">
+        <div className="group bg-gray-900/80 rounded-xl p-4 border border-gray-800 hover-lift card-glow">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-gradient-to-br from-blue-500/20 to-blue-600/20 rounded-lg flex items-center justify-center">
               <FileText className="w-5 h-5 text-blue-400" />
@@ -200,7 +200,7 @@ const AssignmentsPage = () => {
       </div>
 
       {/* Filters */}
-      <div className="glass rounded-xl p-2 border border-white/10 w-fit">
+      <div className="bg-gray-900/80 rounded-xl p-2 border border-gray-800 w-fit">
         <div className="flex flex-wrap gap-2">
           {[
             {

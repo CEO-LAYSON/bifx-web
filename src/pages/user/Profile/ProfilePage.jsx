@@ -137,18 +137,18 @@ const ProfilePage = () => {
     <div className="space-y-8">
       {/* Premium Header */}
       <div className="relative overflow-hidden rounded-2xl">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-purple/20 via-blue-500/10 to-cyan-500/10 animate-gradient"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary-purple/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-purple-900/10 rounded-full blur-3xl animate-pulse"></div>
         <div
-          className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"
+          className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-900/10 rounded-full blur-3xl animate-pulse"
           style={{ animationDelay: "1s" }}
         ></div>
 
-        <div className="relative glass rounded-2xl p-8 border border-white/10">
+        <div className="relative bg-gray-900/80 rounded-2xl p-8 border border-gray-800">
           <div className="flex items-start gap-6 flex-wrap">
             {/* Avatar */}
             <div className="relative">
-              <div className="w-28 h-28 rounded-2xl bg-gradient-to-br from-primary-purple via-blue-500 to-cyan-400 p-1">
+              <div className="w-28 h-28 rounded-2xl bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950 p-1 border border-gray-700">
                 <div className="w-full h-full rounded-xl bg-gray-900 flex items-center justify-center overflow-hidden">
                   {user?.avatar ? (
                     <img
@@ -198,15 +198,15 @@ const ProfilePage = () => {
                 className="flex flex-wrap gap-3 animate-fade-up"
                 style={{ animationDelay: "0.2s" }}
               >
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-primary-purple/20 rounded-full border border-primary-purple/30">
-                  <Award className="w-4 h-4 text-primary-purple" />
-                  <span className="text-primary-purple text-sm font-medium">
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-800/50 rounded-full border border-gray-700">
+                  <Award className="w-4 h-4 text-purple-500" />
+                  <span className="text-purple-400 text-sm font-medium">
                     Pro Member
                   </span>
                 </div>
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-primary-gold/10 rounded-full border border-primary-gold/20">
-                  <Star className="w-4 h-4 text-primary-gold" />
-                  <span className="text-primary-gold text-sm font-medium">
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-800/50 rounded-full border border-gray-700">
+                  <Star className="w-4 h-4 text-amber-600" />
+                  <span className="text-amber-500 text-sm font-medium">
                     Top Learner
                   </span>
                 </div>
@@ -281,7 +281,7 @@ const ProfilePage = () => {
                   <input
                     type="text"
                     defaultValue={user?.fullName}
-                    className="w-full px-4 py-3 bg-black/30 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-purple focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                   />
                 ) : (
                   <p className="text-white text-lg font-medium">

@@ -78,7 +78,7 @@ const LiveSessionsPage = () => {
           style={{ animationDelay: "1s" }}
         ></div>
 
-        <div className="relative glass rounded-2xl p-8 border border-white/10">
+        <div className="relative bg-gray-900/80 rounded-2xl p-8 border border-gray-800">
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
               <h1 className="text-4xl font-bold text-white mb-2 animate-fade-up">

@@ -103,12 +103,12 @@ const MyCoursesPage = () => {
   return (
     <div className="space-y-8">
       {/* Header Section with Premium Design */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-purple-900/80 via-gray-900 to-gray-900 border border-purple-500/20 p-8">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-gray-900 via-gray-900 to-gray-950 border border-gray-800 p-8">
         {/* Animated Background */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-24 -right-24 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute -top-24 -right-24 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl animate-pulse"></div>
           <div
-            className="absolute -bottom-32 -left-32 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl animate-pulse"
+            className="absolute -bottom-32 -left-32 w-80 h-80 bg-amber-600/5 rounded-full blur-3xl animate-pulse"
             style={{ animationDelay: "1s" }}
           ></div>
         </div>
@@ -125,7 +125,7 @@ const MyCoursesPage = () => {
             </div>
             <h1 className="text-3xl lg:text-4xl font-bold text-white mb-2">
               My{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-orange-600">
                 Courses
               </span>
             </h1>
@@ -137,7 +137,7 @@ const MyCoursesPage = () => {
           <div className="flex items-center gap-3">
             <Link
               to="/courses"
-              className="group flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-black font-semibold rounded-xl hover:from-amber-400 hover:to-orange-400 transition-all duration-300 shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40"
+              className="group flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-600 to-orange-600 text-black font-semibold rounded-xl hover:from-amber-500 hover:to-orange-500 transition-all duration-300 shadow-lg shadow-amber-900/25 hover:shadow-amber-800/40"
             >
               <Sparkles className="w-5 h-5" />
               Browse More
