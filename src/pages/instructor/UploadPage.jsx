@@ -790,7 +790,7 @@ const InstructorUploadPage = () => {
             size="lg"
             className="px-16 relative overflow-hidden"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-gold-500 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-700 to-gold-600 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
             {isUploading ? (
               <span className="relative flex items-center gap-2">
                 <div className="relative">

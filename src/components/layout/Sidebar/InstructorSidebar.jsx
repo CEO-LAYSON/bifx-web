@@ -44,8 +44,8 @@ const InstructorSidebar = ({ onClose, isMobile = false }) => {
       {/* Sidebar Header */}
       {!isMobile && (
         <div className="flex items-center justify-center h-20 px-4 border-b border-gray-700">
-          <div className="w-10 h-10 bg-primary-purple rounded-lg flex items-center justify-center mr-3">
-            <GraduationCap size={20} className="text-white" />
+          <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center mr-3 border border-gray-600">
+            <GraduationCap size={20} className="text-primary-purple" />
           </div>
           <div>
             <span className="text-white font-bold block">
@@ -74,7 +74,7 @@ const InstructorSidebar = ({ onClose, isMobile = false }) => {
           <Link
             to="instructor/courses/create"
             onClick={onClose}
-            className="flex items-center justify-center px-4 py-2 bg-primary-purple text-white text-sm rounded-lg hover:bg-purple-700 transition-colors"
+            className="flex items-center justify-center px-4 py-2 bg-purple-800 text-white text-sm rounded-lg hover:bg-purple-900 transition-colors"
           >
             <PlusCircle size={16} className="mr-2" />
             Create Course

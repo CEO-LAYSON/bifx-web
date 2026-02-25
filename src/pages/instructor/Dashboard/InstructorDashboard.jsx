@@ -93,14 +93,14 @@ const InstructorDashboard = () => {
       </div>
 
       {/* Header */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 p-8 border border-white/10 backdrop-blur-xl">
+      <div className="relative overflow-hidden rounded-2xl bg-gray-900/80 p-8 border border-gray-800 backdrop-blur-xl">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-transparent to-purple-500/5" />
         <div className="relative z-10">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
               <div className="flex items-center gap-3 mb-2">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-400 to-purple-500 rounded-xl flex items-center justify-center shadow-[0_0_30px_rgba(139,92,246,0.4)]">
-                  <Sparkles className="w-6 h-6 text-white" />
+                <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center border border-gray-700">
+                  <Sparkles className="w-6 h-6 text-primary-purple" />
                 </div>
                 <h1 className="text-3xl font-bold text-white">
                   Instructor Dashboard
@@ -111,9 +111,9 @@ const InstructorDashboard = () => {
               </p>
             </div>
             <div className="flex items-center gap-3">
-              <div className="px-4 py-2 bg-white/5 rounded-xl border border-white/10">
-                <span className="text-gray-300">Welcome back,</span>
-                <span className="text-yellow-400 font-semibold ml-2">
+              <div className="px-4 py-2 bg-gray-800/50 rounded-xl border border-gray-700">
+                <span className="text-gray-400">Welcome back,</span>
+                <span className="text-amber-500 font-semibold ml-2">
                   Instructor!
                 </span>
               </div>
@@ -144,9 +144,9 @@ const InstructorDashboard = () => {
                     <Link
                       key={index}
                       to={action.href}
-                      className={`relative group overflow-hidden rounded-xl p-4 bg-gradient-to-br ${action.bgGradient} border ${action.borderColor} ${action.hoverBorder} transition-all duration-500 hover:shadow-[0_0_30px_rgba(0,0,0,0.5)]`}
+                      className={`relative group overflow-hidden rounded-xl p-4 bg-gray-800/50 border ${action.borderColor} ${action.hoverBorder} transition-all duration-500`}
                     >
-                      <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       <div className="flex items-center gap-4 relative z-10">
                         <div
                           className={`p-3 rounded-xl bg-gradient-to-br ${action.color} shadow-lg ${action.shadowColor}`}
@@ -174,7 +174,7 @@ const InstructorDashboard = () => {
 
         {/* Recent Courses */}
         <div className="lg:col-span-1">
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/80 via-gray-900/80 to-black/80 p-6 border border-white/10 backdrop-blur-xl h-full">
+          <div className="relative overflow-hidden rounded-2xl bg-gray-900/80 p-6 border border-gray-800 backdrop-blur-xl h-full">
             <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-pink-500/5 to-yellow-500/5 opacity-0 hover:opacity-100 transition-opacity duration-500" />
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-6">
@@ -198,10 +198,10 @@ const InstructorDashboard = () => {
                   <Link
                     key={course.id}
                     to={`/instructor/courses/${course.id}`}
-                    className="relative group overflow-hidden rounded-xl p-4 bg-black/20 border border-white/5 hover:border-purple-500/30 transition-all duration-300 hover:shadow-[0_0_20px_rgba(139,92,246,0.2)]"
+                    className="relative group overflow-hidden rounded-xl p-4 bg-gray-800/50 border border-gray-700 hover:border-purple-500/50 transition-all duration-300"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-white/10 flex items-center justify-center overflow-hidden">
+                      <div className="w-12 h-12 rounded-lg bg-gray-800 border border-gray-700 flex items-center justify-center overflow-hidden">
                         {course.thumbnail ? (
                           <img
                             src={course.thumbnail}
@@ -235,14 +235,14 @@ const InstructorDashboard = () => {
                 ))}
 
                 {recentCourses.length === 0 && (
-                  <div className="relative overflow-hidden rounded-xl p-8 text-center bg-gradient-to-br from-gray-800/50 to-black/50 border border-white/5">
+                  <div className="relative overflow-hidden rounded-xl p-8 text-center bg-gray-800/50 border border-gray-700">
                     <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
                       <Plus className="w-8 h-8 text-gray-500" />
                     </div>
                     <p className="text-gray-400 mb-4">No courses yet</p>
                     <Link
                       to="/instructor/courses/create"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg text-white font-medium hover:shadow-[0_0_20px_rgba(139,92,246,0.4)] transition-all duration-300"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-purple-800 text-white rounded-lg font-medium hover:bg-purple-900 transition-all duration-300"
                     >
                       <Plus className="w-4 h-4" />
                       Create your first course
@@ -258,7 +258,7 @@ const InstructorDashboard = () => {
       {/* Performance Overview */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Top Performing Courses */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/80 via-gray-900/80 to-black/80 p-6 border border-white/10 backdrop-blur-xl">
+        <div className="relative overflow-hidden rounded-2xl bg-gray-900/80 p-6 border border-gray-800 backdrop-blur-xl">
           <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/5 via-orange-500/5 to-red-500/5 opacity-0 hover:opacity-100 transition-opacity duration-500" />
           <div className="relative z-10">
             <div className="flex items-center gap-3 mb-6">
@@ -304,7 +304,7 @@ const InstructorDashboard = () => {
         </div>
 
         {/* Student Engagement */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/80 via-gray-900/80 to-black/80 p-6 border border-white/10 backdrop-blur-xl">
+        <div className="relative overflow-hidden rounded-2xl bg-gray-900/80 p-6 border border-gray-800 backdrop-blur-xl">
           <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 via-teal-500/5 to-cyan-500/5 opacity-0 hover:opacity-100 transition-opacity duration-500" />
           <div className="relative z-10">
             <div className="flex items-center gap-3 mb-6">

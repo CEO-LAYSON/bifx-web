@@ -115,8 +115,14 @@ const InstructorStudentsPage = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-purple-950/20 to-gray-900">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%2260%22%20height%3D%2260%22%20fill%3D%22none%22%20stroke%3D%22rgba%28139%2C92%2C246%2C0.05%29%22%20stroke-width%3D%220.5%22%2F%3E%3C%2Fsvg%3E')] opacity-50"></div>
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-purple-600/5 to-blue-600/5 rounded-full blur-3xl animate-spin" style={{ animationDuration: '60s' }}></div>
+        <div
+          className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "1s" }}
+        ></div>
+        <div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-purple-600/5 to-blue-600/5 rounded-full blur-3xl animate-spin"
+          style={{ animationDuration: "60s" }}
+        ></div>
       </div>
 
       <div className="relative max-w-7xl mx-auto p-8 space-y-8">
@@ -125,7 +131,7 @@ const InstructorStudentsPage = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 via-transparent to-blue-600/5"></div>
           <div className="absolute top-0 right-0 w-32 h-32 bg-purple-600/10 rounded-full blur-2xl"></div>
           <div className="absolute bottom-0 left-0 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl"></div>
-          
+
           <div className="relative flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="relative">
@@ -140,13 +146,15 @@ const InstructorStudentsPage = () => {
                   <Sparkles className="w-6 h-6 text-gold-400 animate-pulse" />
                 </h1>
                 <p className="text-gray-400 mt-1">
-                  Track and manage your enrolled students' progress and performance
+                  Track and manage your enrolled students' progress and
+                  performance
                 </p>
               </div>
             </div>
             <div className="hidden md:flex items-center space-x-2">
               <div className="px-4 py-2 bg-purple-500/10 border border-purple-500/20 rounded-xl text-purple-300 text-sm">
-                <span className="font-semibold">{students.length}</span> Total Students
+                <span className="font-semibold">{students.length}</span> Total
+                Students
               </div>
             </div>
           </div>
@@ -184,11 +192,13 @@ const InstructorStudentsPage = () => {
             {/* Total Students */}
             <div className="relative group bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl rounded-2xl p-6 border border-purple-500/20 shadow-xl hover:border-purple-500/40 transition-all duration-500">
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="absolute top-0 right-0 w-20 h-20 bg-purple-600/10 rounded-full blur-2xl group-hover:bg-purple-500/20 transition-all duration-500"></div>
+              <div className="absolute top-0 right-0 w-20 h-20 bg-purple-600/10 rounded-full blur-2xl group-hover:bg-purple-600/15 transition-all duration-500"></div>
               <div className="relative flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-400 mb-1">Total Students</p>
-                  <p className="text-3xl font-bold text-white">{students.length}</p>
+                  <p className="text-3xl font-bold text-white">
+                    {students.length}
+                  </p>
                 </div>
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-400 rounded-xl blur-lg opacity-75"></div>
@@ -206,7 +216,7 @@ const InstructorStudentsPage = () => {
             {/* Active Students */}
             <div className="relative group bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl rounded-2xl p-6 border border-green-500/20 shadow-xl hover:border-green-500/40 transition-all duration-500">
               <div className="absolute inset-0 bg-gradient-to-r from-green-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="absolute top-0 right-0 w-20 h-20 bg-green-600/10 rounded-full blur-2xl group-hover:bg-green-500/20 transition-all duration-500"></div>
+              <div className="absolute top-0 right-0 w-20 h-20 bg-green-600/10 rounded-full blur-2xl group-hover:bg-green-600/15 transition-all duration-500"></div>
               <div className="relative flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-400 mb-1">Active Students</p>
@@ -230,17 +240,20 @@ const InstructorStudentsPage = () => {
             {/* Avg Progress */}
             <div className="relative group bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl rounded-2xl p-6 border border-gold-500/20 shadow-xl hover:border-gold-500/40 transition-all duration-500">
               <div className="absolute inset-0 bg-gradient-to-r from-gold-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="absolute top-0 right-0 w-20 h-20 bg-gold-600/10 rounded-full blur-2xl group-hover:bg-gold-500/20 transition-all duration-500"></div>
+              <div className="absolute top-0 right-0 w-20 h-20 bg-gold-600/10 rounded-full blur-2xl group-hover:bg-gold-600/15 transition-all duration-500"></div>
               <div className="relative flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-400 mb-1">Avg. Progress</p>
                   <p className="text-3xl font-bold text-gold-400">
                     {students.length > 0
                       ? Math.round(
-                          students.reduce((acc, s) => acc + s.totalProgress, 0) /
-                            students.length,
+                          students.reduce(
+                            (acc, s) => acc + s.totalProgress,
+                            0,
+                          ) / students.length,
                         )
-                      : 0}%
+                      : 0}
+                    %
                   </p>
                 </div>
                 <div className="relative">
@@ -259,7 +272,7 @@ const InstructorStudentsPage = () => {
             {/* Courses Completed */}
             <div className="relative group bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl rounded-2xl p-6 border border-blue-500/20 shadow-xl hover:border-blue-500/40 transition-all duration-500">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="absolute top-0 right-0 w-20 h-20 bg-blue-600/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-all duration-500"></div>
+              <div className="absolute top-0 right-0 w-20 h-20 bg-blue-600/10 rounded-full blur-2xl group-hover:bg-blue-600/15 transition-all duration-500"></div>
               <div className="relative flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-400 mb-1">Completed</p>
@@ -285,7 +298,7 @@ const InstructorStudentsPage = () => {
         {/* Filters and Search */}
         <div className="relative bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl rounded-2xl p-6 border border-purple-500/20 shadow-xl">
           <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 via-transparent to-blue-600/5"></div>
-          
+
           <div className="relative flex flex-col md:flex-row gap-6 mb-6">
             <div className="flex-1">
               <div className="relative group">
@@ -363,7 +376,7 @@ const InstructorStudentsPage = () => {
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 via-transparent to-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-600/50 to-blue-500/50 rounded-t-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  
+
                   <div className="relative flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                     <div className="flex-1">
                       <div className="flex items-center space-x-4 mb-4">
@@ -391,7 +404,10 @@ const InstructorStudentsPage = () => {
                           </h3>
                           <div className="flex items-center space-x-4 text-sm text-gray-400 mt-1">
                             <span className="flex items-center">
-                              <Mail size={14} className="mr-1.5 text-purple-400" />
+                              <Mail
+                                size={14}
+                                className="mr-1.5 text-purple-400"
+                              />
                               {student.email}
                             </span>
                           </div>
@@ -399,12 +415,17 @@ const InstructorStudentsPage = () => {
                       </div>
                       <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400">
                         <span className="flex items-center px-3 py-1 bg-gray-900/60 rounded-lg">
-                          <Calendar size={14} className="mr-1.5 text-blue-400" />
-                          Joined: {format(new Date(student.joinDate), "MMM dd, yyyy")}
+                          <Calendar
+                            size={14}
+                            className="mr-1.5 text-blue-400"
+                          />
+                          Joined:{" "}
+                          {format(new Date(student.joinDate), "MMM dd, yyyy")}
                         </span>
                         <span className="flex items-center px-3 py-1 bg-gray-900/60 rounded-lg">
                           <Clock size={14} className="mr-1.5 text-green-400" />
-                          Last active: {format(new Date(student.lastActive), "MMM dd, yyyy")}
+                          Last active:{" "}
+                          {format(new Date(student.lastActive), "MMM dd, yyyy")}
                         </span>
                       </div>
                     </div>
@@ -415,14 +436,28 @@ const InstructorStudentsPage = () => {
                           student.status,
                         )}`}
                       >
-                        <span className={`w-2 h-2 rounded-full ${student.status === 'active' ? 'bg-green-400 animate-pulse' : 'bg-gray-400'}`}></span>
+                        <span
+                          className={`w-2 h-2 rounded-full ${
+                            student.status === "active"
+                              ? "bg-green-400 animate-pulse"
+                              : "bg-gray-400"
+                          }`}
+                        ></span>
                         {student.status}
                       </span>
                       <div className="flex space-x-3">
-                        <Button variant="ghost" size="sm" className="hover:bg-purple-500/10">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="hover:bg-purple-500/10"
+                        >
                           View Progress
                         </Button>
-                        <Button variant="primary" size="sm" className="bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-500 hover:to-blue-400">
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          className="bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-500 hover:to-blue-400"
+                        >
                           Contact
                           <ChevronRight className="w-4 h-4 ml-1" />
                         </Button>
@@ -434,10 +469,15 @@ const InstructorStudentsPage = () => {
                     <div className="relative">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-sm text-gray-400 flex items-center">
-                          <BookOpen size={14} className="mr-1.5 text-purple-400" />
+                          <BookOpen
+                            size={14}
+                            className="mr-1.5 text-purple-400"
+                          />
                           Enrolled Courses
                         </span>
-                        <span className="text-lg font-semibold text-white">{student.enrolledCourses}</span>
+                        <span className="text-lg font-semibold text-white">
+                          {student.enrolledCourses}
+                        </span>
                       </div>
                     </div>
                     <div className="relative">
@@ -446,16 +486,23 @@ const InstructorStudentsPage = () => {
                           <Award size={14} className="mr-1.5 text-gold-400" />
                           Completed
                         </span>
-                        <span className="text-lg font-semibold text-green-400">{student.completedCourses}</span>
+                        <span className="text-lg font-semibold text-green-400">
+                          {student.completedCourses}
+                        </span>
                       </div>
                     </div>
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-sm text-gray-400 flex items-center">
-                          <TrendingUp size={14} className="mr-1.5 text-blue-400" />
+                          <TrendingUp
+                            size={14}
+                            className="mr-1.5 text-blue-400"
+                          />
                           Overall Progress
                         </span>
-                        <span className="text-sm font-medium text-white">{student.totalProgress}%</span>
+                        <span className="text-sm font-medium text-white">
+                          {student.totalProgress}%
+                        </span>
                       </div>
                       <div className="relative h-3 bg-gray-900/60 rounded-full overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-full"></div>
@@ -465,7 +512,10 @@ const InstructorStudentsPage = () => {
                           )} rounded-full shadow-lg transition-all duration-1000`}
                           style={{ width: `${student.totalProgress}%` }}
                         >
-                          <div className="absolute inset-0 bg-white/20 animate-shimmer" style={{ backgroundPosition: '200% 0' }}></div>
+                          <div
+                            className="absolute inset-0 bg-white/20 animate-shimmer"
+                            style={{ backgroundPosition: "200% 0" }}
+                          ></div>
                         </div>
                       </div>
                     </div>
@@ -482,7 +532,9 @@ const InstructorStudentsPage = () => {
                 <div className="mx-auto w-20 h-20 bg-gradient-to-br from-purple-600/20 to-blue-500/20 rounded-full flex items-center justify-center mb-6">
                   <Users className="w-10 h-10 text-gray-400" />
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">No students found</h3>
+                <h3 className="text-xl font-semibold text-white mb-2">
+                  No students found
+                </h3>
                 <p className="text-gray-400 max-w-md mx-auto">
                   {searchTerm || filter !== "all"
                     ? "Try adjusting your search or filter criteria."

@@ -196,7 +196,7 @@ const AnalyticsPage = () => {
                   className="relative group bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl rounded-2xl p-6 border border-gray-700/50 hover:border-gray-600/50 transition-all duration-500 hover:-translate-y-1"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-purple-600/10 rounded-full blur-2xl group-hover:bg-purple-500/20 transition-all duration-500"></div>
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-purple-600/10 rounded-full blur-2xl group-hover:bg-purple-600/15 transition-all duration-500"></div>
 
                   <div className="relative flex items-center justify-between mb-4">
                     <div className="relative">

@@ -86,7 +86,7 @@ const MyCourses = () => {
             >
               <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
               Create Course
-              <div className="absolute inset-0 rounded-xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute inset-0 rounded-xl bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity" />
             </Link>
           </div>
         </div>
@@ -152,7 +152,7 @@ const MyCourses = () => {
 
             {/* Glow Effect */}
             <div
-              className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 blur-sm"
+              className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl bg-gradient-to-r from-purple-500/30 via-pink-500/30 to-blue-500/30 blur-sm"
               style={{ margin: "-1px" }}
             />
 
@@ -189,10 +189,10 @@ const MyCourses = () => {
               </div>
 
               {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center gap-3">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center gap-3">
                 <Link
                   to={`/instructor/courses/${course.id}`}
-                  className="relative group/btn overflow-hidden rounded-lg px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 text-white font-medium hover:bg-white/30 transition-all duration-300"
+                  className="relative group/btn overflow-hidden rounded-lg px-4 py-2 bg-black/40 backdrop-blur-sm border border-white/20 text-white font-medium hover:bg-black/60 transition-all duration-300"
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     <Edit className="w-4 h-4" />
@@ -201,7 +201,7 @@ const MyCourses = () => {
                 </Link>
                 <Link
                   to={`/courses/${course.id}`}
-                  className="relative group/btn overflow-hidden rounded-lg px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 text-white font-medium hover:bg-white/30 transition-all duration-300"
+                  className="relative group/btn overflow-hidden rounded-lg px-4 py-2 bg-black/40 backdrop-blur-sm border border-white/20 text-white font-medium hover:bg-black/60 transition-all duration-300"
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     <Eye className="w-4 h-4" />
@@ -309,7 +309,7 @@ const MyCourses = () => {
               <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
               Create Your First Course
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-              <div className="absolute inset-0 rounded-xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute inset-0 rounded-xl bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity" />
             </Link>
           </div>
         </div>
