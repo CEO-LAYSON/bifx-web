@@ -27,52 +27,59 @@ export const loginUser = createAsyncThunk(
       return response.data;
     } catch (error) {
       if (error.response?.status === 429) {
-        // Extract lockout details from error message and headers
+        // Extract lockout details from new JSON response format
+        const errorData = error.response?.data?.data;
         const errorMessage =
+          errorData?.message ||
           error.response?.data?.message ||
-          "Too many login attempts. Please try again in 15 minutes.";
+          "Too many login attempts. Please try again.";
 
-        // Parse lockout duration and attempts from message
-        const lockoutMatch = errorMessage.match(
-          /try again in (\d+) minutes\. Remaining attempts: (\d+)\./,
-        );
+        // Parse new format with remainingSeconds and nextAllowedTimestamp
+        const remainingSeconds =
+          errorData?.remainingSeconds ||
+          errorData?.nextAllowedTimestamp - Math.floor(Date.now() / 1000) ||
+          0;
+        const nextAllowedTimestamp = errorData?.nextAllowedTimestamp || 0;
+        const failedAttempts = errorData?.failedAttempts || 5;
 
-        // Get lockout expiry from headers if available
-        const lockoutExpiryHeader = error.response?.headers["x-lockout-expiry"];
-        const lockoutExpiry = lockoutExpiryHeader
-          ? new Date(parseInt(lockoutExpiryHeader) * 1000)
-          : null;
-
-        if (lockoutMatch) {
-          return rejectWithValue({
-            message: errorMessage,
-            lockoutDuration: parseInt(lockoutMatch[1]),
-            remainingAttempts: parseInt(lockoutMatch[2]),
-            isLocked: true,
-            lockoutEndTime: lockoutExpiry,
-          });
-        }
+        // Calculate lockout end time from timestamp
+        const lockoutEndTime =
+          nextAllowedTimestamp > 0
+            ? new Date(nextAllowedTimestamp * 1000)
+            : new Date(Date.now() + remainingSeconds * 1000);
 
         return rejectWithValue({
           message: errorMessage,
+          lockoutDuration: remainingSeconds,
+          remainingSeconds: remainingSeconds,
+          nextAllowedTimestamp: nextAllowedTimestamp,
+          failedAttempts: failedAttempts,
           isLocked: true,
-          lockoutEndTime: lockoutExpiry,
+          lockoutEndTime: lockoutEndTime,
         });
       }
 
-      // Handle attempt count information
-      const attemptMatch = error.response?.data?.message?.match(
-        /(\d+) attempts remaining\./,
-      );
+      // Handle attempt count information (401 Unauthorized)
+      const attemptMatch =
+        error.response?.data?.data?.message?.match(
+          /(\d+) attempts remaining\./,
+        ) || error.response?.data?.message?.match(/(\d+) attempts remaining\./);
+
       if (attemptMatch) {
         return rejectWithValue({
-          message: error.response?.data?.message,
+          message:
+            error.response?.data?.data?.message ||
+            error.response?.data?.message,
           remainingAttempts: parseInt(attemptMatch[1]),
           isLocked: false,
         });
       }
 
-      return rejectWithValue(error.response?.data?.message || "Login failed");
+      return rejectWithValue(
+        error.response?.data?.data?.message ||
+          error.response?.data?.message ||
+          "Login failed",
+      );
     }
   },
 );

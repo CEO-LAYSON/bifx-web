@@ -10,6 +10,10 @@ export const authAPI = {
   refreshToken: (refreshToken) =>
     axiosInstance.post("/v1/auth/refresh", { refreshToken }),
 
+  // Check lockout status for an email
+  checkLockoutStatus: (email) =>
+    axiosInstance.get("/v1/auth/lockout-status", { params: { email } }),
+
   uploadAvatar: (file) => {
     const formData = new FormData();
     formData.append("file", file);

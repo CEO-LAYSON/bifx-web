@@ -13,12 +13,20 @@ const LockoutTimer = ({ errorMessage, email }) => {
   const { lockoutInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    // Extract initial lockout duration from error message
-    const match = errorMessage.match(/try again in (\d+) minutes/);
-    if (match) {
-      const minutes = parseInt(match[1]);
-      const totalSeconds = minutes * 60;
-      setTimeRemaining(totalSeconds);
+    // Extract initial lockout duration from error message (support both seconds and minutes)
+    // New format: "try again in 15 seconds"
+    // Old format: "try again in 15 minutes"
+    let secondsMatch = errorMessage.match(/try again in (\d+) seconds?/);
+    if (secondsMatch) {
+      const seconds = parseInt(secondsMatch[1]);
+      setTimeRemaining(seconds);
+    } else {
+      // Fallback to minutes format
+      const minutesMatch = errorMessage.match(/try again in (\d+) minutes?/);
+      if (minutesMatch) {
+        const minutes = parseInt(minutesMatch[1]);
+        setTimeRemaining(minutes * 60);
+      }
     }
 
     // Check lockout status from backend
@@ -91,7 +99,9 @@ const LockoutTimer = ({ errorMessage, email }) => {
   );
   const remainingAttempts = remainingAttemptsMatch
     ? parseInt(remainingAttemptsMatch[1])
-    : lockoutInfo?.remainingAttempts || 0;
+    : lockoutInfo?.remainingAttempts ||
+      (lockoutInfo?.failedAttempts ? lockoutInfo.failedAttempts - 5 : 0) ||
+      0;
 
   return (
     <div className="mb-6 p-5 bg-gray-900/80 backdrop-blur-sm rounded-2xl border border-red-500/30">
@@ -146,8 +156,9 @@ const LockoutTimer = ({ errorMessage, email }) => {
                 protect against unauthorized access.
               </p>
               <p className="mb-2">
-                Lockout duration: 15 minutes after 5 failed attempts. Successful
-                login will reset your attempt counter.
+                Lockout duration: Starts at 15 seconds after 5 failed attempts,
+                then doubles with each additional lockout (30s, 60s, 120s...).
+                Successful login will reset your attempt counter.
               </p>
               <p>
                 Lockout is account-specific and will not affect other users.
