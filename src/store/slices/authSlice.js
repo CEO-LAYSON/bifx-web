@@ -1,5 +1,23 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { authAPI } from "../../services/api/authAPI";
+import { tokenService } from "../../services/auth/tokenService";
+
+// Helper to safely check if token is valid
+const getStoredAuth = () => {
+  const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refreshToken");
+  const user = localStorage.getItem("user");
+
+  // Validate token exists and is not expired
+  const isValid = token && tokenService.isTokenValid(token);
+
+  return {
+    token: isValid ? token : null,
+    refreshToken: isValid ? refreshToken : null,
+    user: isValid && user ? JSON.parse(user) : null,
+    isAuthenticated: isValid,
+  };
+};
 
 export const loginUser = createAsyncThunk(
   "auth/login",
@@ -106,12 +124,15 @@ export const uploadAvatar = createAsyncThunk(
   },
 );
 
+// Get initial auth state from localStorage with validation
+const storedAuth = getStoredAuth();
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    user: JSON.parse(localStorage.getItem("user")),
-    token: localStorage.getItem("token"),
-    isAuthenticated: !!localStorage.getItem("token"),
+    user: storedAuth.user,
+    token: storedAuth.token,
+    isAuthenticated: storedAuth.isAuthenticated,
     isLoading: false,
     error: null,
     lockoutInfo: {
@@ -134,6 +155,7 @@ const authSlice = createSlice({
         lockoutEndTime: null,
       };
       localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
     },
     clearError: (state) => {
       state.error = null;
@@ -173,6 +195,13 @@ const authSlice = createSlice({
         };
         localStorage.setItem("token", action.payload.data.token);
         localStorage.setItem("user", JSON.stringify(action.payload.data));
+        // Save refresh token if provided
+        if (action.payload.data.refreshToken) {
+          localStorage.setItem(
+            "refreshToken",
+            action.payload.data.refreshToken,
+          );
+        }
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -236,6 +265,13 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
         localStorage.setItem("token", action.payload.data.token);
         localStorage.setItem("user", JSON.stringify(action.payload.data));
+        // Save refresh token if provided
+        if (action.payload.data.refreshToken) {
+          localStorage.setItem(
+            "refreshToken",
+            action.payload.data.refreshToken,
+          );
+        }
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
