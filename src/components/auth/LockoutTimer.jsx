@@ -275,10 +275,11 @@ const LockoutTimer = ({
           <div className="flex items-start gap-2">
             <AlertCircle className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
             <p className="text-blue-200/80 text-xs">
-              <strong className="text-blue-300">Security Notice:</strong> Your
-              account is protected after 5 failed attempts. Lockout starts at 15
-              seconds and increases with repeated failures (30s, 60s, 120s...).
-              Successful login resets the counter.
+              <strong className="text-blue-300">How it works:</strong> After 5
+              failed attempts, you get locked out. If you try again during a
+              lockout, the duration extends (15s → 30s → 60s...). Waiting for
+              lockout to expire resets to 15s. Successful login always resets
+              the counter.
             </p>
           </div>
         </div>
