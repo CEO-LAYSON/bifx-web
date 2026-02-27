@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Eye, EyeOff, Mail, Lock, ArrowRight } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, ArrowRight, Clock } from "lucide-react";
 import { loginUser } from "../../store/slices/authSlice";
 import { loginSchema } from "../../utils/validation/authSchema";
 import Button from "../ui/Button";
@@ -12,9 +12,27 @@ import LockoutTimer from "./LockoutTimer";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { isLoading, error } = useSelector((state) => state.auth);
-  const { email } = useSelector((state) => state.auth.lockoutInfo);
+  const { isLoading, error, lockoutInfo } = useSelector((state) => state.auth);
   const [showPassword, setShowPassword] = useState(false);
+
+  // Determine if user is currently locked out (from Redux or error message)
+  const isLockedOut =
+    lockoutInfo?.isLocked || error?.includes("Too many login attempts");
+  const timeRemaining = lockoutInfo?.lockoutDuration || 0;
+
+  // Calculate lockout end time from Redux or estimate from error
+  const getLockoutEndTime = () => {
+    if (lockoutInfo?.lockoutEndTime) {
+      return new Date(lockoutInfo.lockoutEndTime);
+    }
+    // Try to parse from error message
+    const secondsMatch = error?.match(/try again in (\d+) seconds?/);
+    if (secondsMatch) {
+      const seconds = parseInt(secondsMatch[1]);
+      return new Date(Date.now() + seconds * 1000);
+    }
+    return null;
+  };
 
   const {
     register,
@@ -63,13 +81,25 @@ const LoginForm = () => {
         </p>
       </div>
 
-      {error && error.includes("TOO_MANY_REQUESTS") && (
-        <LockoutTimer errorMessage={error} email={emailValue} />
+      {isLockedOut && (
+        <LockoutTimer
+          errorMessage={error}
+          email={emailValue}
+          lockoutEndTime={getLockoutEndTime()}
+          initialDuration={timeRemaining}
+        />
       )}
 
-      {error && !error.includes("TOO_MANY_REQUESTS") && (
+      {!isLockedOut && error && !error.includes("attempts remaining") && (
         <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-xl backdrop-blur-sm">
           <Alert type="error" message={error} />
+        </div>
+      )}
+
+      {/* Show remaining attempts warning when not locked out */}
+      {error && error.includes("attempts remaining") && !isLockedOut && (
+        <div className="mb-6 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-xl backdrop-blur-sm">
+          <Alert type="warning" message={error} />
         </div>
       )}
 
@@ -159,19 +189,31 @@ const LoginForm = () => {
           )}
         </div>
 
-        {/* Submit Button */}
+        {/* Submit Button - Disabled when locked out */}
         <Button
           type="submit"
           variant="primary"
           size="md"
           loading={isLoading}
-          className="w-full group relative overflow-hidden"
+          disabled={isLockedOut}
+          className={`w-full group relative overflow-hidden ${
+            isLockedOut ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
-          <span className="flex items-center justify-center gap-2 relative z-10">
-            Sign In
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-          </span>
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-purple to-primary-gold opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          {isLockedOut ? (
+            <span className="flex items-center justify-center gap-2 relative z-10">
+              <Clock className="w-4 h-4" />
+              Locked - Try again in {Math.ceil(timeRemaining || 0)}s
+            </span>
+          ) : (
+            <span className="flex items-center justify-center gap-2 relative z-10">
+              Sign In
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+            </span>
+          )}
+          {!isLockedOut && (
+            <div className="absolute inset-0 bg-gradient-to-r from-primary-purple to-primary-gold opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          )}
         </Button>
       </form>
 

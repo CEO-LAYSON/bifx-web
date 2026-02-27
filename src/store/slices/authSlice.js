@@ -61,24 +61,28 @@ export const loginUser = createAsyncThunk(
 
       // Handle attempt count information (401 Unauthorized)
       const attemptMatch =
-        error.response?.data?.data?.message?.match(
+        error.response?.data?.data?.match?.(/(\d+) attempts remaining\./) ||
+        String(error.response?.data?.data)?.match(
           /(\d+) attempts remaining\./,
-        ) || error.response?.data?.message?.match(/(\d+) attempts remaining\./);
+        ) ||
+        error.response?.data?.message?.match(/(\d+) attempts remaining\./);
 
       if (attemptMatch) {
         return rejectWithValue({
-          message:
-            error.response?.data?.data?.message ||
-            error.response?.data?.message,
+          message: String(
+            error.response?.data?.data || error.response?.data?.message,
+          ),
           remainingAttempts: parseInt(attemptMatch[1]),
           isLocked: false,
         });
       }
 
       return rejectWithValue(
-        error.response?.data?.data?.message ||
-          error.response?.data?.message ||
-          "Login failed",
+        String(
+          error.response?.data?.data ||
+            error.response?.data?.message ||
+            "Login failed",
+        ),
       );
     }
   },
@@ -304,5 +308,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, clearError } = authSlice.actions;
+export const { logout, clearError, clearLockout } = authSlice.actions;
 export default authSlice.reducer;
