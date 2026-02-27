@@ -23,8 +23,8 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen w-full flex">
-      {/* Left Panel - Decorative */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
+      {/* Left Panel - Decorative - Fixed */}
+      <div className="hidden lg:flex lg:fixed lg:left-0 lg:top-0 lg:h-screen lg:w-1/2 relative overflow-hidden z-0">
         {/* Animated Gradient Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary-purple via-purple-900 to-black">
           {/* Animated Orbs */}
@@ -109,7 +109,7 @@ const LoginPage = () => {
       </div>
 
       {/* Right Panel - Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-8 bg-black">
+      <div className="w-full lg:w-1/2 lg:ml-[50%] flex items-center justify-center p-4 lg:p-8 bg-black">
         <div className="lg:scale-90 lg:origin-top">
           <LoginForm />
         </div>

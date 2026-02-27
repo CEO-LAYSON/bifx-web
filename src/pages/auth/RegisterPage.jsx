@@ -13,14 +13,14 @@ const RegisterPage = () => {
   return (
     <div className="min-h-screen w-full flex">
       {/* Left Panel - Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-8 bg-black order-2 lg:order-1">
+      <div className="w-full lg:w-1/2 lg:mr-[50%] flex items-center justify-center p-4 lg:p-8 bg-black order-2 lg:order-1">
         <div className="lg:scale-75 lg:origin-top">
           <RegisterForm />
         </div>
       </div>
 
-      {/* Right Panel - Decorative */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden order-1 lg:order-2">
+      {/* Right Panel - Decorative - Fixed */}
+      <div className="hidden lg:flex lg:fixed lg:right-0 lg:top-0 lg:h-screen lg:w-1/2 relative overflow-hidden order-1 lg:order-2 z-0">
         {/* Animated Gradient Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary-purple via-purple-900 to-black">
           {/* Animated Orbs */}
