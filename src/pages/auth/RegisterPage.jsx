@@ -1,10 +1,17 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 import RegisterForm from "../../components/auth/RegisterForm";
+import { clearError } from "../../store/slices/authSlice";
 
 const RegisterPage = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  // Clear any login errors when visiting register page
+  useEffect(() => {
+    dispatch(clearError());
+  }, [dispatch]);
 
   if (isAuthenticated) {
     return <Navigate to="/dashboard" replace />;
