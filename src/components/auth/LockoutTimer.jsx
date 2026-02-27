@@ -1,7 +1,18 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { AlertCircle, Clock, Shield, RefreshCw, Zap } from "lucide-react";
+import {
+  AlertCircle,
+  Clock,
+  Shield,
+  RefreshCw,
+  Zap,
+  CheckCircle,
+} from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { checkLockoutStatus, clearLockout } from "../../store/slices/authSlice";
+import {
+  checkLockoutStatus,
+  clearLockout,
+  clearError,
+} from "../../store/slices/authSlice";
 
 const LockoutTimer = ({
   errorMessage,
@@ -66,8 +77,9 @@ const LockoutTimer = ({
         setTimeRemaining((prev) => {
           if (prev <= 1) {
             clearInterval(interval);
-            // Clear lockout when timer reaches 0
+            // Clear BOTH lockout AND error when timer reaches 0
             dispatch(clearLockout());
+            dispatch(clearError());
             return 0;
           }
           return prev - 1;
