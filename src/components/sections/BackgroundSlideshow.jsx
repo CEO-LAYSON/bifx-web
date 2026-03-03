@@ -1,86 +1,86 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 
-// High-quality Unsplash images for e-learning scenarios
+// High-quality professional images for premium e-learning platform
 const SLIDESHOW_IMAGES = [
   {
     id: 1,
-    url: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1920&q=80",
+    url: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=2560&q=90",
     thumbnail:
       "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&q=80",
-    alt: "Professional forex trading setup with multiple monitors",
-    overlay: "rgba(0, 0, 0, 0.4)",
+    alt: "Professional forex trading platform with multiple monitors",
+    overlay: "rgba(0, 0, 0, 0.35)",
     headline: "Master Forex Trading",
     subheadline:
       "Learn to analyze markets and execute profitable trades with precision",
   },
   {
     id: 2,
-    url: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1920&q=80",
+    url: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=2560&q=90",
     thumbnail:
       "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&q=80",
-    alt: "Developer coding on laptop with multiple monitors",
-    overlay: "rgba(0, 0, 0, 0.45)",
+    alt: "Modern software development workspace",
+    overlay: "rgba(0, 0, 0, 0.4)",
     headline: "Advanced Programming",
     subheadline: "Master software development with hands-on coding projects",
   },
   {
     id: 3,
-    url: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1920&q=80",
+    url: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=2560&q=90",
     thumbnail:
       "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&q=80",
-    alt: "Modern technology workshop with team collaboration",
-    overlay: "rgba(0, 0, 0, 0.5)",
+    alt: "Expert-led technology workshop",
+    overlay: "rgba(0, 0, 0, 0.45)",
     headline: "Technology Workshops",
     subheadline: "Interactive sessions led by industry experts",
   },
   {
     id: 4,
-    url: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1920&q=80",
+    url: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=2560&q=90",
     thumbnail:
       "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&q=80",
-    alt: "Students engaged in digital learning with tablets",
-    overlay: "rgba(0, 0, 0, 0.5)",
+    alt: "Modern digital learning environment",
+    overlay: "rgba(0, 0, 0, 0.4)",
     headline: "Digital Learning Environments",
     subheadline: "Immersive education that adapts to your learning style",
   },
   {
     id: 5,
-    url: "https://images.unsplash.com/photo-1609234656388-0ff363383899?w=1920&q=80",
+    url: "https://images.unsplash.com/photo-1609234656388-0ff363383899?w=2560&q=90",
     thumbnail:
       "https://images.unsplash.com/photo-1609234656388-0ff363383899?w=400&q=80",
-    alt: "Virtual classroom with modern video conferencing",
-    overlay: "rgba(0, 0, 0, 0.5)",
+    alt: "Virtual classroom with video conferencing",
+    overlay: "rgba(0, 0, 0, 0.45)",
     headline: "Virtual Classrooms",
     subheadline: "Live interactive sessions with real-time Q&A",
   },
   {
     id: 6,
-    url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920&q=80",
+    url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=2560&q=90",
     thumbnail:
       "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&q=80",
-    alt: "Financial data analysis with multiple screens",
-    overlay: "rgba(0, 0, 0, 0.55)",
+    alt: "Professional financial data analytics",
+    overlay: "rgba(0, 0, 0, 0.5)",
     headline: "Financial Analytics",
     subheadline: "Master data-driven trading strategies",
   },
   {
     id: 7,
-    url: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1920&q=80",
+    url: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=2560&q=90",
     thumbnail:
       "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&q=80",
-    alt: "Programmer working on code with coffee",
-    overlay: "rgba(0, 0, 0, 0.5)",
+    alt: "Professional software development workspace",
+    overlay: "rgba(0, 0, 0, 0.4)",
     headline: "Software Development",
     subheadline: "Build real-world applications from scratch",
   },
   {
     id: 8,
-    url: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1920&q=80",
+    url: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=2560&q=90",
     thumbnail:
       "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&q=80",
-    alt: "Modern tech office with collaborative workspace",
-    overlay: "rgba(0, 0, 0, 0.5)",
+    alt: "Modern collaborative tech workspace",
+    overlay: "rgba(0, 0, 0, 0.45)",
     headline: "Tech Practice Labs",
     subheadline: "Hands-on experience with cutting-edge tools",
   },
@@ -260,7 +260,7 @@ const BackgroundSlideshow = ({ onSlideChange }) => {
       {/* Animated Gradient Orbs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div
-          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[100px]"
+          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-white/10 rounded-full blur-[120px]"
           style={{
             transform: `translate(${mousePosition.x - 50}px, ${
               mousePosition.y - 50
@@ -269,7 +269,7 @@ const BackgroundSlideshow = ({ onSlideChange }) => {
           }}
         />
         <div
-          className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-amber-500/10 rounded-full blur-[100px]"
+          className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-white/5 rounded-full blur-[100px]"
           style={{
             transform: `translate(${50 - mousePosition.x}px, ${
               50 - mousePosition.y
@@ -295,13 +295,13 @@ const BackgroundSlideshow = ({ onSlideChange }) => {
               <div
                 className={`h-0.5 sm:h-1 rounded-full overflow-hidden transition-all duration-500 ${
                   currentIndex === index
-                    ? "bg-gradient-to-r from-purple-400 to-amber-400"
+                    ? "bg-gradient-to-r from-white to-white/70"
                     : "bg-white/30 group-hover:bg-white/50"
                 }`}
               >
                 {currentIndex === index && (
                   <div
-                    className="h-full bg-gradient-to-r from-purple-400 to-amber-400"
+                    className="h-full bg-gradient-to-r from-white to-white/70"
                     style={{
                       animation: `progressBar ${SLIDE_DURATION}ms linear forwards`,
                     }}

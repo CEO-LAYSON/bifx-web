@@ -73,6 +73,8 @@ export default {
           "0 0 20px rgba(139, 92, 246, 0.3), 0 0 40px rgba(139, 92, 246, 0.2), 0 0 60px rgba(139, 92, 246, 0.1)",
         "premium-glow-gold":
           "0 0 20px rgba(255, 215, 0, 0.3), 0 0 40px rgba(255, 215, 0, 0.2)",
+        "premium-glow-white":
+          "0 0 20px rgba(255, 255, 255, 0.15), 0 0 40px rgba(255, 255, 255, 0.1), 0 4px 6px -1px rgba(0, 0, 0, 0.1)",
         "inner-premium": "inset 0 2px 4px 0 rgba(0, 0, 0, 0.3)",
       },
       // Animation utilities
