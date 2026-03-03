@@ -86,16 +86,23 @@ const SLIDESHOW_IMAGES = [
   },
 ];
 
-const TRANSITION_DURATION = 1200; // ms - smooth fade transition
-const SLIDE_DURATION = 6000; // ms - time between auto-advances
-const KEN_BURNS_DURATION = 20000; // ms - full Ken Burns cycle
+const TRANSITION_DURATION = 1800; // Premium slow fade
+const SLIDE_DURATION = 7000; // Longer display time
 
 const BackgroundSlideshow = ({ onSlideChange }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [nextIndex, setNextIndex] = useState(1);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const containerRef = useRef(null);
+  const timeoutRef = useRef(null);
+  const intervalRef = useRef(null);
+
+  // Initialize next index
+  useEffect(() => {
+    setNextIndex((currentIndex + 1) % SLIDESHOW_IMAGES.length);
+  }, [currentIndex]);
 
   // Mouse parallax effect
   useEffect(() => {
@@ -109,107 +116,134 @@ const BackgroundSlideshow = ({ onSlideChange }) => {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // Auto-advance slides - runs continuously when isPlaying is true
+  // Auto-advance slides with proper transition handling
   useEffect(() => {
     if (!isPlaying) return;
 
-    const advanceSlide = () => {
-      setCurrentIndex((prevIndex) => {
-        const nextIndex = (prevIndex + 1) % SLIDESHOW_IMAGES.length;
-        return nextIndex;
-      });
+    const startTransition = () => {
+      if (!isTransitioning) {
+        setIsTransitioning(true);
+
+        // Clear any existing timeout
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+        }
+
+        // Complete transition after duration
+        timeoutRef.current = setTimeout(() => {
+          setCurrentIndex((prev) => (prev + 1) % SLIDESHOW_IMAGES.length);
+          setIsTransitioning(false);
+        }, TRANSITION_DURATION);
+      }
     };
 
-    // Set up interval for auto-advance
-    const intervalId = setInterval(advanceSlide, SLIDE_DURATION);
+    // Start first interval
+    const startDelay = setTimeout(startTransition, SLIDE_DURATION);
 
-    return () => clearInterval(intervalId);
-  }, [isPlaying]);
+    // Set up recurring interval
+    intervalRef.current = setInterval(
+      startTransition,
+      SLIDE_DURATION + TRANSITION_DURATION,
+    );
 
-  // Notify parent when currentIndex changes (outside of render)
+    return () => {
+      clearTimeout(startDelay);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [isPlaying, isTransitioning]);
+
+  // Notify parent when currentIndex changes
   useEffect(() => {
-    if (onSlideChange) {
+    if (onSlideChange && !isTransitioning) {
       onSlideChange(currentIndex);
     }
-  }, [currentIndex, onSlideChange]);
+  }, [currentIndex, onSlideChange, isTransitioning]);
 
-  // Handle slide transitions
+  // Cleanup on unmount
   useEffect(() => {
-    if (isTransitioning) {
-      const timer = setTimeout(() => {
-        setIsTransitioning(false);
-      }, TRANSITION_DURATION);
-      return () => clearTimeout(timer);
-    }
-  }, [currentIndex, isTransitioning]);
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
 
   const goToSlide = useCallback(
     (index) => {
-      if (index === currentIndex) return;
+      if (index === currentIndex || isTransitioning) return;
 
+      // Clear any pending transitions
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+
+      setNextIndex(index);
       setIsTransitioning(true);
-      setCurrentIndex(index);
 
-      // Notify parent component of slide change
-      if (onSlideChange) {
-        onSlideChange(index);
-      }
+      timeoutRef.current = setTimeout(() => {
+        setCurrentIndex(index);
+        setIsTransitioning(false);
+
+        // Restart auto-advance
+        intervalRef.current = setInterval(() => {
+          if (!isTransitioning) {
+            setIsTransitioning(true);
+            timeoutRef.current = setTimeout(() => {
+              setCurrentIndex((prev) => (prev + 1) % SLIDESHOW_IMAGES.length);
+              setIsTransitioning(false);
+            }, TRANSITION_DURATION);
+          }
+        }, SLIDE_DURATION + TRANSITION_DURATION);
+      }, TRANSITION_DURATION);
     },
-    [currentIndex, onSlideChange],
+    [currentIndex, isTransitioning],
   );
 
   const goToNextSlide = useCallback(() => {
-    const nextIndex = (currentIndex + 1) % SLIDESHOW_IMAGES.length;
-    goToSlide(nextIndex);
+    const next = (currentIndex + 1) % SLIDESHOW_IMAGES.length;
+    goToSlide(next);
   }, [currentIndex, goToSlide]);
 
   const goToPrevSlide = useCallback(() => {
-    const prevIndex =
+    const prev =
       (currentIndex - 1 + SLIDESHOW_IMAGES.length) % SLIDESHOW_IMAGES.length;
-    goToSlide(prevIndex);
+    goToSlide(prev);
   }, [currentIndex, goToSlide]);
 
   const togglePlayPause = () => {
     setIsPlaying(!isPlaying);
   };
 
-  // Get current and next slide for crossfade effect
-  const getVisibleSlides = () => {
-    const current = SLIDESHOW_IMAGES[currentIndex];
-    const next = SLIDESHOW_IMAGES[(currentIndex + 1) % SLIDESHOW_IMAGES.length];
-    return { current, next };
-  };
-
-  const { current, next } = getVisibleSlides();
+  const current = SLIDESHOW_IMAGES[currentIndex];
+  const next = SLIDESHOW_IMAGES[nextIndex];
 
   return (
     <div ref={containerRef} className="absolute inset-0 overflow-hidden">
-      {/* Slides Container */}
+      {/* Premium Slides Container - Dual Layer Crossfade */}
       <div className="absolute inset-0">
-        {/* Current Slide */}
+        {/* Current Slide - Leaving */}
         <div
-          className={`absolute inset-0 transition-all duration-[${TRANSITION_DURATION}] ease-in-out ${
-            isTransitioning ? "opacity-0" : "opacity-100"
+          className={`absolute inset-0 transition-all ease-out will-change-transform ${
+            isTransitioning ? "opacity-0 scale-105" : "opacity-100 scale-100"
           }`}
           style={{
             transitionDuration: `${TRANSITION_DURATION}ms`,
+            zIndex: 1,
           }}
         >
-          {/* Image with Ken Burns Effect */}
           <div
-            className="absolute inset-0 w-full h-full scale-100"
+            className="absolute inset-0 w-full h-full"
             style={{
               backgroundImage: `url(${current.url})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
-              transform: `scale(1.1) translate(${50 - mousePosition.x}px, ${
-                50 - mousePosition.y
-              }px)`,
-              transition: "transform 0.5s ease-out",
-              animation: `kenBurns ${KEN_BURNS_DURATION}ms ease-in-out infinite alternate`,
+              transform: isTransitioning
+                ? "scale(1.1)"
+                : `scale(1.05) translate(${(50 - mousePosition.x) * 0.02}px, ${
+                    (50 - mousePosition.y) * 0.02
+                  }px)`,
+              transition: `transform ${TRANSITION_DURATION}ms ease-out`,
             }}
           >
-            {/* Gradient Overlay */}
             <div
               className="absolute inset-0"
               style={{ backgroundColor: current.overlay }}
@@ -217,31 +251,32 @@ const BackgroundSlideshow = ({ onSlideChange }) => {
           </div>
         </div>
 
-        {/* Next Slide (for crossfade) */}
-        {isTransitioning && (
+        {/* Next Slide - Entering */}
+        <div
+          className={`absolute inset-0 will-change-transform ${
+            isTransitioning ? "opacity-100 scale-100" : "opacity-0 scale-95"
+          }`}
+          style={{
+            transitionDuration: `${TRANSITION_DURATION}ms`,
+            zIndex: 0,
+          }}
+        >
           <div
-            className="absolute inset-0 opacity-0"
+            className="absolute inset-0 w-full h-full"
             style={{
-              transitionDuration: `${TRANSITION_DURATION}ms`,
-              animation: "fadeIn 0ms forwards",
-              animationDelay: `${TRANSITION_DURATION}ms`,
+              backgroundImage: `url(${next.url})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              transform: "scale(1.05)",
+              transition: `transform ${TRANSITION_DURATION}ms ease-out`,
             }}
           >
             <div
-              className="absolute inset-0 w-full h-full"
-              style={{
-                backgroundImage: `url(${next.url})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-            >
-              <div
-                className="absolute inset-0"
-                style={{ backgroundColor: next.overlay }}
-              />
-            </div>
+              className="absolute inset-0"
+              style={{ backgroundColor: next.overlay }}
+            />
           </div>
-        )}
+        </div>
       </div>
 
       {/* Animated Grid Pattern Overlay */}
@@ -257,24 +292,24 @@ const BackgroundSlideshow = ({ onSlideChange }) => {
         }}
       />
 
-      {/* Animated Gradient Orbs */}
+      {/* Premium Animated Gradient Orbs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div
-          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-white/10 rounded-full blur-[120px]"
+          className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-white/10 rounded-full blur-[150px]"
           style={{
             transform: `translate(${mousePosition.x - 50}px, ${
               mousePosition.y - 50
             }px)`,
-            transition: "transform 0.8s ease-out",
+            transition: "transform 1s ease-out",
           }}
         />
         <div
-          className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-white/5 rounded-full blur-[100px]"
+          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px]"
           style={{
             transform: `translate(${50 - mousePosition.x}px, ${
               50 - mousePosition.y
             }px)`,
-            transition: "transform 0.8s ease-out",
+            transition: "transform 1s ease-out",
           }}
         />
       </div>
@@ -287,21 +322,21 @@ const BackgroundSlideshow = ({ onSlideChange }) => {
             <button
               key={slide.id}
               onClick={() => goToSlide(index)}
-              className={`group relative p-0.5 sm:p-1 transition-all duration-300 ${
-                currentIndex === index ? "w-6 sm:w-8" : "w-2"
+              className={`group relative p-0.5 sm:p-1 transition-all duration-500 ${
+                currentIndex === index ? "w-8 sm:w-10" : "w-2"
               }`}
               aria-label={`Go to slide ${index + 1}`}
             >
               <div
-                className={`h-0.5 sm:h-1 rounded-full overflow-hidden transition-all duration-500 ${
+                className={`h-0.5 sm:h-1 rounded-full overflow-hidden transition-all duration-700 ${
                   currentIndex === index
-                    ? "bg-gradient-to-r from-white to-white/70"
-                    : "bg-white/30 group-hover:bg-white/50"
+                    ? "bg-white shadow-lg"
+                    : "bg-white/30 group-hover:bg-white/60"
                 }`}
               >
-                {currentIndex === index && (
+                {currentIndex === index && isTransitioning && (
                   <div
-                    className="h-full bg-gradient-to-r from-white to-white/70"
+                    className="h-full bg-white"
                     style={{
                       animation: `progressBar ${SLIDE_DURATION}ms linear forwards`,
                     }}
@@ -312,52 +347,43 @@ const BackgroundSlideshow = ({ onSlideChange }) => {
           ))}
         </div>
 
-        {/* Arrow Controls - Hidden on very small screens */}
+        {/* Arrow Controls */}
         <div className="hidden sm:flex justify-center items-center gap-4 sm:gap-6">
           <button
             onClick={goToPrevSlide}
-            className="group p-2 sm:p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/80 hover:text-white hover:bg-white/20 transition-all duration-300 hover:scale-110"
+            className="group p-3 sm:p-4 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white/80 hover:text-white hover:bg-white/20 transition-all duration-500 hover:scale-110 hover:shadow-xl"
             aria-label="Previous slide"
           >
-            <ChevronLeft className="w-4 h-4 sm:w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
+            <ChevronLeft className="w-5 h-5 sm:w-6 h-6 group-hover:-translate-x-1 transition-transform" />
           </button>
 
           <button
             onClick={togglePlayPause}
-            className="p-2 sm:p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/80 hover:text-white hover:bg-white/20 transition-all duration-300 hover:scale-110"
+            className="p-3 sm:p-4 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white/80 hover:text-white hover:bg-white/20 transition-all duration-500 hover:scale-110 hover:shadow-xl"
             aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}
           >
             {isPlaying ? (
-              <Pause className="w-4 h-4 sm:w-5 h-5" />
+              <Pause className="w-5 h-5 sm:w-6 h-6" />
             ) : (
-              <Play className="w-4 h-4 sm:w-5 h-5 ml-0.5" />
+              <Play className="w-5 h-5 sm:w-6 h-6 ml-0.5" />
             )}
           </button>
 
           <button
             onClick={goToNextSlide}
-            className="group p-2 sm:p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/80 hover:text-white hover:bg-white/20 transition-all duration-300 hover:scale-110"
+            className="group p-3 sm:p-4 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white/80 hover:text-white hover:bg-white/20 transition-all duration-500 hover:scale-110 hover:shadow-xl"
             aria-label="Next slide"
           >
-            <ChevronRight className="w-4 h-4 sm:w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+            <ChevronRight className="w-5 h-5 sm:w-6 h-6 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
       </div>
 
       {/* CSS Animations */}
       <style>{`
-        @keyframes kenBurns {
-          0% {
-            transform: scale(1.1) translate(0, 0);
-          }
-          100% {
-            transform: scale(1.25) translate(-10px, -10px);
-          }
-        }
-
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
+        @keyframes gridMove {
+          0% { background-position: 0 0; }
+          100% { background-position: 50px 50px; }
         }
 
         @keyframes progressBar {
@@ -365,17 +391,10 @@ const BackgroundSlideshow = ({ onSlideChange }) => {
           to { width: 100%; }
         }
 
-        @keyframes gridMove {
-          0% { background-position: 0 0; }
-          100% { background-position: 50px 50px; }
-        }
-
-        /* Hardware acceleration for smooth 60fps animations */
         .will-change-transform {
-          will-change: transform;
+          will-change: transform, opacity;
         }
         
-        /* Ensure images are optimized */
         img {
           object-fit: cover;
         }
