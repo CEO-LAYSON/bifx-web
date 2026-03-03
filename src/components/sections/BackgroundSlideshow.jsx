@@ -86,118 +86,76 @@ const SLIDESHOW_IMAGES = [
   },
 ];
 
-const TRANSITION_DURATION = 1800; // Premium slow fade
-const SLIDE_DURATION = 7000; // Longer display time
+const SLIDE_DURATION = 6000;
+const TRANSITION_DURATION = 1500;
 
 const BackgroundSlideshow = ({ onSlideChange }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [nextIndex, setNextIndex] = useState(1);
-  const [isPlaying, setIsPlaying] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
-  const containerRef = useRef(null);
-  const timeoutRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(true);
   const intervalRef = useRef(null);
+  const timeoutRef = useRef(null);
 
-  // Initialize next index
-  useEffect(() => {
-    setNextIndex((currentIndex + 1) % SLIDESHOW_IMAGES.length);
-  }, [currentIndex]);
+  // Get current slide data
+  const currentSlide = SLIDESHOW_IMAGES[currentIndex];
 
-  // Mouse parallax effect
+  // Auto-advance slides
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      const x = (e.clientX / window.innerWidth) * 100;
-      const y = (e.clientY / window.innerHeight) * 100;
-      setMousePosition({ x, y });
+    if (!isPlaying) {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      return;
+    }
+
+    const advanceSlide = () => {
+      setIsTransitioning(true);
+
+      // After transition completes, change slide
+      timeoutRef.current = setTimeout(() => {
+        setCurrentIndex((prev) => (prev + 1) % SLIDESHOW_IMAGES.length);
+        setIsTransitioning(false);
+      }, TRANSITION_DURATION);
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+    // Initial delay before first transition
+    const initialDelay = setTimeout(advanceSlide, SLIDE_DURATION);
 
-  // Auto-advance slides with proper transition handling
-  useEffect(() => {
-    if (!isPlaying) return;
-
-    const startTransition = () => {
-      setIsTransitioning((prev) => {
-        if (!prev) {
-          // Complete transition after duration
-          timeoutRef.current = setTimeout(() => {
-            setCurrentIndex(
-              (prevIndex) => (prevIndex + 1) % SLIDESHOW_IMAGES.length,
-            );
-            setIsTransitioning(false);
-          }, TRANSITION_DURATION);
-          return true;
-        }
-        return prev;
-      });
-    };
-
-    // Start first interval
-    const startDelay = setTimeout(startTransition, SLIDE_DURATION);
-
-    // Set up recurring interval
+    // Set up interval for subsequent slides
     intervalRef.current = setInterval(
-      startTransition,
+      advanceSlide,
       SLIDE_DURATION + TRANSITION_DURATION,
     );
 
     return () => {
-      clearTimeout(startDelay);
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      clearTimeout(initialDelay);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [isPlaying]);
 
-  // Notify parent when currentIndex changes
+  // Notify parent of slide changes (only when not transitioning)
   useEffect(() => {
-    if (onSlideChange && !isTransitioning) {
+    if (!isTransitioning && onSlideChange) {
       onSlideChange(currentIndex);
     }
   }, [currentIndex, onSlideChange, isTransitioning]);
 
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, []);
-
+  // Navigation functions
   const goToSlide = useCallback(
     (index) => {
-      if (index === currentIndex || isTransitioning) return;
+      if (index === currentIndex) return;
 
-      // Clear any pending transitions
+      // Clear existing timers
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       if (intervalRef.current) clearInterval(intervalRef.current);
 
-      setNextIndex(index);
       setIsTransitioning(true);
 
       timeoutRef.current = setTimeout(() => {
         setCurrentIndex(index);
         setIsTransitioning(false);
-
-        // Restart auto-advance with fresh state reference
-        intervalRef.current = setInterval(() => {
-          setIsTransitioning((prevTransitioning) => {
-            if (!prevTransitioning) {
-              timeoutRef.current = setTimeout(() => {
-                setCurrentIndex((prev) => (prev + 1) % SLIDESHOW_IMAGES.length);
-                setIsTransitioning(false);
-              }, TRANSITION_DURATION);
-              return true;
-            }
-            return prevTransitioning;
-          });
-        }, SLIDE_DURATION + TRANSITION_DURATION);
       }, TRANSITION_DURATION);
     },
-    [currentIndex, isTransitioning],
+    [currentIndex],
   );
 
   const goToNextSlide = useCallback(() => {
@@ -211,77 +169,33 @@ const BackgroundSlideshow = ({ onSlideChange }) => {
     goToSlide(prev);
   }, [currentIndex, goToSlide]);
 
-  const togglePlayPause = () => {
-    setIsPlaying(!isPlaying);
-  };
-
-  const current = SLIDESHOW_IMAGES[currentIndex];
-  const next = SLIDESHOW_IMAGES[nextIndex];
+  const togglePlayPause = useCallback(() => {
+    setIsPlaying((prev) => !prev);
+  }, []);
 
   return (
-    <div ref={containerRef} className="absolute inset-0 overflow-hidden">
-      {/* Premium Slides Container - Dual Layer Crossfade */}
-      <div className="absolute inset-0">
-        {/* Current Slide - Leaving */}
+    <div className="absolute inset-0 overflow-hidden">
+      {/* Single background layer with smooth opacity transition */}
+      <div
+        className={`absolute inset-0 w-full h-full transition-opacity ease-in-out ${
+          isTransitioning ? "opacity-0" : "opacity-100"
+        }`}
+        style={{
+          transitionDuration: `${TRANSITION_DURATION}ms`,
+          backgroundImage: `url(${currentSlide.url})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundColor: "#000",
+        }}
+      >
+        {/* Dark overlay */}
         <div
-          className={`absolute inset-0 transition-all ease-out will-change-transform ${
-            isTransitioning ? "opacity-0 scale-105" : "opacity-100 scale-100"
-          }`}
-          style={{
-            transitionDuration: `${TRANSITION_DURATION}ms`,
-            zIndex: 1,
-          }}
-        >
-          <div
-            className="absolute inset-0 w-full h-full"
-            style={{
-              backgroundImage: `url(${current.url})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              transform: isTransitioning
-                ? "scale(1.1)"
-                : `scale(1.05) translate(${(50 - mousePosition.x) * 0.02}px, ${
-                    (50 - mousePosition.y) * 0.02
-                  }px)`,
-              transition: `transform ${TRANSITION_DURATION}ms ease-out`,
-            }}
-          >
-            <div
-              className="absolute inset-0"
-              style={{ backgroundColor: current.overlay }}
-            />
-          </div>
-        </div>
-
-        {/* Next Slide - Entering */}
-        <div
-          className={`absolute inset-0 will-change-transform ${
-            isTransitioning ? "opacity-100 scale-100" : "opacity-0 scale-95"
-          }`}
-          style={{
-            transitionDuration: `${TRANSITION_DURATION}ms`,
-            zIndex: 0,
-          }}
-        >
-          <div
-            className="absolute inset-0 w-full h-full"
-            style={{
-              backgroundImage: `url(${next.url})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              transform: "scale(1.05)",
-              transition: `transform ${TRANSITION_DURATION}ms ease-out`,
-            }}
-          >
-            <div
-              className="absolute inset-0"
-              style={{ backgroundColor: next.overlay }}
-            />
-          </div>
-        </div>
+          className="absolute inset-0"
+          style={{ backgroundColor: currentSlide.overlay }}
+        />
       </div>
 
-      {/* Animated Grid Pattern Overlay */}
+      {/* Animated grid pattern overlay */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
@@ -294,26 +208,11 @@ const BackgroundSlideshow = ({ onSlideChange }) => {
         }}
       />
 
-      {/* Premium Animated Gradient Orbs */}
+      {/* Gradient orbs for visual depth */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div
-          className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-white/10 rounded-full blur-[150px]"
-          style={{
-            transform: `translate(${mousePosition.x - 50}px, ${
-              mousePosition.y - 50
-            }px)`,
-            transition: "transform 1s ease-out",
-          }}
-        />
-        <div
-          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px]"
-          style={{
-            transform: `translate(${50 - mousePosition.x}px, ${
-              50 - mousePosition.y
-            }px)`,
-            transition: "transform 1s ease-out",
-          }}
-        />
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-transparent via-transparent to-black/30" />
+        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-white/5 rounded-full blur-[150px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[120px]" />
       </div>
 
       {/* Navigation Controls */}
@@ -324,7 +223,7 @@ const BackgroundSlideshow = ({ onSlideChange }) => {
             <button
               key={slide.id}
               onClick={() => goToSlide(index)}
-              className={`group relative p-0.5 sm:p-1 transition-all duration-500 ${
+              className={`relative p-0.5 sm:p-1 transition-all duration-300 ${
                 currentIndex === index ? "w-8 sm:w-10" : "w-2"
               }`}
               aria-label={`Go to slide ${index + 1}`}
@@ -336,7 +235,8 @@ const BackgroundSlideshow = ({ onSlideChange }) => {
                     : "bg-white/30 group-hover:bg-white/60"
                 }`}
               >
-                {currentIndex === index && isTransitioning && (
+                {/* Progress indicator for active slide */}
+                {currentIndex === index && !isTransitioning && (
                   <div
                     className="h-full bg-white"
                     style={{
@@ -391,14 +291,6 @@ const BackgroundSlideshow = ({ onSlideChange }) => {
         @keyframes progressBar {
           from { width: 0%; }
           to { width: 100%; }
-        }
-
-        .will-change-transform {
-          will-change: transform, opacity;
-        }
-        
-        img {
-          object-fit: cover;
         }
       `}</style>
     </div>
