@@ -116,21 +116,21 @@ const HeroContentOverlay = ({ currentIndex = 0 }) => {
       value: "50K+",
       label: "Active Learners",
       description: "Growing community",
-      color: "purple",
+      color: "blue",
     },
     {
       icon: Award,
       value: "98%",
       label: "Success Rate",
       description: "Proven results",
-      color: "gold",
+      color: "blue",
     },
     {
       icon: TrendingUp,
       value: "$2B+",
       label: "Trading Volume",
       description: "Market impact",
-      color: "emerald",
+      color: "blue",
     },
   ];
 
@@ -191,12 +191,12 @@ const HeroContentOverlay = ({ currentIndex = 0 }) => {
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
             <Link
               to="/register"
-              className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-white via-gray-100 to-white text-gray-900 font-bold rounded-premium-lg overflow-hidden transition-all duration-300 hover:shadow-premium-glow-white hover:-translate-y-1 text-base tracking-wide"
+              className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-white via-gray-50 to-white text-gray-900 font-bold rounded-premium-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-white/20 hover:-translate-y-1 text-base tracking-wide border border-white/20"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
               {/* Shimmer effect */}
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-200/30 to-transparent -translate-x-full group-hover:animate-shimmer" />
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-100/30 to-transparent -translate-x-full group-hover:animate-shimmer" />
 
               <span className="relative z-10 flex items-center gap-2">
                 {content.ctaPrimary}
@@ -210,7 +210,7 @@ const HeroContentOverlay = ({ currentIndex = 0 }) => {
 
             <Link
               to="/courses"
-              className="group inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white/30 text-white font-semibold rounded-premium-lg overflow-hidden transition-all duration-300 hover:border-white/60 hover:bg-white/10 hover:shadow-xl text-base backdrop-blur-sm"
+              className="group inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white/20 text-white/90 font-semibold rounded-premium-lg overflow-hidden transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:shadow-xl text-base backdrop-blur-sm"
             >
               <Play className="w-5 h-5" />
               {content.ctaSecondary}
@@ -254,33 +254,17 @@ const HeroContentOverlay = ({ currentIndex = 0 }) => {
 
                 <div className="relative z-10">
                   <div className="flex items-center gap-3 mb-3">
-                    <div
-                      className={`p-2.5 rounded-xl bg-white/10 border border-white/20 ${
-                        stat.color === "purple"
-                          ? ""
-                          : stat.color === "gold"
-                          ? ""
-                          : ""
-                      }`}
-                    >
-                      <stat.icon
-                        className={`w-5 h-5 ${
-                          stat.color === "purple"
-                            ? "text-purple-300"
-                            : stat.color === "gold"
-                            ? "text-amber-300"
-                            : "text-emerald-300"
-                        }`}
-                      />
+                    <div className="p-2.5 rounded-xl bg-white/10 border border-white/20">
+                      <stat.icon className="w-5 h-5 text-white" />
                     </div>
                   </div>
                   <div className="text-3xl font-bold text-white mb-1">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-gray-200 font-medium">
+                  <div className="text-sm text-white/80 font-medium">
                     {stat.label}
                   </div>
-                  <div className="text-xs text-gray-400 mt-1">
+                  <div className="text-xs text-white/50 mt-1">
                     {stat.description}
                   </div>
                 </div>
