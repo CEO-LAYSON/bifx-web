@@ -121,20 +121,19 @@ const BackgroundSlideshow = ({ onSlideChange }) => {
     if (!isPlaying) return;
 
     const startTransition = () => {
-      if (!isTransitioning) {
-        setIsTransitioning(true);
-
-        // Clear any existing timeout
-        if (timeoutRef.current) {
-          clearTimeout(timeoutRef.current);
+      setIsTransitioning((prev) => {
+        if (!prev) {
+          // Complete transition after duration
+          timeoutRef.current = setTimeout(() => {
+            setCurrentIndex(
+              (prevIndex) => (prevIndex + 1) % SLIDESHOW_IMAGES.length,
+            );
+            setIsTransitioning(false);
+          }, TRANSITION_DURATION);
+          return true;
         }
-
-        // Complete transition after duration
-        timeoutRef.current = setTimeout(() => {
-          setCurrentIndex((prev) => (prev + 1) % SLIDESHOW_IMAGES.length);
-          setIsTransitioning(false);
-        }, TRANSITION_DURATION);
-      }
+        return prev;
+      });
     };
 
     // Start first interval
@@ -151,7 +150,7 @@ const BackgroundSlideshow = ({ onSlideChange }) => {
       if (intervalRef.current) clearInterval(intervalRef.current);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [isPlaying, isTransitioning]);
+  }, [isPlaying]);
 
   // Notify parent when currentIndex changes
   useEffect(() => {
@@ -183,15 +182,18 @@ const BackgroundSlideshow = ({ onSlideChange }) => {
         setCurrentIndex(index);
         setIsTransitioning(false);
 
-        // Restart auto-advance
+        // Restart auto-advance with fresh state reference
         intervalRef.current = setInterval(() => {
-          if (!isTransitioning) {
-            setIsTransitioning(true);
-            timeoutRef.current = setTimeout(() => {
-              setCurrentIndex((prev) => (prev + 1) % SLIDESHOW_IMAGES.length);
-              setIsTransitioning(false);
-            }, TRANSITION_DURATION);
-          }
+          setIsTransitioning((prevTransitioning) => {
+            if (!prevTransitioning) {
+              timeoutRef.current = setTimeout(() => {
+                setCurrentIndex((prev) => (prev + 1) % SLIDESHOW_IMAGES.length);
+                setIsTransitioning(false);
+              }, TRANSITION_DURATION);
+              return true;
+            }
+            return prevTransitioning;
+          });
         }, SLIDE_DURATION + TRANSITION_DURATION);
       }, TRANSITION_DURATION);
     },
