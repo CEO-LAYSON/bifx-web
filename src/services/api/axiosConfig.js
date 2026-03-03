@@ -4,7 +4,9 @@ import { authAPI } from "./authAPI";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL ||
-  (import.meta.env.PROD ? "https://bifx-backend-app.onrender.com/api" : "/api");
+  (import.meta.env.PROD
+    ? "https://bifx-backend-app-oghf.onrender.com/api"
+    : "/api");
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
